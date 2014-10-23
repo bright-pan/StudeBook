@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'APP',
+    'API',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -49,8 +50,15 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
+    #'django.middleware.security.SecurityMiddleware', 
 )
+
+
+"""
+    http://stackoverflow.com/questions/14297691/django-security-middleware-is-crashing-the-site
+    The strange terminal output is your browser trying to 
+    make an SSL handshake with a server that doesn't understand SSL.
+"""
 
 ROOT_URLCONF = 'StudeBook.urls'
 
@@ -63,11 +71,11 @@ WSGI_APPLICATION = 'StudeBook.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE'   : 'django.db.backends.mysql', 
-        'NAME'     : 'StudeBook',
-        'USER'     : 'root',
-        'PASSWORD' : '',
-        'HOST'     : '127.0.0.1',   # Or an IP Address that your DB is hosted on
-        'PORT'     : '',
+        'NAME'     : '__BLANK__',
+        'USER'     : '__BLANK__',
+        'PASSWORD' : '__BLANK__!',
+        'HOST'     : '__BLANK__',   # Or an IP Address that your DB is hosted on
+        'PORT'     : '__BLANK__',
     }
 }
 
