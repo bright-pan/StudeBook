@@ -1,3 +1,5 @@
+from APP.models.UserTypeModel import UserType
+
 class User(models.Model):
     user_id = models.IntegerField(primary_key=True)
     first_name = models.CharField(max_length=40, blank=True)
@@ -10,7 +12,7 @@ class User(models.Model):
     region = models.CharField(max_length=50, blank=True)
     country = models.CharField(max_length=50, blank=True)
     registration_date = models.DateTimeField(blank=True, null=True)
-    user_type = models.ForeignKey('SbUserType', blank=True, null=True)
+    user_type = models.ForeignKey(UserType, blank=True, null=True)
 
     class Meta:
         managed = False

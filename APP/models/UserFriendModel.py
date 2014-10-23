@@ -1,5 +1,7 @@
+from APP.models.UserModel import User
+
 class UserFriend(models.Model):
-    user = models.ForeignKey(SbUser)
+    user = models.ForeignKey(User)
     friend_id = models.IntegerField()
     accepted = models.IntegerField(blank=True, null=True)
 

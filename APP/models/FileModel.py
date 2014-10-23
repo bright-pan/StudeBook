@@ -1,7 +1,10 @@
+from APP.models.UserModel import User
+from APP.models.FileCategoryModel import FileCategory
+
 class File(models.Model):
     file_id = models.IntegerField(primary_key=True)
-    user = models.ForeignKey('SbUser', blank=True, null=True)
-    file_category = models.ForeignKey('SbFileCategory', blank=True, null=True)
+    user = models.ForeignKey(User, blank=True, null=True)
+    file_category = models.ForeignKey(FileCategory, blank=True, null=True)
     name = models.CharField(max_length=100, blank=True)
     description = models.TextField(blank=True)
     upload_date = models.DateTimeField(blank=True, null=True)

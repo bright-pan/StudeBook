@@ -1,7 +1,10 @@
+from APP.models.UserModel import User
+from APP.models.FileModel import File
+
 class FileRating(models.Model):
     file_rating_id = models.IntegerField(primary_key=True)
-    user = models.ForeignKey('SbUser', blank=True, null=True)
-    file = models.ForeignKey(SbFile, blank=True, null=True)
+    user = models.ForeignKey(User, blank=True, null=True)
+    file = models.ForeignKey(File, blank=True, null=True)
     rating = models.DecimalField(max_digits=2, decimal_places=1, blank=True, null=True)
 
     class Meta:
