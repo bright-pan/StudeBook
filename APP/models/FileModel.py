@@ -1,8 +1,11 @@
+#DJANGO
+from django.db import models
+#SB
 from APP.models.UserModel import User
 from APP.models.FileCategoryModel import FileCategory
 
 class File(models.Model):
-    file_id = models.IntegerField(primary_key=True)
+    file_id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, blank=True, null=True)
     file_category = models.ForeignKey(FileCategory, blank=True, null=True)
     name = models.CharField(max_length=100, blank=True)

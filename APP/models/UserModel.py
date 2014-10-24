@@ -1,7 +1,11 @@
+#DJANGO
+from django.db import models
+#SB
 from APP.models.UserTypeModel import UserType
 
-class User(models.Model):
-    user_id = models.IntegerField(primary_key=True)
+class User (models.Model) :
+    
+    user_id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=40, blank=True)
     last_name = models.CharField(max_length=40, blank=True)
     email_address = models.CharField(max_length=80, blank=True)

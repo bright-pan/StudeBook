@@ -1,4 +1,4 @@
-#StudeBook
+#SB
 from APP.views.MainView import MainView
 
 """
@@ -13,6 +13,6 @@ class LoginView (MainView):
     def get (self, request) :
         
         return super(LoginView, self).render(request, 'login.html', {
-            'title'   : 'Login',
-            'message' : 'OAuth login.'
+            'title'     : 'Login',
+            'message'   : 'OAuth login.'
         });

@@ -3,7 +3,6 @@ from django.http import HttpResponse
 from django.views.generic import View
 import json
 
-
 """
  ### StudeBook main api page ### 
  @class APIView

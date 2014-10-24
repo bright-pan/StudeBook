@@ -1,3 +1,6 @@
+#DJANGO
+from django.db import models
+#SB
 from APP.models.UserModel import User
 
 class UserFriend(models.Model):

@@ -1,8 +1,11 @@
 //FB CONFIG SETTINGS
 var FB_CONFIG = {
 	APP_ID  : 307740626096646,
-	SDK_URI : '//connect.facebook.net/nl_NL/sdk.js'
+	SDK_URI : '//connect.facebook.net/nl_NL/sdk.js',
+	API_URI : SB.CONFIG.API_URI + 'externalAccountLogin/provider:facebook'
 };
+
+//alert(SB.CONFIG.CSRF_TOKEN);
 
 /**
  * @class Facebook
@@ -38,26 +41,13 @@ Facebook = function() {
 	 *  This is called with the results from from FB.getLoginStatus().
 	 */
 	this.statusChangeCallback = function (response) {
-		
-		console.log(response);
-		return;
-		
 		if (response.status === 'connected') {
-	        //DJANGO CSRF TOKEN
-			var csrf = $('input[name="csrfmiddlewaretoken"]').val();
-			var base = CONFIG.API_URI + 'externalAccountLogin';
-			response = response.authResponse;
-			//NRGWeb login with facebook 
-	        $.post(base, { 
-	        	'csrfmiddlewaretoken' : csrf, 
-	        	'userID' 			  : response.userID, 
-	        	'accessToken' 		  : response.accessToken, 
-	        	'type' 		  		  : 'facebook'
-	        }, function(resp) {
-		    	alert('Facebook : ' + resp.message);
-		    	if(resp.status == 200) {
-		    		window.location.href = '/';
-		    	};
+	        //SB login with facebook 
+	        $.post(FB_CONFIG.API_URI, { 
+	        	'csrfmiddlewaretoken' : SB.CONFIG.CSRF_TOKEN, 
+	        	'accessToken' 		  : response.authResponse.accessToken
+	        }, function(response) {
+	        	console.log(response);
 			});
 		} else if (response.status === 'not_authorized') {
 	        // The person is logged into Facebook, but not your app.

@@ -12,7 +12,7 @@ class MainView(View):
     
     def render (self, request, template, params) :
         #Manipulate params
-        params.update({ 'logged_in' : request.session.get('logged_in', False) });
+        params.update({ 'test' : 404 });
         #Render view
         return render(request, template, params);
     
