@@ -5,9 +5,9 @@
 	{% for file in file_list %}
 		<hr />
 		<div class="filelist">
-			<a href="{{ file.id }}"><h3>{{ file.name }}</h3></a>
-			<h5>Gemaakt door: {{ file.user }} </h5>
-			<h5>Geüpload op: {{ file.upload_date }} </h5>
+			<a href="show/{{ file.file_id }}"><h3>{{ file.name }}</h3></a>
+			<h5>Uploaded by: {{ file.user }} </h5>
+			<h5>Date: {{ file.upload_date }} </h5>
 		</div>
 
 	{% endfor %}
