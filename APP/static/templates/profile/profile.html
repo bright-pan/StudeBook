@@ -1,6 +1,103 @@
-{% extends "main.html" %}
-{% block content %}
-<h1>{{ title }}</h1>
-<h3>{{ message }} {{ user.user }}</h3>
+{% extends "main.html" %} {% load staticfiles %} {% block head %}
+<script src="{% static 'js/profile.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/bootstrap-datepicker.js' %}" type="text/javascript"></script>
+<link href="{% static 'css/datepicker3.css' %}" rel="stylesheet" />
+<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+{% endblock %} {% block content %}
+
+<div class="container">
+    <h1>My profile</h1>
+</div>
+<div class="table-responsive">
+    <table class="table">
+        <tr>
+            <th>
+                My details
+            </th>
+        </tr>
+        <tr>
+            <td class="col-xs-3">
+                First name
+            </td>
+            <td>
+                <a href="#" class="editable" data-type="text" data-name="first_name" data-pk="{{ user_login.user.user_id}}" data-url="{% url 'profile_update' %}" data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}" data-value="{{ user_login.user.first_name }}">{{ user_login.user.first_name }}</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="col-xs-3">
+                Last name
+            </td>
+            <td>
+                <a href="#" class="editable" data-type="text" data-name="last_name" data-pk="{{ user_login.user.user_id}}" data-url="{% url 'profile_update' %}" data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}"  data-value="{{ user_login.user.last_name }}">{{ user_login.user.last_name }}</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="col-xs-3">
+                Email address
+            </td>
+            <td>
+                <a href="#" id="username" class="editable" data-type="text" data-name="email_address" data-pk="{{ user_login.user.user_id}}" data-url="{% url 'profile_update' %}" data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}"  data-value="{{ user_login.user.email_address }}">{{ user_login.user.email_address }}</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="col-xs-3">
+                Date of birth
+            </td>
+            <td>
+                <a href="#" id="username" class="editable date" data-type="date" data-name="date_of_birth" data-pk="{{ user_login.user.user_id}}" data-url="{% url 'profile_update' %}" data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}"  data-format="yyyy-mm-dd"data-value="1995-1-1">1995-1-1</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="col-xs-3">
+                Address
+            </td>
+            <td>
+                <a href="#" id="username" class="editable" data-type="text" data-name="address" data-pk="{{ user_login.user.user_id}}" data-url="{% url 'profile_update' %}" data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}"  data-value="{{ user_login.user.address }}">{{ user_login.user.address }}</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="col-xs-3">
+                House number
+            </td>
+            <td>
+                <a href="#" id="username" class="editable" data-type="text" data-name="houseno" data-pk="{{ user_login.user.user_id}}" data-url="{% url 'profile_update' %}" data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}"  data-value="{{ user_login.user.houseno }}">{{ user_login.user.houseno }}</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="col-xs-3">
+                City
+            </td>
+            <td>
+                <a href="#" id="username" class="editable" data-type="text" data-name="city" data-pk="{{ user_login.user.user_id}}" data-url="{% url 'profile_update' %}" data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}"  data-value="{{ user_login.user.city }}">{{ user_login.user.city }}</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="col-xs-3">
+                Postal code
+            </td>
+            <td>
+                <a href="#" id="username" class="editable" data-type="text" data-name="postal_code" data-pk="{{ user_login.user.user_id}}" data-url="{% url 'profile_update' %}" data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}"  data-value="{{ user_login.user.postal_code }}">{{ user_login.user.postal_code }}</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="col-xs-3">
+                Region
+            </td>
+            <td>
+                <a href="#" id="username" class="editable" data-type="text" data-name="region" data-pk="{{ user_login.user.user_id}}" data-url="{% url 'profile_update' %}" data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}"  data-value="{{ user_login.user.region }}">{{ user_login.user.region }}</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="col-xs-3">
+                Country
+            </td>
+            <td>
+                <a href="#" id="username" class="editable" data-type="text" data-name="country" data-pk="{{ user_login.user.user_id}}" data-url="{% url 'profile_update' %}" data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}"  data-value="{{ user_login.user.country }}">{{ user_login.user.country }}</a>
+            </td>
+        </tr>
+    </table>
+</div>
+</div>
 
 {% endblock %}

@@ -1,6 +1,7 @@
 #SB
 from APP.views.MainView import MainView
 from APP.models.UserLoginModel import UserLogin
+from APP.models.UserModel import User
 
 
 """
@@ -10,20 +11,21 @@ from APP.models.UserLoginModel import UserLogin
 """
 
 class ProfileView(MainView):
-    
-    def get (self, request) :
-    	# session = request.session.get('user_login_id', False)
-    	# user = UserLogin.objects.get(user_login_id = session)
+    def show (self, request) :
         return super(ProfileView, self).render(request, 'profile/profile.html', {
-            'title'     : 'Ehh',
-            'message'   : 'Nils, lelijke css.'
+            
         });
         
-    def test (self, request) :
-    	# session = request.session.get('user_login_id', False)
-    	# user = UserLogin.objects.get(user_login_id = session)
+    def update (self, request) :
+        name = request.POST.get('name', '')
+        value = request.POST.get('value', '')
+        pk = request.POST.get('pk', '')
+
+        record = User.objects.get(user_id = pk)
+        record.__setattr__(name, value)
+        record.save()
+
         return super(ProfileView, self).render(request, 'profile/profile.html', {
-            'title'     : 'Ehh',
-            'message'   : 'Matha Facka'
+            
         });
 
