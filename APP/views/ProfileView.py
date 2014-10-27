@@ -1,6 +1,7 @@
-#DJANGO
-from django.views.generic import View
-from django.shortcuts import render
+#SB
+from APP.views.MainView import MainView
+from APP.models.UserLoginModel import UserLogin
+
 
 """
  @class ProfileView
@@ -8,11 +9,12 @@ from django.shortcuts import render
  @author StudeBook inc.
 """
 
-class ProfileView(View):
+class ProfileView(MainView):
     
-    def render (self, request, template, params) :
-        #Manipulate params
-        params.update({ 'test' : 404 });
-        #Render view
-        return render(request, template, params);
-    
+    def get (self, request) :
+    	session = request.session.get('user_login_id', False)
+    	user = UserLogin.objects.get(user_login_id = session)
+        return super(ProfileView, self).render(request, 'profile.html', {
+            'title'     : 'Ehh',
+            'message'   : user
+        });
