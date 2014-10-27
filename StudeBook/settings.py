@@ -71,11 +71,11 @@ WSGI_APPLICATION = 'StudeBook.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE'   : 'django.db.backends.mysql', 
-        'NAME'     : '__BLANK__',
-        'USER'     : '__BLANK__',
-        'PASSWORD' : '__BLANK__!',
-        'HOST'     : '__BLANK__',   # Or an IP Address that your DB is hosted on
-        'PORT'     : '__BLANK__',
+        'NAME'     : 'StudeBook',
+        'USER'     : 'hanze',
+        'PASSWORD' : 'HanzeDeveloper050!',
+        'HOST'     : 'localhost',   # Or an IP Address that your DB is hosted on
+        'PORT'     : '',
     }
 }
 
