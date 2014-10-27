@@ -5,17 +5,16 @@ from django.views.generic import ListView
 
 #APP
 from APP.views.APPView import APPView
-from APP.views.LoginView import LoginView
-from APP.views.ProfileView import ProfileView
 from APP.views.PageView import PageView
 from APP.views.FileView import FileView
 
+# from APP.routers.routes.profile 
+
 urlpatterns = patterns('',
 	url(r'^$', APPView.as_view(), name = 'APP'),
-	url(r'^login$', LoginView.as_view(), name = 'Login'),
+	url(r'^login$', include('APP.routers.routes.login')),
 	url(r'^admin/', include(admin.site.urls)),
-	url(r'^profile/', ProfileView.as_view()),
-	url(r'^page/$', PageView.as_view()),
-	url(r'^page/(?P<pageID>\w+)/$', PageView.as_view()),
-	url(r'^file/$', FileView.as_view()),
+	url(r'^profile/', include('APP.routers.routes.profile')),
+	url(r'^page/$', include('APP.routers.routes.page')),
+	url(r'^file/$', include('APP.routers.routes.file')),
 )

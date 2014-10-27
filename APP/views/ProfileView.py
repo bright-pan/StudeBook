@@ -12,9 +12,18 @@ from APP.models.UserLoginModel import UserLogin
 class ProfileView(MainView):
     
     def get (self, request) :
-    	session = request.session.get('user_login_id', False)
-    	user = UserLogin.objects.get(user_login_id = session)
-        return super(ProfileView, self).render(request, 'profile.html', {
+    	# session = request.session.get('user_login_id', False)
+    	# user = UserLogin.objects.get(user_login_id = session)
+        return super(ProfileView, self).render(request, 'profile/profile.html', {
             'title'     : 'Ehh',
-            'message'   : user
+            'message'   : 'Nils, lelijke css.'
         });
+        
+    def test (self, request) :
+    	# session = request.session.get('user_login_id', False)
+    	# user = UserLogin.objects.get(user_login_id = session)
+        return super(ProfileView, self).render(request, 'profile/profile.html', {
+            'title'     : 'Ehh',
+            'message'   : 'Matha Facka'
+        });
+
