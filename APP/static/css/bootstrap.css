@@ -1,24 +1,21 @@
 body {
     min-height: 2000px;
-    padding-top: 70px;
+    padding-top: 100px;
 }
 
 .navbar-blue {
-    /* background-color: #4879ed; */
-    border-radius: 0;
-    border: 0;
     background-image: -webkit-gradient(
         linear,
         left top,
         left bottom,
-        color-stop(0, #3C78F0),
-        color-stop(1, #83A6E6)
-        );
-    background-image: -o-linear-gradient(bottom, #3C78F0 0%, #83A6E6 100%);
-    background-image: -moz-linear-gradient(bottom, #3C78F0 0%, #83A6E6 100%);
-    background-image: -webkit-linear-gradient(bottom, #3C78F0 0%, #83A6E6 100%);
-    background-image: -ms-linear-gradient(bottom, #3C78F0 0%, #83A6E6 100%);
-    background-image: linear-gradient(to bottom, #3C78F0 0%, #83A6E6 100%);
+        color-stop(0, #2a6496),
+        color-stop(1, #428bca)
+    );
+    background-image: -o-linear-gradient(bottom, #2a6496 0%, #428bca 100%);
+    background-image: -moz-linear-gradient(bottom, #2a6496 0%, #428bca 100%);
+    background-image: -webkit-linear-gradient(bottom, #2a6496 0%, #428bca 100%);
+    background-image: -ms-linear-gradient(bottom, #2a6496 0%, #428bca 100%);
+    background-image: linear-gradient(to bottom, #2a6496 0%, #428bca 100%);
 }
 
 .navbar-blue a {
@@ -46,6 +43,10 @@ body {
     background-color: rgba(0, 0, 0, 0.1);
 }
 
-.pagelist {
+.navbar-toggle .icon-bar {
+  background-color: #ffffff;
+}
 
+.navbar-collapse.collapse.in .dropdown-menu>li>a {
+    color : #fff !important;
 }
