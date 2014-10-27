@@ -1,6 +1,6 @@
 body {
     min-height: 2000px;
-    padding-top: 100px;
+    padding-top: 80px;
 }
 
 .navbar-blue {
@@ -44,9 +44,9 @@ body {
 }
 
 .navbar-toggle .icon-bar {
-  background-color: #ffffff;
+    background-color: #ffffff;
 }
 
-.navbar-collapse.collapse.in .dropdown-menu>li>a {
-    color : #fff !important;
+.navbar-collapse.collapse.in .dropdown-menu > li > a {
+    color : #ffffff;
 }
