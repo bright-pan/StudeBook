@@ -14,6 +14,9 @@ class File(models.Model):
     size = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     path = models.CharField(max_length=100, blank=True)
 
+    def __str__ (self) :
+        return self.name
+
     class Meta:
         managed = False
         db_table = 'sb_file'
