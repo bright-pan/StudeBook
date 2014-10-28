@@ -12,7 +12,7 @@ class APPView (MainView):
 
     def get (self, request) :
         
-        return super(APPView, self).render(request, 'app.html', {
+        return super(APPView, self).render(request, 'home/app.html', {
             'title'   : 'StudeBook',
             'message' : 'APPPPPPPP.'
         });
