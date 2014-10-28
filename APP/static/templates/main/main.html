@@ -1,0 +1,33 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>StudeBook</title>
+        <!-- INCLUDE META DATA -->
+        {% include "main/meta.html" %}
+		<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+        {% block head %}
+        <!-- SPECIFIC META DATA -->
+        {% endblock %}
+    </head>
+    <body>
+        <!-- Container -->
+        <div class="container-fluid">
+        	
+            <!-- Header -->
+            {% include "main/menu.html" %}
+
+            <!-- Content -->
+            <div class="container">
+                <div class="jumbotron">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+
+            <!-- Footer -->
+            {% include "main/footer.html" %}
+
+        </div>
+    </body>
+</html>
