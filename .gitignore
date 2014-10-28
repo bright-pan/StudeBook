@@ -1,7 +1,8 @@
-
-sftp-config.json
 StudeBook/settings.py
 /.idea
 .DS_Store
+.project
+.pydevproject
+ftpsync.settings
 sftp-config.json
 Thumbs.db
