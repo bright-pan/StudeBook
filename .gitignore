@@ -6,3 +6,4 @@ StudeBook/settings.py
 ftpsync.settings
 sftp-config.json
 Thumbs.db
+*.pyc
