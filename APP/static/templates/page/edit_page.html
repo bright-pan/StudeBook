@@ -1,0 +1,28 @@
+{% extends "main.html" %}
+{% block content %}
+<div class="container">
+	<span>{{title}}</span>
+	<div style="min-height: 200px;">
+		<img src="{{ page.img }}" 
+		style="float: left; margin-right: 30px; " width="200px" height="150px"/> 
+		<h1>{{ page.title }}</h1>
+		<h4>{{ page.user }}</h4>
+		
+	</div>
+	<div class="col-md-8" style="word-wrap: break-word; border: 1px solid red;">
+		<h2>Messages</h2>
+		<p>{{ page.body }}</p>
+		<form action="/your-name/" method="post">
+		    <label for="title">Page Title: </label>
+		    <input id="title" type="text" name="title" value="{{ page.title }}">
+		    <label for="body">Page Body: </label>
+		    <input id="body" type="text" name="body" value="{{ page.body }}">
+		    <input type="submit" value="Save">
+		</form>
+	</div>
+
+	<div class="col-md-4" style="word-wrap: break-word; border: 1px solid blue;">
+		<h2>Sidebar</h2>
+	</div>
+</div>
+{% endblock %}

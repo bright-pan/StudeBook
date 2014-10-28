@@ -1,0 +1,29 @@
+html, body, #authentication {
+    height : 100%;
+}
+
+#authentication {
+    display        : table;
+    margin 		   : 0 auto;
+    vertical-align : middle;
+}
+
+#authentication .content {
+    display        : table-cell;
+    vertical-align : middle;
+}
+
+#authentication .content .inner {
+	background : #eaeaea;
+}
+
+#authentication .content .inner header {
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #2a6496), color-stop(1, #428bca));
+    border-bottom : 1px solid #2a6496;
+    padding : 10px 50px;   
+    color : #fff;
+}
+
+#authentication .content .inner>div {
+	padding : 10px 20px;
+}

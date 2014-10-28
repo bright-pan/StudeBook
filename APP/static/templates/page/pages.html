@@ -1,0 +1,14 @@
+{% extends "main.html" %}
+{% block content %}
+	<h1>{{ title }}</h1>
+
+	{% for page in page_list %}
+		<hr />
+		<div class="pagelist">
+			<a href="getPage/{{ page.page_id }}"><h3>{{ page.title }}</h3></a>
+			<h5>Created by : {{ page.user }} </h5>
+			<h5>Date Created : {{ page.created }} </h5>
+		</div>
+
+	{% endfor %}
+{% endblock %}

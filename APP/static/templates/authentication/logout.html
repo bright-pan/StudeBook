@@ -1,0 +1,26 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{{request_uri}}</title>
+        <!-- INCLUDE META DATA -->
+        {% include "main/meta.html" %}
+        <script src="{% static 'js/main.js' %}" type="text/javascript"></script>
+		<script src="{% static 'js/authentication/main.js' %}" type="text/javascript"></script>
+	</head>
+	<body>
+		<div id="authentication">
+		    <div class="content">
+		    	<div class="inner">
+		    		<header><h1>{{ title }}</h1></header>	
+					<div>       
+						<span style="display:none">{{csrf_token}}</span>
+						<h3>{{ message }}</h3>
+						<h5>Logged in -> {{ user_login.user }}</h5>
+						<a href="#logout" name="logout" id="logout">Logout</a>	
+					</div>	 
+				</div>
+		    </div>
+		</div>
+	</body>
+</html>
