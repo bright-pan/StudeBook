@@ -5,4 +5,5 @@ from APP.views.ProfileView import ProfileView
 urlpatterns = patterns('',
     url(r'^$', ProfileView().show),
     url(r'^update/$', ProfileView().update, name="profile_update"),
+    url(r'^countries/$', ProfileView().getCountries),
 )

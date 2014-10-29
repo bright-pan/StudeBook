@@ -4,7 +4,7 @@ $(document).ready(function() {
 });
 
 function initEditable() {
-    $.fn.editable.defaults.mode = 'inline-block';
+    $.fn.editable.defaults.mode = 'inline';
     $.fn.editable.defaults.ajaxOptions = {
         type: "post"
     };
@@ -29,16 +29,5 @@ function initEditable() {
 
     $('.editable').each(function() {
         $(this).editable(options);
-    });
-    $('.date').each(function() {
-        $(this).editable({
-            type: 'date',
-            format: 'yyyy-mm-dd',
-            viewformat: 'yyyy-mm-dd',
-            datepicker: {
-                weekStart: 1
-            },
-            forceParse: true
-        });
     });
 }

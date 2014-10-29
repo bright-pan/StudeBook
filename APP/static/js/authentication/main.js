@@ -27,10 +27,7 @@ $().ready(function() {
 		$.post(AUTH_CONFIG.LOGOUT.API_URI, { 
         	'csrfmiddlewaretoken' : SB.CONFIG.CSRF_TOKEN
         }, function(response) {
-	    	alert(response.message);
-	    	if(response.status == 200) {
-	    		window.location.href = '/';
-	    	};
+	    	
 		});
 	});
 });
