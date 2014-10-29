@@ -15,6 +15,6 @@ urlpatterns = patterns('',
 	url(r'^login$', include('APP.routers.routes.login')),
 	url(r'^admin/', include(admin.site.urls)),
 	url(r'^profile/', include('APP.routers.routes.profile')),
-	url(r'^page/$', include('APP.routers.routes.page')),
-	url(r'^file/', include('APP.routers.routes.file')),
+	url(r'^page/', include('APP.routers.routes.page')),
+	url(r'^file/', include('APP.routers.routes.file'))
 )

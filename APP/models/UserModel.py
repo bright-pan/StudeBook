@@ -19,6 +19,9 @@ class User (models.Model) :
     registration_date = models.DateTimeField(blank=True, null=True)
     user_type = models.ForeignKey(UserType, blank=True, null=True)
 
+    def __str__ (self) :
+        return self.first_name + " " + self.last_name
+
     class Meta:
         managed = False
         db_table = 'sb_user'

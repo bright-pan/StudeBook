@@ -1,8 +1,10 @@
 #StudeBook
 from APP.views.MainView import MainView
+from django.http import HttpResponseRedirect
 
 #sb
 from APP.models.FileModel import File
+from APP.forms.FileForm import FileForm
 
 """
  ### StudeBook Files page ### 
@@ -34,5 +36,32 @@ class FileView (MainView):
             'file' : file
 
         });    
+
+    def create(self, request):
+
+        if request.method == 'POST':
+            form = FileForm(request.POST, request.FILES)
+            if form.is_valid():
+                # file is saved
+                form.user = super(FileView, self).getUserLogin(request).user
+                form.save()
+                addedFile = File.objects.latest('file_id')
+
+                return HttpResponseRedirect('/file/show/' + str(addedFile.file_id))
+            else:
+                return super(FileView, self).render(request, 'file/create.html', {
+            'title'   : form.errors,
+            'message' : 'Create a file',
+            'formset' : form
+        });  
+        else:
+            form = FileForm()
+
+        return super(FileView, self).render(request, 'file/create.html', {
+            'title'   : 'Create file',
+            'message' : 'Create a file',
+            'formset' : form
+        });  
+
 
 

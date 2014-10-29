@@ -12,7 +12,7 @@ class File(models.Model):
     description = models.TextField(blank=True)
     upload_date = models.DateTimeField(blank=True, null=True)
     size = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    path = models.CharField(max_length=100, blank=True)
+    path = models.FileField()
 
     def __str__ (self) :
         return self.name

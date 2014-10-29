@@ -1,14 +1,46 @@
 {% extends "main/main.html" %}
+{% load staticfiles %}
+{% block head %}
+
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'css/rating.css' %}" /> -->
+<style>
+.starRate {position:relative; margin:0px; overflow:hidden; zoom:1;}
+.starRate ul {width:160px; margin:0; padding:0;}
+.starRate li {display:inline; list-style:none;}
+.starRate a, .starRate b {background:url({% static 'img/star_rate.gif' %}) left top repeat-x;}
+.starRate a {float:right; margin:0 80px 0 -144px; width:80px; height:16px; background-position:left 16px; color:#000; text-decoration:none;}
+.starRate a:hover {background-position:left -32px;}
+.starRate b {position:absolute; z-index:-1; width:80px; height:16px; background-position:left -16px;}
+.starRate div b {left:0px; bottom:0px; background-position:left top;}
+.starRate a span {position:absolute; left:-300px;}
+.starRate a:hover span {left:90px; width:100%;}
+</style>
+{% endblock %}
+
 {% block content %}
+
 	<h1>{{ file.name }}</h1>
 
 		<table>
 			<tr><td style="width: 200px; font-weight: bold;">Uploaded by</td><td>{{ file.user }}</td></tr>
-			<tr><td style="font-weight: bold;">Category</td><td>{{ file.file_category_id }}</td></tr>
+			<tr><td style="font-weight: bold;">Category</td><td>{{ file.file_category }}</td></tr>
 			<tr><td style="font-weight: bold;">Description</td><td>{{ file.description }}</td></tr>
 			<tr><td style="font-weight: bold;">Date</td><td>{{ file.upload_date }}</td></tr>
 			<tr><td style="font-weight: bold;">Filesize</td><td>{{ file.size }} kB</td></tr>
 			<tr><td style="font-weight: bold;">Download</td><td><a href="{{ file.path }}">{{ file.path }}</a></td></tr>
+			<tr><td style="font-weight: bold;">Rating</td><td width="300"><div class="starRate">
+<div>
+	<!-- Currently rated: 3 stars -->
+	<b></b></div>
+<ul>
+<li><a href="#5star"><span>Give it 5 stars</span></a></li>
+<li><a href="#4star"><span>Give it 4 stars</span></a></li>
+<li><a href="#3star"><span>Give it 3 stars</span><b></b></a></li>
+<li><a href="#2star"><span>Give it 2 stars</span></a></li>
+<li><a href="#1star"><span>Give it 1 star</span></a></li>
+</ul>
+</div></td></tr>
+
 		</table>
 
 {% endblock %}
