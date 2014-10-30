@@ -5,107 +5,33 @@
         <title>StudeBook</title>
         {% include "main/meta.html" %}
         <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-
-
-        <script src="http://run.plnkr.co/plunks/sA6H7U/sidebar.js"></script>
-        <link rel="stylesheet" href="http://run.plnkr.co/plunks/sA6H7U/style.css">
-        <link rel="stylesheet" href="http://run.plnkr.co/plunks/sA6H7U/sidebar.css">
-
+        <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+        <script src="{% static 'js/sidebar.js' %}"></script>
         {% block head %}
         {% endblock %}
     </head>
     <body>
-            <!-- Header -->
-            {% include "main/menu.html" %}
+        <!-- Container -->
+        <div class="container-fluid">
+            <!-- Navigation -->
+            {% include "main/nav.html" %}
 
-            <!-- http://run.plnkr.co/plunks/sA6H7U/# -->
-            <!-- Fixed navbar -->
-            <div class="navbar navbar-static navbar-default navbar-fixed-bottom">
-                <div class="container-fluid">
-                    <button type="button" class="navbar-toggle toggle-right" data-toggle="sidebar" data-target=".sidebar-right">
-                        <a href="#"><span class="glyphicon glyphicon-comment"></span> Chat</a>
-                    </button>
+            <div class="row">
+                <!-- Left Sidebar -->
+                {% include "main/left-sidebar.html" %}
+
+                <!-- Content -->
+                <div class="main col-md-8 col-md-offset-2">
+                    {% block content %}
+                    {% endblock %}
                 </div>
+
+                <!-- Right Sidebar -->
+                {% include "main/right-sidebar.html" %}
             </div>
-
-<!-- Begin page content -->
-<div class="container-fluid">
-<div class="row">
-<div class="col-xs-7 col-sm-3 col-md-2 sidebar sidebar-left sidebar-animate sidebar-md-show">
-<ul class="nav navbar-stacked">
-<li class="active">
-<a href="#">Update #1</a>
-</li>
-<li>
-<a href="#">Update #2</a>
-</li>
-<li>
-<a href="#">Update #3</a>
-</li>
-<li class="active">
-<a href="#">Update #1</a>
-</li>
-<li>
-<a href="#">Update #2</a>
-</li>
-<li>
-<a href="#">Update #3</a>
-</li>
-<li class="active">
-<a href="#">Update #1</a>
-</li>
-<li>
-<a href="#">Update #2</a>
-</li>
-<li>
-<a href="#">Update #3</a>
-</li>
-<li class="active">
-<a href="#">Update #1</a>
-</li>
-<li>
-<a href="#">Update #2</a>
-</li>
-<li>
-<a href="#">Update #3</a>
-</li>
-<li class="active">
-<a href="#">Update #1</a>
-</li>
-<li>
-<a href="#">Update #2</a>
-</li>
-<li>
-<a href="#">Update #3</a>
-</li>
-<li class="active">
-<a href="#">Update #1</a>
-</li>
-<li>
-<a href="#">Update #2</a>
-</li>
-<li>
-<a href="#">Update #3</a>
-</li>
-</ul>
-</div>
-<div class="main col-md-9 col-md-offset-3">
-{% block content %}
-{% endblock %}
-</div>
-<div class="col-xs-7 col-sm-3 col-md-2 sidebar sidebar-right sidebar-animate">
-<ul class="nav navbar-stacked">
-<li>CHATTEN MET MICHEL</li>
-</ul>
-</div>
-</div>
-</div>
-
-
-
-
 
             <!-- Footer -->
             {% include "main/footer.html" %}
+        </div>
     </body>
 </html>
