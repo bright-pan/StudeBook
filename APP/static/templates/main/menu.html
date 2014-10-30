@@ -13,7 +13,14 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-left">
                 <li><a href="/"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-                <li><a href="/file"><span class="glyphicon glyphicon-file"></span> Files</a></li>
+
+                <li class="dropdown">
+                    <a href="/file" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-file"></span> Files <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="/file"><span class="glyphicon glyphicon-user"></span> All files</a></li>
+                        <li><a href="/file/create"><span class="glyphicon glyphicon-log-out"></span> Upload file</a></li>
+                    </ul>
+                </li>
                 <li><a href="/book"><span class="glyphicon glyphicon-book"></span> Books</a></li>
                 <li><a href="/page"><span class="glyphicon glyphicon-list-alt"></span> Pages</a></li>
                 <li><a href="/event"><span class="glyphicon glyphicon-pushpin"></span> Events</a></li>
@@ -21,12 +28,11 @@
                 <li><a href="/internship"><span class="glyphicon glyphicon-briefcase"></span> Internships</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><span class="glyphicon glyphicon-comment"></span> Chat</a></li>
                 <li class="dropdown">
                     <a href="/profile" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> Profile <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="/profile"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
-                        <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                        <li><a href="/authentication/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                         <li class="divider"></li>
                         <li><a href="/friend"><span class="glyphicon glyphicon-user"></span> Friends</a></li>
                         <li><a href="/rating"><span class="glyphicon glyphicon-star"></span> Rating</a></li>
