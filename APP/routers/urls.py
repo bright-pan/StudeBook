@@ -12,9 +12,9 @@ from APP.views.FileView import FileView
 
 urlpatterns = patterns('',
 	url(r'^$', APPView.as_view(), name = 'APP'),
-	url(r'^login$', include('APP.routers.routes.login')),
+	url(r'^authentication/', include('APP.routers.routes.authentication')),
 	url(r'^admin/', include(admin.site.urls)),
 	url(r'^profile/', include('APP.routers.routes.profile')),
 	url(r'^page/', include('APP.routers.routes.page')),
-	url(r'^file/', include('APP.routers.routes.file'))
+	url(r'^file/', include('APP.routers.routes.file')),
 )

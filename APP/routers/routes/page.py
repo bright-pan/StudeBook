@@ -3,8 +3,10 @@ from django.conf.urls import patterns, include, url
 from APP.views.PageView import PageView
 
 urlpatterns = patterns('',
-    url(r'^$', PageView().get),
-    url(r'^test/$', PageView().test),
-    url(r'^getPage/$', PageView().getPage),
-    url(r'^getPages/$', PageView().getPages),
+    url(r'^$', PageView().index),
+    url(r'^getPage/(?P<pageID>\d+)/$', PageView().show),
+    url(r'^getPage/(?P<pageID>\d+)/edit/', PageView().updatePage),
+    url(r'^getPage/(?P<pageID>\d+)/delete/', PageView().deletePage),
+    url(r'^update/$', PageView().update, name="page_update"),
+    url(r'^add/$', PageView().create),
 )

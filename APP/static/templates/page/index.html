@@ -1,0 +1,19 @@
+{% extends "main/main.html" %}
+{% load staticfiles %} {% block head %}
+<link href="{% static 'css/page.css' %}" rel="stylesheet" />
+{% endblock %} 
+{% block content %}
+<div class="container page">
+	<div class="col-md-10"><h1>{{ title }}</h1></div>
+	<a href="add"><div class="col-md-2 add" style="padding-top: 20px; font-size: 30pt;"></div></a>
+
+	{% for page in page_list %}
+		<div class="pagelist col-md-12">
+			<a href="getPage/{{ page.page_id }}"><h3>{{ page.title }}</h3></a>
+			<h5>Created by : {{ page.user }} </h5>
+			<h5>Date Created : {{ page.created }} </h5>
+		</div>
+
+	{% endfor %}
+</div>
+{% endblock %}
