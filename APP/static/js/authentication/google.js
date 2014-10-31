@@ -19,42 +19,46 @@ var Google = function() {
 	 */
 	this.render = function(wrapper) {
 		$(wrapper).append(self.button);
+		gapi.signin.render(self.button.attr('id'), {
+	      'callback'			  : self.OAuthCallback,
+	      'clientid'			  : AUTH_CONFIG.GOOGLE.CLIENT_ID,
+	      'cookiepolicy'		  : AUTH_CONFIG.GOOGLE.COOKIE_POLICY,
+	      'requestvisibleactions' : AUTH_CONFIG.GOOGLE.VISIBLE_ACTION,
+	      'scope'		          : AUTH_CONFIG.GOOGLE.SCOPE,
+	      'approvalprompt' 		  : AUTH_CONFIG.GOOGLE.PROMPT
+	    });
+	};
+	
+	//Google OAuth callback
+	this.OAuthCallback = function (response) {
+		//Login succes
+		if (response['status']['signed_in']) {
+			console.log(response);
+	    	//NRGWeb login with google 
+	        $.post(AUTH_CONFIG.GOOGLE.API_URI, { 
+	        	'csrfmiddlewaretoken' : SB.CONFIG.CSRF_TOKEN, 
+	        	'accessToken' 		  : response.access_token
+	        }, function(response) {
+	        	console.log(response);
+		    	alert(response.message);
+		    	if(response.status == 200) {
+		    		window.location.href = '/';
+		    	}
+			});
+	    //Login failure
+	  	} else {
+		    console.log('Sign-in state: ' + response['error']);
+	  	};	
 	};
 	
 	/**
 	 * @method setButton
 	 */
 	var setButton = function() {
-		var button = $('<div />');
-		button.attr('class', 'g-signin');
-		button.attr('data-callback', AUTH_CONFIG.GOOGLE.CALLBACK);
-		button.attr('data-approvalprompt', AUTH_CONFIG.GOOGLE.PROMPT);
-		button.attr('data-clientid', AUTH_CONFIG.GOOGLE.CLIENT_ID);
-		button.attr('data-requestvisibleactions', AUTH_CONFIG.GOOGLE.VISIBLE_ACTION);
-		button.attr('data-cookiepolicy', AUTH_CONFIG.GOOGLE.COOKIE_POLICY);
+		//Google login button
 		self.button = $('<div />');
-		self.button.attr('id', 'signin-button');
-		self.button.attr('class', 'show');
-		self.button.append(button);
+		self.button.attr('class','button');
+		self.button.attr('id', 'googleButton');
+		self.button.append($('<a />'));
 	};
-};
-
-//Google OAuth callback
-var OAuthCallback = function (response) {
-	//Login succes
-    if (response['status']['signed_in']) {
-    	//NRGWeb login with google 
-        $.post(AUTH_CONFIG.GOOGLE.API_URI, { 
-        	'csrfmiddlewaretoken' : SB.CONFIG.CSRF_TOKEN, 
-        	'accessToken' 		  : response.access_token
-        }, function(response) {
-	    	alert(response.message);
-	    	if(response.status == 200) {
-	    		window.location.href = '/';
-	    	}
-		});
-    //Login failure
-  	} else {
-	    console.log('Sign-in state: ' + response['error']);
-  	};	
 };

@@ -10,8 +10,6 @@ Facebook = function() {
 	 * @method init
 	 */
 	this.init = function () {
-		//Load FB module
-		loadModule();
 		//Init FB module
 		initModule();
 		//Set login button
@@ -19,9 +17,12 @@ Facebook = function() {
 	};
 	
 	var setButton = function() {
-		self.button = $('<fb:login-button />');
-		self.button.attr('scope', 'public_profile,email');
-		self.button.attr('onlogin', 'facebook.checkLoginState();');
+		//FB login button
+		self.button = $('<div />');
+		self.button.attr('class','button');
+		self.button.attr('id', 'facebookButton');
+		self.button.click(self.checkLoginState);
+		self.button.append($('<a />'));
 	};
 	
 	this.render = function(wrapper) {
@@ -38,6 +39,7 @@ Facebook = function() {
 	        	'csrfmiddlewaretoken' : SB.CONFIG.CSRF_TOKEN, 
 	        	'accessToken' 		  : response.authResponse.accessToken
 	        }, function(response) {
+	        	console.log(response);
 	        	alert(response.message);
 	        	if(response.status == 200) {
 		    		window.location.href = '/';
@@ -54,7 +56,9 @@ Facebook = function() {
 	 * Button. See the onlogin handler attached to it in the sample code below. 
 	 */
 	this.checkLoginState = function () {
-		FB.getLoginStatus(self.statusChangeCallback);
+		FB.login(self.statusChangeCallback, {
+    		scope : AUTH_CONFIG.FACEBOOK.SCOPE
+    	});
 	};
 	
 	/**
@@ -70,20 +74,6 @@ Facebook = function() {
 		        version    : 'v2.1' // use version 2.1
 		    });
 		};
-	};
-	
-	/**
-	 * @method loadModule
-	 */
-	var loadModule = function() {
-		//Execute
-		(function(d, s, id) {
-		    var js, fjs = d.getElementsByTagName(s)[0];
-		    if (d.getElementById(id)) return;
-	    	js = d.createElement(s); js.id = id;
-	    	js.src = AUTH_CONFIG.FACEBOOK.SDK_URI;
-	    	fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));
 	};
 	
 };
