@@ -27,25 +27,18 @@ class FacebookView (View) :
         except :
             return False;
     
-    #Login with FB credentials
+    #Login with Google credentials
     def login (self) :
-        #Get user data from FB API by AccessToken
+        #Get user data from Google API by AccessToken
         externalUser = self.getUserByAccessToken();
         if (externalUser is not False) :
             #Update user
             try :
-                self.user = self.updateUser(externalUser);
+                self.user = self.updateUserLogin(externalUser);
             #Create user
             except :
-                self.user = self.createUser(externalUser);
+                self.user = self.createUserLogin(externalUser);
     
-    #Update user 
-    def updateUser (self, externalUser) :
-        userLogin = UserLogin.objects.get(provider = 'facebook', provider_id = externalUser['id']); 
-        userLogin.access_token = self.accessToken;
-        userLogin.save();
-        return userLogin;  
-        
     #Create user
     #TODO -> User validation for multiple providers
     def createUser (self, externalUser) :
@@ -55,6 +48,22 @@ class FacebookView (View) :
         user.last_name = externalUser['last_name'];  
         user.email_address = externalUser['email'];      
         user.save();
+        return user;
+    
+    #Update user 
+    def updateUserLogin (self, externalUser) :
+        userLogin = UserLogin.objects.get(provider = 'facebook', provider_id = externalUser['id']); 
+        userLogin.access_token = self.accessToken;
+        userLogin.save();
+        return userLogin;
+        
+    def createUserLogin (self, externalUser) :
+        #Get user
+        try : 
+            user = User.objects.get(email_address = externalUser['email']);
+        #Create user
+        except : 
+            user = self.createUser(externalUser);
         #UserLoginModel
         userLogin = UserLogin(user = user, access_token = self.accessToken);
         userLogin.provider = 'facebook';

@@ -38,27 +38,37 @@ class GoogleView (View) :
         if (externalUser is not False) :
             #Update user
             try :
-                self.user = self.updateUser(externalUser);
+                self.user = self.updateUserLogin(externalUser);
             #Create user
             except :
-                self.user = self.createUser(externalUser);
+                self.user = self.createUserLogin(externalUser);
     
-    #Update user 
-    def updateUser (self, externalUser) :
-        userLogin = UserLogin.objects.get(provider = 'google', provider_id = externalUser['id']); 
-        userLogin.access_token = self.accessToken;
-        userLogin.save();
-        return userLogin;  
-        
     #Create user
     #TODO -> User validation for multiple providers
     def createUser (self, externalUser) :
         #UserModel 
         user = User();
         user.first_name = externalUser['name']['givenName'];
-        user.last_name = externalUser['name']['familyName'];    
+        user.last_name = externalUser['name']['familyName'];  
+        user.email_address = externalUser['emails'][0]['value'];
         user.save();
-        #UserLoginModel
+        return user;
+    
+    #Update user 
+    def updateUserLogin (self, externalUser) :
+        userLogin = UserLogin.objects.get(provider = 'google', provider_id = externalUser['id']); 
+        userLogin.access_token = self.accessToken;
+        userLogin.save();
+        return userLogin;
+        
+    def createUserLogin (self, externalUser) :
+        #Get user
+        try : 
+            user = User.objects.get(email_address = externalUser['emails'][0]['value']);
+        #Create user
+        except :
+            user = self.createUser(externalUser);
+        #Create user login
         userLogin = UserLogin(user = user, access_token = self.accessToken);
         userLogin.provider = 'google';
         userLogin.provider_id = externalUser['id'];
