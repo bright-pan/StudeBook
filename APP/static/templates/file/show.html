@@ -3,6 +3,7 @@
 {% block head %}
 
 <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/rating.css' %}" /> -->
+<script type="text/javascript" src="{% static 'js/rating.js' %}"></script>
 <style>
 .starRate {position:relative; margin:0px; overflow:hidden; zoom:1;}
 .starRate ul {width:160px; margin:0; padding:0;}
@@ -14,6 +15,9 @@
 .starRate div b {left:0px; bottom:0px; background-position:left top;}
 .starRate a span {position:absolute; left:-300px;}
 .starRate a:hover span {left:90px; width:100%;}
+.starRating {
+	cursor: pointer;
+}
 </style>
 {% endblock %}
 
@@ -26,21 +30,26 @@
 			<tr><td style="font-weight: bold;">Category</td><td>{{ file.file_category }}</td></tr>
 			<tr><td style="font-weight: bold;">Description</td><td>{{ file.description }}</td></tr>
 			<tr><td style="font-weight: bold;">Date</td><td>{{ file.upload_date }}</td></tr>
-			<tr><td style="font-weight: bold;">Filesize</td><td>{{ file.size }} kB</td></tr>
-			<tr><td style="font-weight: bold;">Download</td><td><a href="{{ file.path }}">{{ file.path }}</a></td></tr>
-			<tr><td style="font-weight: bold;">Rating</td><td width="300"><div class="starRate">
-<div>
-	<!-- Currently rated: 3 stars -->
-	<b></b></div>
-<ul>
-<li><a href="#5star"><span>Give it 5 stars</span></a></li>
-<li><a href="#4star"><span>Give it 4 stars</span></a></li>
-<li><a href="#3star"><span>Give it 3 stars</span><b></b></a></li>
-<li><a href="#2star"><span>Give it 2 stars</span></a></li>
-<li><a href="#1star"><span>Give it 1 star</span></a></li>
-</ul>
-</div></td></tr>
+			<tr><td style="font-weight: bold;">Filesize</td><td>{{ file.size }} MB</td></tr>
+			<tr><td style="font-weight: bold;">Download</td><td><a href="{{ file.path }}" target="_blank">{{ file.path }}</a> (Costs: {{ file.price }})</td></tr>
+			<tr><td style="font-weight: bold;">Rating</td><td width="400">
+<div class="starRate">
+	<div>
+		<!-- Currently rated: 3 stars -->
+		<b></b>
+	</div>
+	<ul>
+	<li><a id="starRating5" class="starRating"><span>Give it 5 stars</span>{% if avgRating = 5 %}<b></b>{% endif %}</a></li>
+	<li><a id="starRating4" class="starRating"><span>Give it 4 stars</span>{% if avgRating = 4 %}<b></b>{% endif %}</a></li>
+	<li><a id="starRating3" class="starRating"><span>Give it 3 stars</span>{% if avgRating = 3 %}<b></b>{% endif %}</a></li>
+	<li><a id="starRating2" class="starRating"><span>Give it 2 stars</span>{% if avgRating = 2 %}<b></b>{% endif %}</a></li>
+	<li><a id="starRating1" class="starRating"><span>Give it 1 star</span>{% if avgRating = 1 %}<b></b>{% endif %}</a></li>
+	</ul>
+</div>
 
-		</table>
+({{numberOfRatings}} votes)
+</td>
+</tr>
+</table>
 
 {% endblock %}
