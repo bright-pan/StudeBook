@@ -1,4 +1,4 @@
-#Djano
+#Django
 from django.http import HttpResponse
 from django.core import serializers
 from django.core.validators import validate_email

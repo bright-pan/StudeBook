@@ -1,0 +1,29 @@
+{% extends "main/main.html" %} {% block content %}
+<div class="contrainer">
+    <h1>Friends</h1>
+    <form role="form" class="form-inline m-b-20" action="search/" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <input type="text" class="form-control" name="search" placeholder="Find someone">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+    <table class="table">
+        <tr>
+            <th>
+                Friendlist
+            </th>
+        </tr>
+
+        {% for friend in friends %}
+        <tr>
+            <td>
+                {{ friend }} <button class="btn btn-primary">Check le profille</button>{%empty%} You don't have any friends yet!
+            </td>
+        </tr>
+        {% endfor %}
+
+    </table>
+</div>
+
+{% endblock %}

@@ -4,5 +4,5 @@ from APP.views.FriendView import FriendView
 
 urlpatterns = patterns('',
     url(r'^$', FriendView().index),
-    url(r'searchPeople^$', FriendView().searchPeople),
+    url(r'search/$', FriendView().searchPeople),
 )

@@ -14,5 +14,5 @@ class APPView (MainView):
         
         return super(APPView, self).render(request, 'home/app.html', {
             'title'   : 'StudeBook',
-            'message' : 'APPPPPPPP.'
+            'message' : 'Welkom.'
         });
