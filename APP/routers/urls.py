@@ -4,11 +4,7 @@ from django.contrib import admin
 from django.views.generic import ListView
 
 #APP
-from APP.views.APPView import APPView
-from APP.views.PageView import PageView
-from APP.views.FileView import FileView
-
-# from APP.routers.routes.profile 
+from APP.views.APPView import APPView 
 
 urlpatterns = patterns('',
 	url(r'^$', APPView.as_view(), name = 'APP'),
@@ -17,4 +13,5 @@ urlpatterns = patterns('',
 	url(r'^profile/', include('APP.routers.routes.profile')),
 	url(r'^page/', include('APP.routers.routes.page')),
 	url(r'^file/', include('APP.routers.routes.file')),
+	url(r'^friends/', include('APP.routers.routes.friend'))
 )
