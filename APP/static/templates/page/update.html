@@ -1,0 +1,49 @@
+{% extends "main/main.html" %}
+{% load staticfiles %} {% block head %}
+<script src="{% static 'js/page.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/bootstrap-datepicker.js' %}" type="text/javascript"></script>
+<link href="{% static 'css/datepicker3.css' %}" rel="stylesheet" />
+<link href="{% static 'css/page.css' %}" rel="stylesheet" />
+<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+{% endblock %} 
+{% block content %}
+<div class="container page">
+<div class="table-responsive">
+    <table class="table">
+        <tr>
+            <th>
+                Page Details UPDATE
+            </th>
+        </tr>
+        <tr>
+            <td class="col-xs-3">
+                Page Title
+            </td>
+            <td>
+                <a href="#" class="editable" data-type="text" data-name="title" data-pk="{{ page.page_id }}" data-url="{% url 'page_update' %}" data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}" data-value="{{ page.title }}">{{ page.title }}</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="col-xs-3">
+                Publiced
+            </td>
+            <td>
+                <a href="#" class="editable" data-type="select" data-name="publiced" data-pk="{{ page.page_id }}" data-url="{% url 'page_update' %}" data-source='{"0": "Not publiced", "1": "Publiced"}' data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}" data-value="{{ page.body }}">
+                {{ page.getPubliced }}</a>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="col-xs-3">
+                Page Body
+            </td>
+            <td>
+                <a href="#" class="editable" data-type="textarea" data-name="body" data-pk="{{ page.page_id }}" data-url="{% url 'page_update' %}" data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}" data-value="{{ page.body }}">{{ page.body }}</a>
+            </td>
+        </tr>
+        
+    </table>
+</div>
+</div>
+{% endblock %}

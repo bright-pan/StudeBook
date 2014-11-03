@@ -1,6 +1,6 @@
 body {
-    min-height: 2000px;
-    padding-top: 80px;
+    padding-top: 40px;
+    padding-bottom: 60px;
 }
 
 .navbar-blue {
@@ -49,4 +49,8 @@ body {
 
 .navbar-collapse.collapse.in .dropdown-menu > li > a {
     color : #ffffff;
+}
+
+.row {
+    margin: 20px;
 }

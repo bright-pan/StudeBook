@@ -1,6 +1,7 @@
 {% extends "main/main.html" %} {% load staticfiles %} {% block head %}
 <script src="{% static 'js/profile.js' %}" type="text/javascript"></script>
 <script src="{% static 'js/bootstrap-datepicker.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/moment.js' %}" type="text/javascript"></script>
 <link href="{% static 'css/datepicker3.css' %}" rel="stylesheet" />
 <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />
 <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
@@ -21,7 +22,7 @@
                 First name
             </td>
             <td>
-                <a href="#" class="editable" data-type="text" data-name="first_name" data-pk="{{ user_login.user.user_id}}" data-url="{% url 'profile_update' %}" data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}" data-value="{{ user_login.user.first_name }}">{{ user_login.user.first_name }}</a>
+                <a href="#" class="editable" data-type="text" data-name="first_name" data-pk="{{ user_login.user.user_id}}" data-url="{% url 'profile_update' %}" data-params="{csrfmiddlewaretoken:'{{csrf_token}}'}" data-value="{{ user_login.user.first_name }}">{{ user_login.user.first_name }}</a>
             </td>
         </tr>
         <tr>
@@ -29,7 +30,7 @@
                 Last name
             </td>
             <td>
-                <a href="#" class="editable" data-type="text" data-name="last_name" data-pk="{{ user_login.user.user_id}}" data-url="{% url 'profile_update' %}" data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}"  data-value="{{ user_login.user.last_name }}">{{ user_login.user.last_name }}</a>
+                <a href="#" class="editable" data-type="text" data-name="last_name" data-pk="{{ user_login.user.user_id}}" data-url="{% url 'profile_update' %}" data-params="{csrfmiddlewaretoken:'{{csrf_token}}'}" data-value="{{ user_login.user.last_name }}">{{ user_login.user.last_name }}</a>
             </td>
         </tr>
         <tr>
@@ -37,7 +38,7 @@
                 Email address
             </td>
             <td>
-                <a href="#" id="username" class="editable" data-type="text" data-name="email_address" data-pk="{{ user_login.user.user_id}}" data-url="{% url 'profile_update' %}" data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}"  data-value="{{ user_login.user.email_address }}">{{ user_login.user.email_address }}</a>
+                <a href="#" id="username" class="editable" data-type="text" data-name="email_address" data-pk="{{ user_login.user.user_id}}" data-url="{% url 'profile_update' %}" data-params="{csrfmiddlewaretoken:'{{csrf_token}}'}" data-value="{{ user_login.user.email_address }}">{{ user_login.user.email_address }}</a>
             </td>
         </tr>
         <tr>
@@ -45,7 +46,7 @@
                 Date of birth
             </td>
             <td>
-                <a href="#" id="username" class="editable date" data-type="date" data-name="date_of_birth" data-pk="{{ user_login.user.user_id}}" data-url="{% url 'profile_update' %}" data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}"  data-format="yyyy-mm-dd"data-value="1995-1-1">1995-1-1</a>
+                <a href="#" class="editable" data-pk="{{ user_login.user.user_id }}" data-format="YYYY-MM-DD" data-template="YYYY-MM-DD" data-name="date_of_birth" data-combodate="{'minYear': '1900', 'maxYear': '2005'}" data-type="combodate" data-url="{% url 'profile_update' %}" data-params="{ csrfmiddlewaretoken:'{{csrf_token}}' }" data-value='{{ user_login.user.date_of_birth|date:"Y-m-d" }}'>{{ user_login.user.date_of_birth|date:'Y-m-d' }}</a>
             </td>
         </tr>
         <tr>
@@ -53,7 +54,7 @@
                 Address
             </td>
             <td>
-                <a href="#" id="username" class="editable" data-type="text" data-name="address" data-pk="{{ user_login.user.user_id}}" data-url="{% url 'profile_update' %}" data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}"  data-value="{{ user_login.user.address }}">{{ user_login.user.address }}</a>
+                <a href="#" id="username" class="editable" data-type="text" data-name="address" data-pk="{{ user_login.user.user_id}}" data-url="{% url 'profile_update' %}" data-params="{csrfmiddlewaretoken:'{{csrf_token}}'}" data-value="{{ user_login.user.address }}">{{ user_login.user.address }}</a>
             </td>
         </tr>
         <tr>
@@ -61,7 +62,7 @@
                 House number
             </td>
             <td>
-                <a href="#" id="username" class="editable" data-type="text" data-name="houseno" data-pk="{{ user_login.user.user_id}}" data-url="{% url 'profile_update' %}" data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}"  data-value="{{ user_login.user.houseno }}">{{ user_login.user.houseno }}</a>
+                <a href="#" id="username" class="editable" data-type="text" data-name="houseno" data-pk="{{ user_login.user.user_id}}" data-url="{% url 'profile_update' %}" data-params="{csrfmiddlewaretoken:'{{csrf_token}}'}" data-value="{{ user_login.user.houseno }}">{{ user_login.user.houseno }}</a>
             </td>
         </tr>
         <tr>
@@ -69,7 +70,7 @@
                 City
             </td>
             <td>
-                <a href="#" id="username" class="editable" data-type="text" data-name="city" data-pk="{{ user_login.user.user_id}}" data-url="{% url 'profile_update' %}" data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}"  data-value="{{ user_login.user.city }}">{{ user_login.user.city }}</a>
+                <a href="#" id="username" class="editable" data-type="text" data-name="city" data-pk="{{ user_login.user.user_id}}" data-url="{% url 'profile_update' %}" data-params="{csrfmiddlewaretoken:'{{csrf_token}}'}" data-value="{{ user_login.user.city }}">{{ user_login.user.city }}</a>
             </td>
         </tr>
         <tr>
@@ -77,7 +78,7 @@
                 Postal code
             </td>
             <td>
-                <a href="#" id="username" class="editable" data-type="text" data-name="postal_code" data-pk="{{ user_login.user.user_id}}" data-url="{% url 'profile_update' %}" data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}"  data-value="{{ user_login.user.postal_code }}">{{ user_login.user.postal_code }}</a>
+                <a href="#" id="username" class="editable" data-type="text" data-name="postal_code" data-pk="{{ user_login.user.user_id}}" data-url="{% url 'profile_update' %}" data-params="{csrfmiddlewaretoken:'{{csrf_token}}'}" data-value="{{ user_login.user.postal_code }}">{{ user_login.user.postal_code }}</a>
             </td>
         </tr>
         <tr>
@@ -85,7 +86,7 @@
                 Region
             </td>
             <td>
-                <a href="#" id="username" class="editable" data-type="text" data-name="region" data-pk="{{ user_login.user.user_id}}" data-url="{% url 'profile_update' %}" data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}"  data-value="{{ user_login.user.region }}">{{ user_login.user.region }}</a>
+                <a href="#" id="username" class="editable" data-type="text" data-name="region" data-pk="{{ user_login.user.user_id}}" data-url="{% url 'profile_update' %}" data-params="{csrfmiddlewaretoken:'{{csrf_token}}'}" data-value="{{ user_login.user.region }}">{{ user_login.user.region }}</a>
             </td>
         </tr>
         <tr>
@@ -93,11 +94,10 @@
                 Country
             </td>
             <td>
-                <a href="#" id="username" class="editable" data-type="text" data-name="country" data-pk="{{ user_login.user.user_id}}" data-url="{% url 'profile_update' %}" data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}"  data-value="{{ user_login.user.country }}">{{ user_login.user.country }}</a>
+                <a href="#" id="username" class="editable" data-type="select" data-source="{{ countries }}" data-name="country" data-pk="{{ user_login.user.user_id}}" data-url="{% url 'profile_update' %}" data-params="{csrfmiddlewaretoken:'{{csrf_token}}'}" data-value="{{ user_login.user.country }}">{{ currentCountry.name }}</a>
             </td>
         </tr>
     </table>
-</div>
 </div>
 
 {% endblock %}

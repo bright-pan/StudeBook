@@ -3,31 +3,35 @@
 <html>
     <head>
         <title>StudeBook</title>
-        <!-- INCLUDE META DATA -->
         {% include "main/meta.html" %}
-		<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+        <script src="{% static 'js/sidebar.js' %}"></script>
         {% block head %}
-        <!-- SPECIFIC META DATA -->
         {% endblock %}
     </head>
     <body>
         <!-- Container -->
         <div class="container-fluid">
-        	
-            <!-- Header -->
-            {% include "main/menu.html" %}
+            <!-- Navigation -->
+            {% include "main/nav.html" %}
 
-            <!-- Content -->
-            <div class="container">
-                <div class="jumbotron">
+            <div class="row">
+                <!-- Left Sidebar -->
+                {% include "main/left-sidebar.html" %}
+
+                <!-- Content -->
+                <div class="main col-md-8 col-md-offset-2">
                     {% block content %}
                     {% endblock %}
                 </div>
+
+                <!-- Right Sidebar -->
+                {% include "main/right-sidebar.html" %}
             </div>
 
             <!-- Footer -->
             {% include "main/footer.html" %}
-
         </div>
     </body>
 </html>
