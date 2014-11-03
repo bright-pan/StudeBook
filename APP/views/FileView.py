@@ -3,7 +3,9 @@ from APP.views.MainView import MainView
 from django.http import HttpResponseRedirect
 
 #sb
+from django.db.models import Avg
 from APP.models.FileModel import File
+from APP.models.FileRatingModel import FileRating
 from APP.forms.FileForm import FileForm
 
 """
@@ -30,10 +32,30 @@ class FileView (MainView):
         
     	file = File.objects.get(file_id = id)
 
+        try:
+            fileRatings = FileRating.objects.get(file=file)
+            numberOfRatings = fileRatings.count()
+            avgRating = fileRatings.annotate(Avg('rating'))
+        except FileRating.DoesNotExist:
+            numberOfRatings = 555
+            avgRating = 1
+
+        file.size = round((file.size / 1024) / 1024, 2)
+        file.price = file.file_category.file_price
+
+        if file.price > 1:
+            file.price = str(file.price) + " credits"
+        else: 
+            file.price = str(file.price) + " credit"
+
+        
+
+
         return super(FileView, self).render(request, 'file/show.html', {
             'title'   : 'File',
-            'message' : 'Table of all files',
-            'file' : file
+            'file' : file,
+            'numberOfRatings' : numberOfRatings,
+            'avgRating' :   avgRating
 
         });    
 
@@ -43,8 +65,10 @@ class FileView (MainView):
             form = FileForm(request.POST, request.FILES)
             if form.is_valid():
                 # file is saved
-                form.user = super(FileView, self).getUserLogin(request).user
-                form.save()
+                file = form.save(commit=False)
+                file.user = super(FileView, self).getUserLogin(request).user
+                file.size = request.FILES['path'].size
+                file.save()
                 addedFile = File.objects.latest('file_id')
 
                 return HttpResponseRedirect('/file/show/' + str(addedFile.file_id))
