@@ -22,7 +22,7 @@
 {% endblock %}
 
 {% block content %}
-
+	<input type="hidden" id="fileId" value="{{ file.file_id }}" />
 	<h1>{{ file.name }}</h1>
 
 		<table>
@@ -47,7 +47,7 @@
 	</ul>
 </div>
 
-({{numberOfRatings}} votes)
+({{numberOfRatings}} votes, rating: {{ avgRating }})
 </td>
 </tr>
 </table>

@@ -1,6 +1,9 @@
+import json
+
 #StudeBook
 from APP.views.MainView import MainView
 from django.http import HttpResponseRedirect
+from django.http import HttpResponse
 
 #sb
 from django.db.models import Avg
@@ -33,9 +36,9 @@ class FileView (MainView):
     	file = File.objects.get(file_id = id)
 
         try:
-            fileRatings = FileRating.objects.get(file=file)
+            fileRatings = FileRating.objects.filter(file=file)
             numberOfRatings = fileRatings.count()
-            avgRating = fileRatings.annotate(Avg('rating'))
+            avgRating = FileRating.objects.filter(file=file).annotate(rating__avg=Avg('rating'))
         except FileRating.DoesNotExist:
             numberOfRatings = 555
             avgRating = 1
@@ -48,14 +51,13 @@ class FileView (MainView):
         else: 
             file.price = str(file.price) + " credit"
 
-        
-
 
         return super(FileView, self).render(request, 'file/show.html', {
             'title'   : 'File',
             'file' : file,
             'numberOfRatings' : numberOfRatings,
-            'avgRating' :   avgRating
+
+            'avgRating' :   avgRating.rating__avg
 
         });    
 
@@ -87,5 +89,20 @@ class FileView (MainView):
             'formset' : form
         });  
 
+    def addRating (self, request) :
 
+        file = File.objects.get(file_id = request.POST.get('fileId', False))
 
+        fr = FileRating(user = super(FileView, self).getUserLogin(request).user, file = file, rating = request.POST['rating'])
+        fr.save();
+
+        return HttpResponse(json.dumps({ 'status' : 200 }), content_type = 'application/json');
+
+    def getRatings (self, request) :
+
+        fileRating = FileRating.objects.get(file_id = request.POST.get('fileId', False))
+
+        fr = FileRating(user = super(FileView, self).getUserLogin(request).user, file = file, rating = request.POST['rating'])
+        fr.save();
+
+        return HttpResponse(json.dumps({ 'status' : 200 }), content_type = 'application/json');        
