@@ -39,11 +39,10 @@ Facebook = function() {
 	        	'csrfmiddlewaretoken' : SB.CONFIG.CSRF_TOKEN, 
 	        	'accessToken' 		  : response.authResponse.accessToken
 	        }, function(response) {
-	        	console.log(response);
-	        	alert(response.message);
 	        	if(response.status == 200) {
-		    		window.location.href = '/';
-	        	}; 
+		    		return window.location.href = '/';
+	        	};
+                alert(response.message);
 			});
 		} else if (response.status === 'not_authorized') {
 	        // The person is logged into Facebook, but not your app.

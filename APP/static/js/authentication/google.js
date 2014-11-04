@@ -39,11 +39,10 @@ var Google = function() {
 	        	'csrfmiddlewaretoken' : SB.CONFIG.CSRF_TOKEN, 
 	        	'accessToken' 		  : response.access_token
 	        }, function(response) {
-	        	console.log(response);
-		    	alert(response.message);
-		    	if(response.status == 200) {
-		    		window.location.href = '/';
+	        	if(response.status == 200) {
+		    		return window.location.href = '/';
 		    	}
+                alert(response.message);
 			});
 	    //Login failure
 	  	} else {
