@@ -19,8 +19,11 @@ class User (models.Model) :
     registration_date = models.DateTimeField(blank=True, null=True)
     user_type = models.ForeignKey(UserType, blank=True, null=True)
 
+    def getFullName (self) :
+        return self.first_name + ' ' + self.last_name;
+
     def __str__ (self) :
-        return self.first_name + " " + self.last_name
+        return self.getFullName();
 
     class Meta:
         managed = False
