@@ -43,7 +43,6 @@ class MainView(View) :
         params.update({
             'logged_in'   : self.isLoggedIn(request),
             'user_login'  : self.getUserLogin(request),
-            'user_friend' : self.getUserFriend(request),
             'request_uri' : request.get_full_path()
         });
         #Render view
