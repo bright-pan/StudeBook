@@ -6,4 +6,5 @@ urlpatterns = patterns('',
     url(r'^$', FileView().index),
     url(r'^show/(?P<id>\d+)/$', FileView().show),
     url(r'^create/$', FileView().create),
+    url(r'^addRating/$', FileView().addRating),
 )

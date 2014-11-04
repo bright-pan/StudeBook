@@ -4,10 +4,13 @@ from django.db import models
 from APP.models.UserModel import User
 
 class UserFriend(models.Model):
-    user = models.ForeignKey(User)
-    friend_id = models.IntegerField()
-    accepted = models.IntegerField(blank=True, null=True)
+    user_friend_id = models.AutoField(primary_key=True)
+    requester = models.ForeignKey(User)
+    recipient = models.ForeignKey(User)
+    status = models.IntegerField(blank=True)
+    since = models.DateTimeField(auto_now=True)
 
     class Meta:
         managed = False
         db_table = 'sb_user_friend'
+        
