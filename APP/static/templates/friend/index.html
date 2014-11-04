@@ -18,7 +18,11 @@
         {% for friend in friends %}
         <tr>
             <td>
-                {{ friend }} <button class="btn btn-primary">Check le profille</button>{%empty%} You don't have any friends yet!
+                {{ friend }}
+                <button class="btn btn-primary">Check le profille</button>{%empty%}
+                <tr>
+                    <td>You don't have any friends yet!</td>
+                </tr>
             </td>
         </tr>
         {% endfor %}
