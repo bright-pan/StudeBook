@@ -17,19 +17,10 @@
 		    	<div class="inner">
 		    		<header><h1>{{ title }}</h1></header>	
 					<div>       
-						
-						<script type="text/javascript">
-		    			$().ready(function(){
-	    					//SETUP SOCKET CONNECTION
-							initSocket('ws://185.10.51.243',8020,{{user_login.user.user_id}});    					
-	    				});
-		    			</script>
-		    	
 						<span style="display:none">{{csrf_token}}</span>
 						<h3>{{ message }}</h3>
 						<h5>Logged in -> {{ user_login.user }}</h5>
-						<a href="#logout" name="logout" id="logout">Logout</a>	
-						
+						<a href="#logout" name="logout" id="logout">Logout</a>
 					</div>	 
 				</div>
 		    </div>

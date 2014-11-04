@@ -3,6 +3,8 @@
 <!--TMP-->
 <div class="col-xs-8 col-sm-2 col-md-2 sidebar sidebar-right sidebar-animate">
     <ul class="nav navbar-stacked">
-        <li>CHATTEN MET MICHEL</li>
+        {% for friend in user_friend %}
+        <li id="CLIENT-{{ friend.recipient.user_id }}"><a href="#" rel="{{ friend.recipient.user_id }}">{{ friend }}</a></li>
+        {% endfor %}
     </ul>
 </div>
