@@ -38,10 +38,11 @@ class FileView (MainView):
         try:
             fileRatings = FileRating.objects.filter(file=file)
             numberOfRatings = fileRatings.count()
-            avgRating = FileRating.objects.filter(file=file).annotate(rating__avg=Avg('rating'))
+            avgRating = self.getAverageFileRating(id);
+
         except FileRating.DoesNotExist:
-            numberOfRatings = 555
-            avgRating = 1
+            numberOfRatings = 0
+            avgRating = 0
 
         file.size = round((file.size / 1024) / 1024, 2)
         file.price = file.file_category.file_price
@@ -56,8 +57,7 @@ class FileView (MainView):
             'title'   : 'File',
             'file' : file,
             'numberOfRatings' : numberOfRatings,
-
-            'avgRating' :   avgRating.rating__avg
+            'avgRating' :   avgRating
 
         });    
 
@@ -66,7 +66,6 @@ class FileView (MainView):
         if request.method == 'POST':
             form = FileForm(request.POST, request.FILES)
             if form.is_valid():
-                # file is saved
                 file = form.save(commit=False)
                 file.user = super(FileView, self).getUserLogin(request).user
                 file.size = request.FILES['path'].size
@@ -90,19 +89,34 @@ class FileView (MainView):
         });  
 
     def addRating (self, request) :
+        file_id = request.POST.get('fileId', False)
 
-        file = File.objects.get(file_id = request.POST.get('fileId', False))
+        file = File.objects.get(file_id = file_id)
 
-        fr = FileRating(user = super(FileView, self).getUserLogin(request).user, file = file, rating = request.POST['rating'])
-        fr.save();
+        ratingExists = FileRating.objects.filter(user = super(FileView, self).getUserLogin(request).user, file = file).count()
+        if ratingExists == 0:
+            fr = FileRating(user = super(FileView, self).getUserLogin(request).user, file = file, rating = request.POST['rating'])
+            fr.save();
 
-        return HttpResponse(json.dumps({ 'status' : 200 }), content_type = 'application/json');
+            avgRating = self.getAverageFileRating(file_id)
+            numberOfRatings = FileRating.objects.filter(file=file).count()
 
-    def getRatings (self, request) :
+            return HttpResponse(json.dumps({ 'status' : 200, 'avgRating' : avgRating, 'numberOfRatings' : numberOfRatings }), content_type = 'application/json');
+        else:
+            return HttpResponse(json.dumps({ 'status' : 500 }), content_type = 'application/json');
 
-        fileRating = FileRating.objects.get(file_id = request.POST.get('fileId', False))
+    def getAverageFileRating (self, id) :
+        file = File.objects.get(file_id = id)
 
-        fr = FileRating(user = super(FileView, self).getUserLogin(request).user, file = file, rating = request.POST['rating'])
-        fr.save();
+        avgRatings = FileRating.objects.values('file').filter(file=file).annotate(avg=Avg('rating'))   
+        for r in avgRatings:
+            a = r
 
-        return HttpResponse(json.dumps({ 'status' : 200 }), content_type = 'application/json');        
+        try:
+            a
+        except NameError:
+            avgRating = 0
+        else:
+            avgRating = round(a["avg"])
+        
+        return avgRating;

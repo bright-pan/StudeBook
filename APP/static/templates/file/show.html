@@ -2,7 +2,6 @@
 {% load staticfiles %}
 {% block head %}
 
-<!-- <link rel="stylesheet" type="text/css" href="{% static 'css/rating.css' %}" /> -->
 <script type="text/javascript" src="{% static 'js/rating.js' %}"></script>
 <style>
 .starRate {position:relative; margin:0px; overflow:hidden; zoom:1;}
@@ -35,7 +34,6 @@
 			<tr><td style="font-weight: bold;">Rating</td><td width="400">
 <div class="starRate">
 	<div>
-		<!-- Currently rated: 3 stars -->
 		<b></b>
 	</div>
 	<ul>
@@ -47,7 +45,7 @@
 	</ul>
 </div>
 
-({{numberOfRatings}} votes, rating: {{ avgRating }})
+(<span id="numberOfRatings">{{numberOfRatings}}</span> votes, rating: <span id="averageRating">{{ avgRating }}</span>)
 </td>
 </tr>
 </table>
