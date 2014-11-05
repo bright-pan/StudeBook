@@ -27,3 +27,19 @@ html, body, #authentication {
 #authentication .content .inner>div {
 	padding : 10px 20px;
 }
+
+div.button {
+    border : 1px solid red;
+    height : 135px;
+    width  : 135px;
+    display : inline-block;
+}
+
+div.button#facebookButton {
+    margin-right : 10px;
+    background : url('/static/img/authentication/fb_blur.png');
+}
+
+div.button#googleButton {
+    margin-right : 10px;
+}

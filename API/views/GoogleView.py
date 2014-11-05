@@ -17,7 +17,7 @@ class GoogleView (View) :
     
     API_URI = 'https://www.googleapis.com/plus/v1/people/me';
     accessToken = None;
-    user = None;
+    userLogin = None;
     
     def __init__ (self, accessToken) :
         self.accessToken = accessToken;
@@ -38,13 +38,12 @@ class GoogleView (View) :
         if (externalUser is not False) :
             #Update user
             try :
-                self.user = self.updateUserLogin(externalUser);
+                self.userLogin = self.updateUserLogin(externalUser);
             #Create user
             except :
-                self.user = self.createUserLogin(externalUser);
+                self.userLogin = self.createUserLogin(externalUser);
     
     #Create user
-    #TODO -> User validation for multiple providers
     def createUser (self, externalUser) :
         #UserModel 
         user = User();
@@ -75,13 +74,13 @@ class GoogleView (View) :
         userLogin.save();
         return userLogin;
     
-    #Get user
-    def getUser (self) :
-        return self.user;
+    #Get user login
+    def getUserLogin (self) :
+        return self.userLogin;
     
     #Get user login state
     def getLoginState (self) :
-        if (self.user is not None) : 
+        if (self.userLogin is not None) :
             return { 'status' : 200, 'message' : 'Successfully signed in using Google+' };
         return { 'status' : 400, 'message' : 'Bad request' };
     

@@ -2,12 +2,46 @@ var _SOCKET = null;
 
 $().ready(function(){
 	//SETUP SOCKET CONNECTION
-    initSocket('ws://185.10.51.243',8020);
+    initSocket('ws://185.10.51.243',8027);
 });
 
-//TERMINATE SOCKET CONNECTION
 window.onbeforeunload = function() {
-	_SOCKET.close()
+    return disconnect();
+};
+
+/**
+ * @method disconnect
+ * TMP
+ */
+function disconnect() {
+    _SOCKET.close();
+    return;
+    //Get friend list
+    $.get(SB.CONFIG.API_URI + 'user/getFriends', function(response) {
+        if(response.status == 200) {
+            var pks = [];
+            response.friendList.forEach(function(friend) { pks.push(friend.pk); });
+            //Validate user friend status
+            _SOCKET.send(JSON.stringify({ action : 'notifyClient', clientList : pks, 'message' : 'disconnected' }));
+            _SOCKET.close();
+        }
+    });
+};
+
+/**
+ * @method connect
+ * TMP
+ */
+function connect() {
+    //Get friend list
+    $.get(SB.CONFIG.API_URI + 'user/getFriends', function(response) {
+        if(response.status == 200) {
+            var pks = [];
+            response.friendList.forEach(function(friend) { pks.push(friend.pk); });
+            //Validate user friend status
+            _SOCKET.send(JSON.stringify({ action : 'notifyClient', clientList : pks, 'message' : 'connected' }));
+        }
+    });
 };
 
 /**
@@ -23,29 +57,52 @@ function initSocket(host, port, userID) {
 	//Incoming message
 	_SOCKET.onmessage = onMessage;
     //update friends list
-    userFriendList();
+    updateUserFriendList();
 };
 
 /**
- * TMP TMP TMP
+ * @method updateUserFriendStatus
  */
+function updateUserFriendStatus(friendStatus) {
+    friendStatus.forEach(function(friend){
+        var element = $('#'+friend.clientID);
+        if(friend.status == 'connected') {
+            element.addClass('online').removeClass('offline');
+        } else {
+            element.removeClass('online').addClass('offline');
+        };
+    });
+};
 
 /**
- * @method userFriendList
+ * @method validateUserFriendStatus
  */
-function userFriendList() {
+function validateUserFriendStatus() {
+    //Validate user friend status
+    _SOCKET.send(JSON.stringify({ action : 'validateClient', clientList : pks }));
+};
+
+/**
+ * @method updateUserFriendList
+ */
+function updateUserFriendList() {
     $.get(SB.CONFIG.API_URI + 'user/getFriends', function(response) {
         //Update userFriendList
         if(response.status == 200) {
+            var pks = [];
             $('#userFriendList').empty();
             response.friendList.forEach(function(friend) {
-                var element = $('<a />')
-                element.text(friend.full_name);
-                element.attr('rel', friend.pk);
-                element.attr('href','#');
-                element.attr('id', 'CLIENT-'+friend.pk);
-                $('#userFriendList').append($('<li />').append(element));
+                pks.push(friend.pk);
+                var element = $('<li />').attr('id','CLIENT-'+friend.pk);
+                var inner = $('<a />');
+                inner.text(friend.full_name);
+                inner.attr('rel', friend.pk);
+                inner.attr('href','#');
+                element.append(inner);
+                $('#userFriendList').append(element);
             });
+            //Validate user friend status
+            validateUserFriendStatus();
         }
     });
 };
@@ -68,9 +125,17 @@ var onOpen = function () {
  */
 var onMessage = function(response) {
     var data = JSON.parse(response.data);
+    console.log(data);
     switch(data.action) {
-        case 'userFriendList' :
-            updateFriendsList();
+        case 'init' :
+            _SOCKET.send(JSON.stringify({ action : 'notifyClient', clientList : pks, message : 'connected' }));
+        break;
+        case 'clientStatus' :
+            updateUserFriendStatus(data.clientList);
+        break;
+        //TMP!!!
+        case 'ping' :
+            validateUserFriendStatus();
         default :
             console.log(data);
         break;

@@ -40,9 +40,9 @@ Facebook = function() {
 	        	'accessToken' 		  : response.authResponse.accessToken
 	        }, function(response) {
 	        	if(response.status == 200) {
-		    		return window.location.href = '/';
+                    localStorage.setItem('sb_access_token', response.data.access_token);
+                    return window.location.href = '/';
 	        	};
-                alert(response.message);
 			});
 		} else if (response.status === 'not_authorized') {
 	        // The person is logged into Facebook, but not your app.
