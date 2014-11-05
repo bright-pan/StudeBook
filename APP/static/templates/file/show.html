@@ -2,22 +2,28 @@
 {% load staticfiles %}
 {% block head %}
 
-<script type="text/javascript" src="{% static 'js/rating.js' %}"></script>
+
 <style>
 .starRate {position:relative; margin:0px; overflow:hidden; zoom:1;}
 .starRate ul {width:160px; margin:0; padding:0;}
 .starRate li {display:inline; list-style:none;}
 .starRate a, .starRate b {background:url({% static 'img/star_rate.gif' %}) left top repeat-x;}
 .starRate a {float:right; margin:0 80px 0 -144px; width:80px; height:16px; background-position:left 16px; color:#000; text-decoration:none;}
-.starRate a:hover {background-position:left -32px;}
 .starRate b {position:absolute; z-index:-1; width:80px; height:16px; background-position:left -16px;}
 .starRate div b {left:0px; bottom:0px; background-position:left top;}
 .starRate a span {position:absolute; left:-300px;}
+</style>
+
+{% if not ratedByUser %}
+<script type="text/javascript" src="{% static 'js/rating.js' %}"></script>
+<style>
+.starRate a:hover {background-position:left -32px;}
 .starRate a:hover span {left:90px; width:100%;}
 .starRating {
 	cursor: pointer;
 }
 </style>
+{% endif %}
 {% endblock %}
 
 {% block content %}
@@ -31,7 +37,7 @@
 			<tr><td style="font-weight: bold;">Date</td><td>{{ file.upload_date }}</td></tr>
 			<tr><td style="font-weight: bold;">Filesize</td><td>{{ file.size }} MB</td></tr>
 			<tr><td style="font-weight: bold;">Download</td><td><a href="{{ file.path }}" target="_blank">{{ file.path }}</a> (Costs: {{ file.price }})</td></tr>
-			<tr><td style="font-weight: bold;">Rating</td><td width="400">
+			<tr><td style="font-weight: bold;">Rating{{ fileRatedByUser }}</td><td width="400">
 <div class="starRate">
 	<div>
 		<b></b>

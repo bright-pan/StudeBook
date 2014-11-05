@@ -17,7 +17,7 @@ class User (models.Model) :
     region = models.CharField(max_length=50, blank=True)
     country = models.CharField(max_length=50, blank=True)
     registration_date = models.DateTimeField(blank=True, null=True)
-    user_type = models.ForeignKey(UserType, blank=True, null=True)
+    user_type = models.ForeignKey(UserType, blank=True, null=True)    
 
     def getFullName (self) :
         return self.first_name + ' ' + self.last_name;

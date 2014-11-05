@@ -9,8 +9,4 @@ class FileForm(forms.ModelForm):
 	        label='Select a file',
 	        help_text='max. 42 megabytes'
     	)
-		# exclude = ['user', 'upload_date', 'path']
-		# widgets = {
-  #           'path': FileField(attrs={}),
-  #       }
 
