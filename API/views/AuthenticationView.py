@@ -40,7 +40,8 @@ class AuthenticationView (View):
                 request.session['user_login_id'] = facebook.getUserLogin().user_login_id;
                 state['data'] = {
                     'sb_user_id'      : facebook.getUserLogin().user.user_id,
-                    'sb_access_token' : self.setAccessToken(facebook.getUserLogin())
+                    'sb_access_token' : self.setAccessToken(facebook.getUserLogin()),
+                    'sb_full_name'    : facebook.getUserLogin().user.getFullName()
                 };
             return self.response(state);
     
@@ -58,7 +59,8 @@ class AuthenticationView (View):
                 request.session['user_login_id'] = google.getUserLogin().user_login_id;
                 state['data'] = {
                     'sb_user_id'      : google.getUserLogin().user.user_id,
-                    'sb_access_token' : self.setAccessToken(google.getUserLogin())
+                    'sb_access_token' : self.setAccessToken(google.getUserLogin()),
+                    'sb_full_name'    : google.getUserLogin().user.getFullName()
                 };
             return self.response(state);
 

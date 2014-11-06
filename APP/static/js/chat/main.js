@@ -8,14 +8,12 @@ $().ready(function(){
     initSocket('ws://185.10.51.243',8001);
     //update friends list
     updateUserFriendList();
-
-    //TMP
+    //Set chat wrapper
     $('#userFriendList').delegate('a.userFriend.online', 'click', function() {
-        var box = getChatBox($(this).text());
+        var box = getChatWrapper($(this).text(), $(this).attr('rel'));
         box.draggable({ containment : 'body' });
         $('.main').append(box);
     });
-
 });
 
 /**
@@ -47,6 +45,43 @@ function initSocket(host, port, userID) {
 	_SOCKET.onopen = onOpen;
 	//Incoming message
 	_SOCKET.onmessage = onMessage;
+};
+
+/**
+ * @method handleNotifyUserFriend
+ * @param data
+ * Handle incoming notification
+ */
+function handleNotifyUserFriend(data) {
+    var box = $('#CLIENT'+data.pk);
+    console.log(box);
+    if(!box.length) {
+        //Render chat wrapper
+        box = getChatWrapper(data.fullName,data.pk);
+        box.draggable({ containment : 'body' });
+        $('.main').append(box);
+    };
+    //Add message to chatContainer
+    box.find('.chatContainer').prepend($('<p />').text(data.message));
+};
+
+/**
+ * @method notifyUserFriend
+ * @param userID
+ * @param message
+ * Notify userFriend by userID
+ */
+function notifyUserFriend(userID, message) {
+    //Notify user friend
+    if(_SOCKET) {
+        _SOCKET.send(JSON.stringify({
+            action : 'notifyUserFriend',
+            data   : {
+                clientID : userID,
+                message  : message
+            }
+        }));
+    };
 };
 
 /**
@@ -112,7 +147,8 @@ var onOpen = function () {
         action : 'connect',
         data   : {
             clientID    : localStorage.getItem('sb_user_id'),
-            accessToken : localStorage.getItem('sb_access_token')
+            accessToken : localStorage.getItem('sb_access_token'),
+            fullName    : localStorage.getItem('sb_full_name')
         }
     }));
 };
@@ -133,6 +169,11 @@ var onMessage = function(response) {
                 updateUserFriendStatus(response.data.friendList);
             };
         break;
+        case 'notifyUserFriend' :
+            if(response.status == 200) {
+                handleNotifyUserFriend(response.data);
+            };
+        break;
         case '_ping' :
             //TMP!!!
             validateUserFriendStatus();
@@ -144,19 +185,30 @@ var onMessage = function(response) {
 };
 
 /**
- * @method getChatBox
- * @param title
+ * @method getChatWrapper
+ * @param username
+ * @param userID
  * @returns {*|jQuery|HTMLElement}
  */
-var getChatBox = function(title) {
-    var wrapper = $('<div />').attr('class', 'popover top');
+var getChatWrapper = function(username, userID) {
+    var wrapper = $('<div />').attr('class', 'popover top chatWrapper').attr('id','CLIENT'+userID);
     var arrow = $('<div />').attr('class','arrow');
-    var header = $('<h3 />').attr('class', 'popover-title');
-    var title = $('<a />').text(title).attr('class','title');
-    var content = $('<div />').attr('class', 'popover-content');
-    var close = $('<a />').attr('class', 'btn btn-warning').text('X').click(function(){
-        wrapper.remove();
+    var header = $('<h3 />').attr('class', 'popover-title header');
+    var title = $('<a />').text(username).attr('class','title');
+    var content = $('<div />').attr('class', 'popover-content content');
+    var chatContainer = $('<div />').attr('class', 'chatContainer');
+    var chatBox = $('<input />').attr('type','text').attr('class','chatBox').attr('placeholder','Say hi...');
+    var close = $('<a />').attr('class', 'btn btn-warning').text('X');
+    chatBox.keyup(function(e){
+        var message = $(this).val();
+        if(e.keyCode == 13 && message) {
+            chatContainer.prepend($('<p />').attr('class','me').text(message));
+            notifyUserFriend(userID, message);
+            $(this).val('');
+        };
     });
+    close.click(function(){ wrapper.remove(); });
+    content.append(chatContainer).append(chatBox);
     header.append(title).append(close);
     wrapper.append(arrow).append(header).append(content);
     return wrapper;
