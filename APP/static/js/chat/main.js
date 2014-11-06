@@ -19,22 +19,6 @@ function disconnect() {
 };
 
 /**
- * @method connect
- * TMP
- */
-function connect() {
-    //Get friend list
-    $.get(SB.CONFIG.API_URI + 'user/getFriends/accessToken:'+localStorage.getItem('sb_access_token'), function(response) {
-        if(response.status == 200) {
-            var pks = [];
-            response.friendList.forEach(function(friend) { pks.push(friend.pk); });
-            //Validate user friend status
-            _SOCKET.send(JSON.stringify({ action : 'notifyClient', clientList : pks, 'message' : 'connected' }));
-        }
-    });
-};
-
-/**
  * @method initSocket
  * @param <String> host
  * @param <Integer> port
@@ -46,6 +30,30 @@ function initSocket(host, port, userID) {
 	_SOCKET.onopen = onOpen;
 	//Incoming message
 	_SOCKET.onmessage = onMessage;
+};
+
+/**
+ * @method updateUserFriendList
+ */
+function updateUserFriendList() {
+    var URI = SB.CONFIG.API_URI + 'user/getFriends/accessToken:'+localStorage.getItem('sb_access_token');
+    $.get(URI, function(response) {
+        //Update userFriendList
+        if(response.status == 200) {
+            $('#userFriendList').empty();
+            response.data.friendList.forEach(function(friend) {
+                var element = $('<li />').attr('id','CLIENT'+friend.pk);
+                var inner = $('<a />');
+                inner.text(friend.full_name);
+                inner.attr('rel', friend.pk);
+                inner.attr('href','#');
+                element.append(inner);
+                $('#userFriendList').append(element);
+            });
+        };
+        //Validate user friend status
+        validateUserFriendStatus();
+    });
 };
 
 /**
@@ -72,30 +80,9 @@ function updateUserFriendStatus(friendList) {
  */
 function validateUserFriendStatus() {
     //Validate user friend status
-    _SOCKET.send(JSON.stringify({ action : 'validateClient', clientList : pks }));
-};
-
-/**
- * @method updateUserFriendList
- */
-function updateUserFriendList() {
-    var URI = SB.CONFIG.API_URI + 'user/getFriends/accessToken:'+localStorage.getItem('sb_access_token');
-    $.get(URI, function(response) {
-        //Update userFriendList
-        if(response.status == 200) {
-            $('#userFriendList').empty();
-            response.data.friendList.forEach(function(friend) {
-                var element = $('<li />').attr('id','CLIENT'+friend.pk);
-                var inner = $('<a />');
-                inner.text(friend.full_name);
-                inner.attr('rel', friend.pk);
-                inner.attr('href','#');
-                element.append(inner);
-                $('#userFriendList').append(element);
-            });
-        };
+    if(_SOCKET) {
         _SOCKET.send(JSON.stringify({ action : 'validateUserFriend' }));
-    });
+    };
 };
 
 /**
@@ -119,20 +106,19 @@ var onMessage = function(response) {
     response = JSON.parse(response.data);
     switch(response.action) {
         case 'connect' :
-        break;
-        case '_init' :
-            _SOCKET.send(JSON.stringify({ action : 'notifyClient', clientList : pks, message : 'connected' }));
+            //TODO fill
         break;
         case 'userFriendStatus' :
             if(response.status == 200) {
                 updateUserFriendStatus(response.data.friendList);
             };
         break;
-        //TMP!!!
         case '_ping' :
+            //TMP!!!
             validateUserFriendStatus();
+        break;
         default :
-            console.log(data);
+            console.log(response);
         break;
     };
 };
