@@ -106,6 +106,10 @@ var onMessage = function(response) {
     response = JSON.parse(response.data);
     switch(response.action) {
         case 'connect' :
+            alert(111);
+
+            $('body')
+
             //TODO fill
         break;
         case 'userFriendStatus' :
