@@ -11,7 +11,7 @@ class User (models.Model) :
     email_address = models.CharField(max_length=80, blank=True)
     date_of_birth = models.DateField(blank=True, null=True)
     address = models.CharField(max_length=150, blank=True)
-    houseno = models.CharField(max_length=5, blank=True, null=True)
+    houseno = models.CharField(max_length=5, null=True, blank=True)
     city = models.CharField(max_length=100, blank=True)
     postal_code = models.CharField(max_length=12, blank=True)
     region = models.CharField(max_length=50, blank=True)
