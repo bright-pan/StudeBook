@@ -36,9 +36,12 @@ class AuthenticationView (View):
             state = facebook.getLoginState();
             #Successfully signed in
             if(state['status'] == 200) :
-                state['data'] = { 'access_token' : self.setAccessToken(facebook.getUserLogin()) };
                 request.session['logged_in'] = True;
                 request.session['user_login_id'] = facebook.getUserLogin().user_login_id;
+                state['data'] = {
+                    'sb_user_id'      : facebook.getUserLogin().user.user_id,
+                    'sb_access_token' : self.setAccessToken(facebook.getUserLogin())
+                };
             return self.response(state);
     
     ############################
@@ -51,9 +54,12 @@ class AuthenticationView (View):
             state = google.getLoginState();
             #Successfully signed in
             if(state['status'] == 200) : 
-                state['data'] = { 'access_token' : self.setAccessToken(google.getUserLogin()) };
                 request.session['logged_in'] = True;
                 request.session['user_login_id'] = google.getUserLogin().user_login_id;
+                state['data'] = {
+                    'sb_user_id'      : google.getUserLogin().user.user_id,
+                    'sb_access_token' : self.setAccessToken(google.getUserLogin())
+                };
             return self.response(state);
 
     #Set

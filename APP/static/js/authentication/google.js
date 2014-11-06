@@ -40,7 +40,8 @@ var Google = function() {
 	        	'accessToken' 		  : response.access_token
 	        }, function(response) {
 	        	if(response.status == 200) {
-                    localStorage.setItem('sb_access_token', response.data.access_token);
+                    localStorage.setItem('sb_user_id', response.data.sb_user_id);
+                    localStorage.setItem('sb_access_token', response.data.sb_access_token);
 		    		return window.location.href = '/';
 		    	};
 			});

@@ -1,0 +1,21 @@
+#userFriendList {
+}
+
+#userFriendList li {
+    background : #ccc;
+    border-bottom : 1px solid #ccc;
+    border-top : 1px solid #fff;
+}
+
+
+#userFriendList li a {
+    color : #333;
+}
+
+#userFriendList li.offline {
+    background : url('/static/img/chat/offline.png') center right no-repeat #eee;
+}
+
+#userFriendList li.online {
+    background : url('/static/img/chat/online.png') center right no-repeat #eee;
+}
