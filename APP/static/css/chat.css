@@ -1,3 +1,7 @@
+/***********************
+*** USER FRIEND LIST ***
+***********************/
+
 #userFriendList {
 }
 
@@ -11,10 +15,26 @@
     color : #333;
 }
 
-#userFriendList li.offline {
-    background : url('/static/img/chat/offline.png') center right no-repeat #eee;
+#userFriendList li a.offline {
+    background : url('/static/img/chat/offline.png') center right no-repeat;
 }
 
-#userFriendList li.online {
-    background : url('/static/img/chat/online.png') center right no-repeat #eee;
+#userFriendList li a.online {
+    background : url('/static/img/chat/online.png') center right no-repeat;
+}
+
+/***********************
+****** CHAT BOX ********
+***********************/
+
+body div.popover {
+    width    : 200px;
+    display  : block;
+    z-index  : 10000;
+}
+
+body div.popover h3 a.title {
+    width   : 130px;
+    display : inline-block;
+    cursor  : pointer;
 }
