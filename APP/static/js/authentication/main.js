@@ -28,7 +28,7 @@ var AUTH_CONFIG = {
 
 //Execute after the DOM is ready.
 $().ready(function() {
-	//Logout button
+    //Logout button
 	$('#logout').click(function() {
 		$.post(AUTH_CONFIG.LOGOUT.API_URI, { 
         	'csrfmiddlewaretoken' : SB.CONFIG.CSRF_TOKEN

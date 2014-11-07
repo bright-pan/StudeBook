@@ -1,11 +1,14 @@
 #PYTHON
 import json
+import time
+import hashlib
 #PYTHON
 from django.http import HttpResponse
 from django.views.generic import View
 #SB
 from API.views.FacebookView import FacebookView
 from API.views.GoogleView import GoogleView
+from APP.models.UserAccessTokenModel import UserAccessToken
 
 """
  @class AuthenticationView
@@ -22,22 +25,6 @@ class AuthenticationView (View):
     def logout (self, request) :
         request.session.clear();
         return self.response({ 'status' : 200, 'message' : 'User succesfully logged out!' });
-    
-    ###################################
-    ### User external account login ###
-    ###################################
-    def post (self, request, provider) :
-        #POST params
-        accessToken = request.POST['accessToken'];
-        #Facebook OAuth
-        if (provider == 'facebook') : 
-            return self.response(self.facebookLogin(request, accessToken));
-        #Google OAuth
-        elif (provider == 'google') :
-            return self.response(self.googleLogin(request, accessToken));
-        #Bad request
-        else :
-            return self.response({ 'status' : 400, 'message' : 'Bad request' });
           
     ##############################
     ### Facebook auth request ###
@@ -48,9 +35,14 @@ class AuthenticationView (View):
             facebook.login();
             state = facebook.getLoginState();
             #Successfully signed in
-            if(state['status'] == 200) : 
+            if(state['status'] == 200) :
                 request.session['logged_in'] = True;
-                request.session['user_login_id'] = facebook.getUser().user_login_id;
+                request.session['user_login_id'] = facebook.getUserLogin().user_login_id;
+                state['data'] = {
+                    'sb_user_id'      : facebook.getUserLogin().user.user_id,
+                    'sb_access_token' : self.setAccessToken(facebook.getUserLogin()),
+                    'sb_full_name'    : facebook.getUserLogin().user.getFullName()
+                };
             return self.response(state);
     
     ############################
@@ -64,9 +56,23 @@ class AuthenticationView (View):
             #Successfully signed in
             if(state['status'] == 200) : 
                 request.session['logged_in'] = True;
-                request.session['user_login_id'] = google.getUser().user_login_id;
+                request.session['user_login_id'] = google.getUserLogin().user_login_id;
+                state['data'] = {
+                    'sb_user_id'      : google.getUserLogin().user.user_id,
+                    'sb_access_token' : self.setAccessToken(google.getUserLogin()),
+                    'sb_full_name'    : google.getUserLogin().user.getFullName()
+                };
             return self.response(state);
-        
+
+    #Set
+    def setAccessToken(self, userLogin) :
+        #TMP GEN ACCESS TOKEN
+        accessToken = hashlib.sha1('#SB' + str(time.time()) + str(userLogin.user.user_id));
+        userAccessToken = UserAccessToken(user = userLogin.user, access_token = accessToken.hexdigest());
+        userAccessToken._save();
+        return userAccessToken.access_token;
+        #TMP GEN ACCESS TOKEN
+
     #Response 
     def response (self, data) :
         return HttpResponse(json.dumps(data), content_type = 'application/json');

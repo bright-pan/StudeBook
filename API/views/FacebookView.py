@@ -14,7 +14,7 @@ from APP.models.UserModel import User
 class FacebookView (View) :
     
     accessToken = None;
-    user = None;
+    userLogin = None;
     
     def __init__ (self, accessToken) :
         self.accessToken = accessToken;
@@ -34,10 +34,10 @@ class FacebookView (View) :
         if (externalUser is not False) :
             #Update user
             try :
-                self.user = self.updateUserLogin(externalUser);
+                self.userLogin = self.updateUserLogin(externalUser);
             #Create user
             except :
-                self.user = self.createUserLogin(externalUser);
+                self.userLogin = self.createUserLogin(externalUser);
     
     #Create user
     #TODO -> User validation for multiple providers
@@ -72,12 +72,12 @@ class FacebookView (View) :
         return userLogin;
     
     #Get user
-    def getUser (self) :
-        return self.user;
+    def getUserLogin (self) :
+        return self.userLogin;
     
     #Get user login state
     def getLoginState (self) :
-        if (self.user is not None) : 
+        if (self.userLogin is not None) :
             return { 'status' : 200, 'message' : 'Successfully signed in using Facebook' };
         return { 'status' : 400, 'message' : 'Bad request' };
     

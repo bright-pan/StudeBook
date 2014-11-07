@@ -12,8 +12,10 @@
         {% endblock %}
     </head>
     <body>
+        <!-- CSRF_TOKEN -->
+        <span style="display:none">{% csrf_token %}</span>
         <!-- Container -->
-        <div class="container-fluid">
+        <div class="container-fluid" id="container">
             <!-- Navigation -->
             {% include "main/nav.html" %}
 
