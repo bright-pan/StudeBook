@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from APP.views.MainView import MainView
 from APP.models.SoftwareModel import Software
 
@@ -8,7 +9,8 @@ from APP.models.SoftwareModel import Software
 """
 
 
-class SoftwareView (MainView):
+class SoftwareView(MainView):
+    url = '/software/'
 
     def index(self, request):
         return super(SoftwareView, self).render(request, 'software/index.html', {
@@ -32,6 +34,11 @@ class SoftwareView (MainView):
         })
 
     def delete(self, request, softwareID):
-        return super(SoftwareView, self).render(request, 'software/read.html', {
-            'software': Software.objects.get(software_id=softwareID)
-        })
+        software = Software.objects.get(software_id=softwareID)
+        userLogin = super(SoftwareView, self).getUserLogin(request)
+
+        if(software.user_id == userLogin.user.user_id):
+            software.delete()
+            return HttpResponseRedirect(self.url)
+
+        return HttpResponseRedirect(self.url)
