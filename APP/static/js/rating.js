@@ -18,6 +18,7 @@ $(document).ready(function() {
 
                 $('#averageRating').html(result.avgRating);
                 $('#numberOfRatings').html(result.numberOfRatings)
+
             }
         });
     });

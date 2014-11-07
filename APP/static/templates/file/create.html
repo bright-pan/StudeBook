@@ -2,9 +2,15 @@
 {% block content %}
 <h1>{{ title }}</h1>
 <form method="post" action="" enctype="multipart/form-data">
-    {{ formset }}
+	<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+	<table>
+	    {% for field in formset %}
+	    	<tr>
+	    		<td style="width: 200px; height: 40px; font-weight: bold;">{{field.name }}</td><td>{{ field }}</td>
+	    	</tr>	    
+	    {% endfor %}
 
-    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
-    <input type="submit" value="Submit" />
+    	<tr><td></td><td><br /><input type="submit" value="Submit" /></td></tr>
+    </table>
 </form>
 {% endblock %}

@@ -35,6 +35,7 @@ class FileView (MainView):
         for index in range(0, len(files)):
             files[index].rating = FileRating.getAverage(files[index]);
             files[index].numberOfRatings = FileRating.getNumberOfRatings(files[index]); 
+            files[index].numberOfDownloads = FileDownload.getNumberOfDownloads(files[index]);
 
         return super(FileView, self).render(request, 'file/index.html', {
             'title'   : 'File overview',
