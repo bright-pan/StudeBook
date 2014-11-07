@@ -1,10 +1,17 @@
 {% extends "main/main.html" %}
 {% load staticfiles %} {% block head %}
 <link href="{% static 'css/page.css' %}" rel="stylesheet" />
+<script src="{% static 'js/jquery-2.1.1.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/page/search.js' %}" type="text/javascript"></script>
 {% endblock %} 
 {% block content %}
-<div class="container page">
+<div class="container page" style="margin-bottom: 100px;">
 	<div class="col-md-10"><h1>{{ title }}</h1></div>
+	<form name="input" action="" method="POST">
+		<input type="text" name="search">
+		<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+		<input type="submit" value="Submit">
+	</form>
 	<a href="add"><div class="col-md-2 add" style="padding-top: 20px; font-size: 30pt;"></div></a>
 
 	{% for page in page_list %}

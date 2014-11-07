@@ -1,0 +1,23 @@
+{% extends "main/main.html" %}
+
+{% block content %}
+    <h1>{{ software.name }}</h1>
+
+    <div class="col-md-14 col-margin-top col-margin-bottom">
+        <h5><strong>Added by:</strong> {{ software.user }}</h5>
+        <h5><strong>Date added:</strong> {{ software.date }}</h5>
+    </div>
+    <div class="col-md-14 col-margin-bottom">
+        <h5><strong>Description:</strong></h5>
+        <p>{{ software.description }}</p>
+    </div>
+    <div class="col-md-14 col-margin-bottom">
+        <h4><a href="{{ software.url }}" target="_blank"><span class="glyphicon glyphicon-download"></span> Get software</a></h4>
+    </div>
+    {% if software.user == user_login.user %}
+        <div class="col-md-14 col-margin-top">
+            <a href="delete" class="btn btn-danger pull-right m-l-10">Delete</a>
+            <a href="edit" class="btn btn-primary pull-right m-l-10">Edit</a>
+        </div>
+    {% endif %}
+{% endblock %}
