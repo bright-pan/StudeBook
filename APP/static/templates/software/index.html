@@ -1,0 +1,13 @@
+{% extends "main/main.html" %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+
+	{% for software in software_list %}
+        <div class="col-md-20">
+            <h3><a href="{{ software.software_id }}">{{ software.name }}</a></h3>
+            <h5>Added by: {{ software.user }}</h5>
+            <h5>Date added: {{ software.date }}</h5>
+        </div>
+	{% endfor %}
+{% endblock %}
