@@ -10,6 +10,7 @@ from django.db.models import Avg
 from APP.models.FileModel import File
 from APP.models.FileRatingModel import FileRating
 from APP.models.FileCategoryModel import FileCategory
+from APP.models.FileDownloadModel import FileDownload
 from APP.forms.FileForm import FileForm
 
 """
@@ -60,7 +61,31 @@ class FileView (MainView):
             'numberOfRatings' : numberOfRatings,
             'avgRating' :   avgRating,
             'ratedByUser' : ratedByUser 
-        });    
+        });  
+
+    def download (self, request, id) :
+        
+        file = File.objects.get(file_id = id);
+        user = super(FileView, self).getUserLogin(request).user;
+        # return super(FileView, self).render(request, 'file/download.html', {
+        #         'title'   : user.user_id,
+        #         'path' : file.path
+        #     }); 
+        if user.credits >= file.file_category.file_price:
+            fd = FileDownload(file = file, user = user);
+            fd.save();
+            user.credits -= file.file_category.file_price;
+            user.save();
+
+            return super(FileView, self).render(request, 'file/download.html', {
+                'title'   : 'File download',
+                'path' : file.path
+            });       
+        else:
+            return super(FileView, self).render(request, 'file/download.html', {
+                'title'   : 'File download',
+                'message' : 'Not enough credits.'
+            });
 
     def create(self, request):
 
