@@ -11,6 +11,7 @@ class Page(models.Model):
     body = models.TextField()
     publiced = models.IntegerField()
     created = models.DateTimeField()
+    img = models.CharField(max_length=500)
 
     def __str__ (self) :
         return self.title

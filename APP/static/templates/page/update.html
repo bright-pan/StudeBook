@@ -42,6 +42,17 @@
                 <a href="#" class="editable" data-type="textarea" data-name="body" data-pk="{{ page.page_id }}" data-url="{% url 'page_update' %}" data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}" data-value="{{ page.body }}">{{ page.body }}</a>
             </td>
         </tr>
+
+        <tr>
+            <td class="col-xs-3">
+                Page Image
+            </td>
+            <td>
+                <a href="#" class="editable" data-type="textarea" data-name="img" data-pk="{{ page.page_id }}" data-url="{% url 'page_update' %}" data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}" data-value="{{ page.img }}">{{ page.img }}</a>
+            </td>
+        </tr>
+
+        
         
     </table>
 </div>
