@@ -17,6 +17,9 @@ class File(models.Model):
     def __str__ (self) :
         return self.name
 
+    def __unicode__(self):
+        return unicode(self.name)
+
     class Meta:
         managed = False
         db_table = 'sb_file'

@@ -31,12 +31,13 @@
 	<h1>{{ file.name }}</h1>
 
 		<table>
-			<tr><td style="width: 200px; font-weight: bold;">Uploaded by</td><td>{{ file.user }}</td></tr>
-			<tr><td style="font-weight: bold;">Category</td><td>{{ file.file_category }}</td></tr>
+			<tr><td style="width: 200px; font-weight: bold;">Uploaded by</td><td><a href="/profile/{{file.user.user_id }}/">{{ file.user }}</a></td></td></tr>
+			<tr><td style="font-weight: bold;">Category</td><td><a href="/file/{{file.file_category.file_category_id }}/">{{ file.file_category }}</a></td></tr>
 			<tr><td style="font-weight: bold;">Description</td><td>{{ file.description }}</td></tr>
 			<tr><td style="font-weight: bold;">Date</td><td>{{ file.upload_date }}</td></tr>
 			<tr><td style="font-weight: bold;">Filesize</td><td>{{ file.size }} MB</td></tr>
-			<tr><td style="font-weight: bold;">Download</td><td><a href="{{ file.path }}" target="_blank">{{ file.path }}</a> (Costs: {{ file.price }})</td></tr>
+			<tr><td style="font-weight: bold;">Price</td><td>{{ file.price }}</td></tr>
+			<tr><td style="font-weight: bold;">Downloads</td><td>{{ numberOfDownloads }}x</td></tr>
 			<tr><td style="font-weight: bold;">Rating{{ fileRatedByUser }}</td><td width="400">
 <div class="starRate">
 	<div>
@@ -55,5 +56,7 @@
 </td>
 </tr>
 </table>
+<br /><br />
+<a href="/file/download/{{ file.file_id }}" target="_blank"><button class="btn btn-primary">Download</button></a>
 
 {% endblock %}

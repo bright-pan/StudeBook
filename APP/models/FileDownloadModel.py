@@ -11,6 +11,10 @@ class FileDownload (models.Model) :
     user = models.ForeignKey(User)  
     date = models.DateTimeField(blank=True, null=True)
 
+    @staticmethod
+    def getNumberOfDownloads (file) :
+    	return FileDownload.objects.filter(file=file).count();
+
     class Meta:
         managed = False
         db_table = 'sb_file_download'
