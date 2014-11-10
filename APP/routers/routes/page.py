@@ -4,6 +4,7 @@ from APP.views.PageView import PageView
 
 urlpatterns = patterns('',
     url(r'^$', PageView().index),
+    url(r'^(?P<page>\d+)/$', PageView().index),
     url(r'^getPage/(?P<pageID>\d+)/$', PageView().show),
     url(r'^getPage/(?P<pageID>\d+)/edit/', PageView().updatePage),
     url(r'^getPage/(?P<pageID>\d+)/unsubscribe/', PageView().unsubscribe),

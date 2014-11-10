@@ -4,6 +4,7 @@ from APP.views.EventView import EventView
 
 urlpatterns = patterns('',
     url(r'^$', EventView().index),
+    url(r'^(?P<page>\d+)/$', EventView().index),
     url(r'^getEvent/(?P<eventID>\d+)/$', EventView().show),
     url(r'^getEvent/(?P<eventID>\d+)/edit/', EventView().updateEvent),
     url(r'^getEvent/(?P<eventID>\d+)/unsubscribe/', EventView().unsubscribe),
