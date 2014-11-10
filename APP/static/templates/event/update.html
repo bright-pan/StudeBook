@@ -1,0 +1,70 @@
+{% extends "main/main.html" %}
+{% load staticfiles %} {% block head %}
+<script src="{% static 'js/page.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/bootstrap-datepicker.js' %}" type="text/javascript"></script>
+<link href="{% static 'css/datepicker3.css' %}" rel="stylesheet" />
+<link href="{% static 'css/page.css' %}" rel="stylesheet" />
+<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+<script src="{% static 'js/bootstrap-datepicker.js' %}" type="text/javascript"></script>
+<link href="{% static 'css/datepicker3.css' %}" rel="stylesheet" />
+<script src="{% static 'js/moment.js' %}" type="text/javascript"></script>
+{% endblock %} 
+{% block content %}
+<div class="container page">
+<div class="table-responsive">
+    <table class="table">
+        <tr>
+            <th>
+                Event Details
+            </th>
+        </tr>
+        <tr>
+            <td class="col-xs-3">
+                Event Title
+            </td>
+            <td>
+                <a href="#" class="editable" data-type="text" data-name="title" data-pk="{{ event.event_id }}" data-url="{% url 'event_update' %}" data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}" data-value="{{ event.title }}">{{ event.title }}</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="col-xs-3">
+                Publiced
+            </td>
+            <td>
+                <a href="#" class="editable" data-type="select" data-name="publiced" data-pk="{{ event.event_id }}" data-url="{% url 'event_update' %}" data-source='{"0": "Not publiced", "1": "Publiced"}' data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}" data-value="{{ event.body }}">
+                {{ event.getPubliced }}</a>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="col-xs-3">
+                Event Information
+            </td>
+            <td>
+                <a href="#" class="editable" data-type="textarea" data-name="body" data-pk="{{ event.event_id }}" data-url="{% url 'event_update' %}" data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}" data-value="{{ event.body }}">{{ event.body }}</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="col-xs-3">
+                Event Date Start
+            </td>
+            <td>
+                <a href="#" class="editable" data-name="datestart" data-format="YYYY-MM-DD" data-template="YYYY-MM-DD" data-combodate="{'minYear': '2014', 'maxYear': '2016'}" data-type="combodate" data-pk="{{ event.event_id }}" data-url="{% url 'event_update' %}" data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}" data-value="{{ event.datestart|date:'Y-m-d' }}">{{ event.datestart|date:'Y-m-d' }}</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="col-xs-3">
+                Event Date End
+            </td>
+            <td>
+                <a href="#" class="editable" data-name="dateend" data-format="YYYY-MM-DD" data-template="YYYY-MM-DD" data-combodate="{'minYear': '2014', 'maxYear': '2016'}" data-type="combodate" data-pk="{{ event.event_id }}" data-url="{% url 'event_update' %}" data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}" data-value="{{ event.dateend|date:'Y-m-d'  }}">{{ event.dateend|date:'Y-m-d'  }}</a>
+            </td>
+        </tr>
+
+        
+        
+    </table>
+</div>
+</div>
+{% endblock %}

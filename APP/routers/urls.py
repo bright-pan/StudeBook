@@ -12,6 +12,7 @@ urlpatterns = patterns('',
 	url(r'^admin/', include(admin.site.urls)),
 	url(r'^profile/', include('APP.routers.routes.profile')),
 	url(r'^page/', include('APP.routers.routes.page')),
+	url(r'^event/', include('APP.routers.routes.event')),
 	url(r'^software/', include('APP.routers.routes.software')),
 	url(r'^file/', include('APP.routers.routes.file')),
 	url(r'^friends/', include('APP.routers.routes.friend'))

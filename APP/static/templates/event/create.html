@@ -1,0 +1,53 @@
+{% extends "main/main.html" %}
+{% load staticfiles %} {% block head %}
+<script src="{% static 'js/profile.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/bootstrap-datepicker.js' %}" type="text/javascript"></script>
+<link href="{% static 'css/datepicker3.css' %}" rel="stylesheet" />
+<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+{% endblock %} 
+{% block content %}
+<div class="container">
+<div class="table-responsive">
+    <table class="table">
+        <tr>
+            <th>
+                Event Details
+            </th>
+        </tr>
+        <tr>
+            <td class="col-xs-3">
+                Event Title
+            </td>
+            <td>
+                <a href="#" class="editable" data-type="text" data-name="title" data-pk="{{ new_enty.event_id }}" data-url="{% url 'event_update' %}" data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}" data-value="{{ new_enty.title }}">{{ new_enty.title }}</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="col-xs-3">
+                Event Information
+            </td>
+            <td>
+                <a href="#" class="editable" data-type="text" data-name="body" data-pk="{{ new_enty.event_id }}" data-url="{% url 'event_update' %}" data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}" data-value="{{ new_enty.body }}">{{ new_enty.body }}</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="col-xs-3">
+                Event Date Start
+            </td>
+            <td>
+                <a href="#" class="editable" data-name="datestart" data-format="YYYY-MM-DD" data-template="YYYY-MM-DD" data-combodate="{'minYear': '2014', 'maxYear': '2015'}" data-type="combodate" data-pk="{{ new_enty.event_id }}" data-url="{% url 'event_update' %}" data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}" data-value="{{ new_enty.datestart }}">{{ new_enty.datestart }}</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="col-xs-3">
+                Event Date End
+            </td>
+            <td>
+                <a href="#" class="editable" data-name="dateend" data-format="YYYY-MM-DD" data-template="YYYY-MM-DD" data-combodate="{'minYear': '2014', 'maxYear': '2015'}" data-type="combodate" data-pk="{{ new_enty.event_id }}" data-url="{% url 'event_update' %}" data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}" data-value="{{ new_enty.dateend }}">{{ new_enty.dateend }}</a>
+            </td>
+        </tr>
+    </table>
+</div>
+</div>
+{% endblock %}

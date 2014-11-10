@@ -6,9 +6,9 @@
 }
 
 #userFriendList li {
-    background : #ccc;
+    background    : #ccc;
     border-bottom : 1px solid #ccc;
-    border-top : 1px solid #fff;
+    border-top    : 1px solid #fff;
 }
 
 #userFriendList li a {
@@ -28,15 +28,31 @@
 ***********************/
 
 body div.chatWrapper {
-    width      : 200px;
-    display    : block;
-    z-index    : 10000;
+    width     : 400px !important;
+    display   : block;
+    z-index   : 10000;
+    position  : absolute !important;
+    top       : 0;
+    right     : 0;
 }
 
 body div.chatWrapper h3.header a.title {
-    width   : 130px;
+    margin  : 10px 0;
     display : inline-block;
     cursor  : pointer;
+    float   : left;
+}
+
+body div.chatWrapper h3.header a.btn {
+    float : right;
+}
+
+body div.chatWrapper h3.header:after {
+   content     : ".";
+    display    : block;
+    height     : 0;
+    clear      : both;
+    visibility : hidden;
 }
 
 body div.chatWrapper div.content div.chatContainer {
@@ -46,11 +62,15 @@ body div.chatWrapper div.content div.chatContainer {
 }
 
 body div.chatWrapper div.content div.chatContainer p {
-    border     : 1px solid red;
+    border     : #eee;
     overflow-x : hidden;
 }
 
 body div.chatWrapper div.content div.chatContainer p.me {
-    border : 1px solid green;
     text-align : right;
+    color      : green;
+}
+
+body div.chatWrapper div.content input.chatBox {
+    width : 100%;
 }
