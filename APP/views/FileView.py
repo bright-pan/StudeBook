@@ -28,12 +28,30 @@ from APP.forms.FileForm import FileForm
 
 class FileView (MainView):
 
-    def index (self, request, categoryId, page = 1) :
+    def index (self, request, categoryId, page = 1, orderBy = "rating", orderBySeq = "desc") :
         
-        fileCategory = FileCategory.objects.get(file_category_id = categoryId)
-    	files = File.objects.filter(file_category = fileCategory).order_by('-upload_date');
-        paginator = Paginator(files, 10);
+        if (orderBy == "rating") or (orderBy == "downloads"):
+            order = "-upload_date";
+        elif (orderBySeq == "desc"):
+            order = "-" + orderBy;
+        else:
+            order = orderBy;
 
+        fileCategory = FileCategory.objects.get(file_category_id = categoryId)
+    	files = File.objects.filter(file_category = fileCategory).order_by(order);
+        
+        for index in range(0, len(files)):
+            files[index].rating = FileRating.getAverage(files[index]);
+            files[index].numberOfRatings = FileRating.getNumberOfRatings(files[index]); 
+            files[index].downloads = FileDownload.getNumberOfDownloads(files[index]);
+
+        if (orderBy == "rating" or (orderBy == "downloads")):
+            if (orderBySeq == "desc"):
+                files = sorted(files, key=lambda f: getattr(f, orderBy), reverse=True);
+            else:
+                files = sorted(files, key=lambda f: getattr(f, orderBy), reverse=False);
+
+        paginator = Paginator(files, 10);
         try:
             files = paginator.page(page)
         except PageNotAnInteger:
@@ -43,18 +61,14 @@ class FileView (MainView):
             # If page is out of range (e.g. 9999), deliver last page of results.
             files = paginator.page(paginator.num_pages)
 
-        for index in range(0, len(files)):
-            files[index].rating = FileRating.getAverage(files[index]);
-            files[index].numberOfRatings = FileRating.getNumberOfRatings(files[index]); 
-            files[index].numberOfDownloads = FileDownload.getNumberOfDownloads(files[index]);
-
-        paginationRange = [i+1 for i in range(files.paginator.num_pages)];
+        paginationRange = [i+1 for i in range(files.paginator.num_pages)];        
 
         return super(FileView, self).render(request, 'file/index.html', {
             'title'   : 'File overview',
             'category' : fileCategory,
             'file_list' : files,
-            'paginationRange' : paginationRange            
+            'paginationRange' : paginationRange,
+            'orderBy' : orderBy + "/" + orderBySeq            
 
         });
 
@@ -90,12 +104,12 @@ class FileView (MainView):
         file = File.objects.get(file_id = id);
         user = super(FileView, self).getUserLogin(request).user;
 
-        if user.credits >= file.file_category.file_price:
+        if file.user == user or user.credits >= file.file_category.file_price:
             # Insert FileDownload and update credits (first time download)
-            if FileDownload.objects.filter(file = file, user = user).count() == 0:
+            if file.user != user and FileDownload.objects.filter(file = file, user = user).count() == 0:
                 fd = FileDownload(file = file, user = user);
                 user.credits -= file.file_category.file_price;
-                file.user.credits += file.file_category.file_price;
+                file.user.credits += (file.file_category.file_price - 1);
 
                 fd.save();
                 user.save();

@@ -2,20 +2,38 @@
 {% load staticfiles %}
 
 {% block head %}
-<style>
-.starRate {position:relative; margin:0px; overflow:hidden; zoom:1; z-index:99999;}
-.starRate ul {width:160px; margin:0; padding:0;}
-.starRate li {display:inline; list-style:none;}
-.starRate a, .starRate b {background:url({% static 'img/star_rate.gif' %}) left top repeat-x;}
-.starRate a {float:right; margin:0 80px 0 -144px; width:80px; height:16px; background-position:left 16px; color:#000; text-decoration:none;}
-.starRate b {position:absolute; z-index:-1; width:80px; height:16px; background-position:left -16px;}
-.starRate div b {left:0px; bottom:0px; background-position:left top;}
-</style>
+	<style>
+	.starRate {position:relative; margin:0px; overflow:hidden; zoom:1; z-index:999;}
+	.starRate ul {width:160px; margin:0; padding:0;}
+	.starRate li {display:inline; list-style:none;}
+	.starRate a, .starRate b {background:url({% static 'img/star_rate.gif' %}) left top repeat-x;}
+	.starRate a {float:right; margin:0 80px 0 -144px; width:80px; height:16px; background-position:left 16px; color:#000; text-decoration:none;}
+	.starRate b {position:absolute; z-index:-1; width:80px; height:16px; background-position:left -16px;}
+	.starRate div b {left:0px; bottom:0px; background-position:left top;}
+	</style>
+	<script type="text/javascript" src="{% static 'js/file.js' %}"></script>
 {% endblock %}
 
 {% block content %}
 	<h1>{{ title }}</h1>
 	<h3>{{ category.category }}</h3>
+
+	<input type="hidden" id="categoryId" value="{{ category.file_category_id }}" />
+	<input type="hidden" id="page" value="{{ file_list.number }}" />
+	
+	<div style="float: right;">
+		<strong>Order by: </strong> 
+		<select id="orderBy">
+			<option value="rating/desc"{% if orderBy = "rating/desc" %} selected="selected"{% endif %}>Rating (highest first)</option>
+			<option value="rating/asc"{% if orderBy = "rating/asc" %} selected="selected"{% endif %}>Rating (lowest first)</option>
+			<option value="downloads/desc"{% if orderBy = "downloads/desc" %} selected="selected"{% endif %}>Downloads (highest first)</option>
+			<option value="downloads/asc"{% if orderBy = "downloads/asc" %} selected="selected"{% endif %}>Downloads (lowest first)</option>
+			<option value="upload_date/desc"{% if orderBy = "upload_date/desc" %} selected="selected"{% endif %}>Date (newest first)</option>
+			<option value="upload_date/asc"{% if orderBy = "upload_date/asc" %} selected="selected"{% endif %}>Date (oldest first)</option>
+			<option value="name/asc"{% if orderBy = "name/asc" %} selected="selected"{% endif %}>Name (A-Z)</option>
+			<option value="name/desc"{% if orderBy = "name/desc" %} selected="selected"{% endif %}>Name (Z-A)</option>
+		</select>
+	</div>
 
 	<table style="width: 100%;" class="table table-striped table-hover">
 		<thead><tr><th>Name</th><th>Date</th><th>User</th><th>Downloads</th><th>Rating</th></tr></thead>
@@ -26,7 +44,7 @@
 						<td><a href="/file/show/{{ file.file_id }}">{{ file.name }}</a></td>
 						<td>{{ file.upload_date }}</td>
 						<td>{{ file.user }}</td>
-						<td>{{ file.numberOfDownloads }} x</td>
+						<td>{{ file.downloads }} x</td>
 						<td>
 							<div class="starRate" style="float: left;">
 								<div>
@@ -52,14 +70,14 @@
 	  <ul class="pagination">
 
 	  	{% if file_list.has_previous %}
-	  		<li><a href="/file/{{ category.file_category_id }}/{{ file_list.previous_page_number }}/">&laquo;</a></li>
+	  		<li><a href="/file/{{ category.file_category_id }}/{{ file_list.previous_page_number }}/{{ orderBy }}">&laquo;</a></li>
 	  	{% else %}
 	    	<li class="disabled"><a href="#">&laquo;</a></li>
 	    {% endif %}
 
 	    {% for index in paginationRange %}
 	    	<li class="{% if index = file_list.number %} active {% endif %}">
-	    		<a href="/file/{{ category.file_category_id }}/{{ index }}">
+	    		<a href="/file/{{ category.file_category_id }}/{{ index }}/{{ orderBy }}">
 	    			{{ index }}
 			    	{% if index = file_list.number %}
 			    		<span class="sr-only">(current)</span>
@@ -69,7 +87,7 @@
 	   	{% endfor %}
 
 	    {% if file_list.has_next %}
-	  		<li><a href="/file/{{ category.file_category_id }}/{{ file_list.next_page_number }}/">&raquo;</a></li>
+	  		<li><a href="/file/{{ category.file_category_id }}/{{ file_list.next_page_number }}/{{ orderBy }}">&raquo;</a></li>
 	  	{% else %}
 	    	<li class="disabled"><a href="#">&raquo;</a></li>
 	    {% endif %}
