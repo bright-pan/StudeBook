@@ -109,10 +109,12 @@ var StudeBookChat = function() {
         chatBox.keyup(function(e){
             var message = $(this).val();
             if(e.keyCode == 13 && message) {
-                chatContainer.append($('<p />').attr('class','me').text(message + ' : ' + localStorage.getItem('sb_full_name')));
+                chatContainer.append($('<p />').attr('class','me').text(message + ' : ' + 'me'));
                 chatContainer.scrollTop(chatContainer[0].scrollHeight);
                 self.notifyUserFriend(userID, message);
                 $(this).val('');
+                var nTop = (wrapper.height()*-1);
+                wrapper.css({ top : nTop });
             };
         });
         close.click(function(){ wrapper.remove(); });
@@ -128,10 +130,14 @@ var StudeBookChat = function() {
 
     /**
      * @method renderChatWrapper
+     * @param wrapper
      */
     this.renderChatWrapper = function(wrapper) {
-        wrapper.draggable({ containment : 'body' });
-        $('#test').append(wrapper);
+        wrapper.draggable({ axis : 'x', containment : 'body' }).css({
+            position : 'absolute',
+            top      : '-106px'
+        });
+        $('#footer').prepend(wrapper);
         return wrapper;
     };
 
@@ -148,6 +154,8 @@ var StudeBookChat = function() {
         };
         //Add message to chatContainer
         wrapper.find('.chatContainer').prepend($('<p />').text(data.fullName + ' : ' + data.message));
+        var nTop = (wrapper.height()*-1);
+        wrapper.css({ top : nTop });
     };
 
     /*********************
@@ -189,7 +197,7 @@ var StudeBookChat = function() {
                     element.attr('class','userFriend');
                     element.attr('rel', friend.pk);
                     element.attr('href','#');
-                    $('#userFriendList').prepend($('<li />').append(element));
+                    $('#userFriendList').append($('<li />').append(element));
                 });
             };
             //Validate user friend status
