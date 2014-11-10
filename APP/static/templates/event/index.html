@@ -16,11 +16,41 @@
 	<a href="add"><div class="col-md-2 add" style="padding-top: 20px; font-size: 30pt;"></div></a>
 	{% for event in event_list %}
 		<div class="pagelist col-md-12">
-			<a href="getEvent/{{ event.event_id }}"><h3>{{ event.title }}</h3></a>
+			<a href="/event/getEvent/{{ event.event_id }}"><h3>{{ event.title }}</h3></a>
 			<h5>Created by : {{ event.user }} </h5>
 			<h5>Date : {{ event.datestart }} - {{ event.dateend }}</h5>
 		</div>
 
 	{% endfor %}
+	<nav style="margin-bottom: 20px;">
+	  <ul class="pagination">
+
+	  	{% if event_list.has_previous %}
+	  		<li><a href="/event/{{ event_list.previous_page_number }}/">&laquo;</a></li>
+	  	{% else %}
+	    	<li class="disabled"><a href="#">&laquo;</a></li>
+	    {% endif %}
+
+	    {% for index in paginationRange %}
+	    	<li class="{% if index = event_list.number %} active {% endif %}">
+	    		<a href="/event/{{ index }}/">
+	    			{{ index }}
+			    	{% if index = event_list.number %}
+			    		<span class="sr-only">(current)</span>
+			    	{% endif %}
+	    		</a>
+	    	</li>
+	   	{% endfor %}
+
+	    {% if event_list.has_next %}
+	  		<li><a href="/event/{{ event_list.next_page_number }}/">&raquo;</a></li>
+	  	{% else %}
+	    	<li class="disabled"><a href="#">&raquo;</a></li>
+	    {% endif %}
+
+	  </ul>
+	</nav>
 </div>
+
+
 {% endblock %}

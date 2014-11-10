@@ -6,21 +6,51 @@
 {% endblock %} 
 {% block content %}
 <div class="container page" style="margin-bottom: 100px;">
-	<div class="col-md-10"><h1>{{ title }}</h1></div>
-	<form name="input" action="" method="POST">
-		<input type="text" name="search">
-		<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
-		<input type="submit" value="Submit">
-	</form>
+	<div class="col-md-10">
+		<h1>{{ title }}</h1>
+			<form name="input" action="" id="search" method="POST">
+				<input type="text" name="search" class="search square" placeholder="Search for page title">
+				<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+			</form>
+	</div>
 	<a href="add"><div class="col-md-2 add" style="padding-top: 20px; font-size: 30pt;"></div></a>
-
 	{% for page in page_list %}
 		<div class="pagelist col-md-12">
-			<a href="getPage/{{ page.page_id }}"><h3>{{ page.title }}</h3></a>
+			<a href="/page/getPage/{{ page.page_id }}"><h3>{{ page.title }}</h3></a>
 			<h5>Created by : {{ page.user }} </h5>
 			<h5>Date Created : {{ page.created }} </h5>
 		</div>
 
 	{% endfor %}
+	<nav style="margin-bottom: 20px;">
+	  <ul class="pagination">
+
+	  	{% if page_list.has_previous %}
+	  		<li><a href="/page/{{ page_list.previous_page_number }}/">&laquo;</a></li>
+	  	{% else %}
+	    	<li class="disabled"><a href="#">&laquo;</a></li>
+	    {% endif %}
+
+	    {% for index in paginationRange %}
+	    	<li class="{% if index = page_list.number %} active {% endif %}">
+	    		<a href="/page/{{ index }}/">
+	    			{{ index }}
+			    	{% if index = page_list.number %}
+			    		<span class="sr-only">(current)</span>
+			    	{% endif %}
+	    		</a>
+	    	</li>
+	   	{% endfor %}
+
+	    {% if page_list.has_next %}
+	  		<li><a href="/page/{{ page_list.next_page_number }}/">&raquo;</a></li>
+	  	{% else %}
+	    	<li class="disabled"><a href="#">&raquo;</a></li>
+	    {% endif %}
+
+	  </ul>
+	</nav>
 </div>
+
+
 {% endblock %}
