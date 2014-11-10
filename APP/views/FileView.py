@@ -9,6 +9,7 @@ from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.core.servers.basehttp import FileWrapper
 from django.utils.encoding import smart_str
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 #sb
 from django.db.models import Avg
@@ -27,20 +28,33 @@ from APP.forms.FileForm import FileForm
 
 class FileView (MainView):
 
-    def index (self, request, categoryId) :
+    def index (self, request, categoryId, page = 1) :
         
         fileCategory = FileCategory.objects.get(file_category_id = categoryId)
     	files = File.objects.filter(file_category = fileCategory).order_by('-upload_date');
+        paginator = Paginator(files, 10);
+
+        try:
+            files = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            files = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            files = paginator.page(paginator.num_pages)
 
         for index in range(0, len(files)):
             files[index].rating = FileRating.getAverage(files[index]);
             files[index].numberOfRatings = FileRating.getNumberOfRatings(files[index]); 
             files[index].numberOfDownloads = FileDownload.getNumberOfDownloads(files[index]);
 
+        paginationRange = [i+1 for i in range(files.paginator.num_pages)];
+
         return super(FileView, self).render(request, 'file/index.html', {
             'title'   : 'File overview',
-            'category' : fileCategory.category,
-            'file_list' : files            
+            'category' : fileCategory,
+            'file_list' : files,
+            'paginationRange' : paginationRange            
 
         });
 
