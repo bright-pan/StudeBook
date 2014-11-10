@@ -15,7 +15,7 @@ class User (models.Model) :
     city = models.CharField(max_length=100, blank=True)
     postal_code = models.CharField(max_length=12, blank=True)
     region = models.CharField(max_length=50, blank=True)
-    country = models.CharField(max_length=50)
+    country = models.CharField(max_length=10, default=1)
     registration_date = models.DateTimeField(blank=True, null=True)
     user_type = models.ForeignKey(UserType, blank=True, null=True)    
     credits = models.IntegerField(blank=True, null=True)

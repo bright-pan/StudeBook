@@ -41,6 +41,9 @@ var StudeBookServer = function() {
         self.setAction('ping', function(data) {
             self.server.send(JSON.stringify({ action : 'pong', message : ('Pong from client ' + localStorage.getItem('sb_user_id')) }));
         });
+        self.setAction('notifyFriendRequest', function(data){
+            // Code uitvoeren voor notifactie.
+        })
     };
 
     /**
