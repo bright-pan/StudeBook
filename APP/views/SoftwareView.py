@@ -40,9 +40,19 @@ class SoftwareView(MainView):
         })
 
     def update(self, request, software_id):
-        return super(SoftwareView, self).render(request, 'software/update.html', {
-            'software': Software.objects.get(software_id=software_id)
-        })
+        instance = Software.objects.get(software_id=software_id)
+        form = SoftwareForm(request.POST or None, instance=instance)
+
+        if form.is_valid():
+            software = form.save(commit=False)
+            software.save()
+
+            return HttpResponseRedirect(self.url)
+        else:
+            return super(SoftwareView, self).render(request, 'software/update.html', {
+                'title': 'Edit Software',
+                'form': form
+            })
 
     def delete(self, request, software_id):
         software = Software.objects.get(software_id=software_id)
