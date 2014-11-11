@@ -11,5 +11,5 @@ urlpatterns = patterns('',
     url(r'^show/(?P<eventID>\d+)/subscribe/', EventView().subscribe),
     url(r'^show/(?P<eventID>\d+)/delete/', EventView().deleteEvent),
     url(r'^update/$', EventView().update, name="event_update"),
-    url(r'^add/$', EventView().create),
+    url(r'^create/$', EventView().create),
 )
