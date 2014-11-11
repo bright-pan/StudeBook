@@ -16,11 +16,11 @@
                     <a href="/file" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-file"></span> Files <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="/file/create"><span class="glyphicon glyphicon-upload"></span> Upload file</a></li>
-                        <!-- <li><a href="/file/"><span class="glyphicon glyphicon-list"></span> Categories</a></li> -->
                         <li class="divider"></li>
-                        <li><a href="/file/1/"><span class="glyphicon glyphicon-file"></span> Papers</a></li>
-                        <li><a href="/file/2/"><span class="glyphicon glyphicon-edit"></span> Source</a></li>
-                        <li><a href="/file/3/"><span class="glyphicon glyphicon-book"></span> Essays</a></li>
+                        
+                        {% for fileCategory in file_category %}
+                            <li><a href="/file/{{ fileCategory.file_category_id }}/"><span class="glyphicon glyphicon-{{ fileCategory.glyphicon }}"></span> {{ fileCategory.category }}</a></li>
+                        {% endfor %}
                         
                     </ul>
                 </li>

@@ -89,6 +89,8 @@ class FileView (MainView):
         else: 
             file.price = str(file.price) + " credit"
 
+        file.extension = os.path.splitext(file.path.url)[1];
+
 
         return super(FileView, self).render(request, 'file/read.html', {
             'title'   : 'File',
@@ -143,7 +145,7 @@ class FileView (MainView):
                 file.save()
                 addedFile = File.objects.latest('file_id')
 
-                return HttpResponseRedirect('/file/show/' + str(addedFile.file_id))
+                return HttpResponseRedirect('/file/read/' + str(addedFile.file_id))
             else:
                 return super(FileView, self).render(request, 'file/create.html', {
             'title'   : 'File upload failed',

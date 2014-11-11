@@ -28,7 +28,7 @@ class EventView (MainView):
         
         events = Event.objects.filter((Q(publiced='1') | Q(user_id = userLogin.user)) & (Q(title__icontains = search))).order_by('title');
 
-        paginator = Paginator(events, 5);
+        paginator = Paginator(events, 10);
         try:
             events = paginator.page(page)
         except PageNotAnInteger:
@@ -77,7 +77,7 @@ class EventView (MainView):
                 'event' : event,
             });
             
-        return HttpResponseRedirect('/event/getEvent/' + eventID)
+        return HttpResponseRedirect('/event/show/' + eventID)
 
     #Delete event 
     def deleteEvent(self, request, eventID) :
@@ -88,14 +88,14 @@ class EventView (MainView):
             event.delete()
             return HttpResponseRedirect('/event/')
 
-        return HttpResponseRedirect('/event/getEvent/' + eventID)
+        return HttpResponseRedirect('/event/show/' + eventID)
 
     def create(self, request) :
         userLogin = super(EventView, self).getUserLogin(request)
         new_entry = Event(title='title', user=userLogin.user, body='body', publiced='0')
         new_entry.save()
 
-        return HttpResponseRedirect('/event/getEvent/'+ str(new_entry.event_id) +'/edit/')
+        return HttpResponseRedirect('/event/show/'+ str(new_entry.event_id) +'/edit/')
 
     def update (self, request) :
         name = request.POST.get('name', '')
@@ -115,11 +115,11 @@ class EventView (MainView):
         subscription = EventSubscription.objects.filter(Q(event_id = eventID) & Q(user_id = userLogin));
 
         subscription.delete()
-        return HttpResponseRedirect('/event/getEvent/' + eventID)
+        return HttpResponseRedirect('/event/show/' + eventID)
     
     def subscribe (self, request, eventID) :
         userLogin = super(EventView, self).getUserLogin(request);
         eventsubscription = EventSubscription(event_id = eventID, user_id = userLogin.user.user_id)
         eventsubscription.save()
 
-        return HttpResponseRedirect('/event/getEvent/' + eventID)
+        return HttpResponseRedirect('/event/show/' + eventID)
