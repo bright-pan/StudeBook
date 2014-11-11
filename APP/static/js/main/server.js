@@ -143,6 +143,6 @@ $().ready(function(){
     SB.SERVER.init('ws://185.10.51.243', 8001);
     //Action for handling incoming friend request
     SB.SERVER.setAction('notifyUserFriendRequest', function(data) {
-        console.log(data);
+        SB.NOTIFICATION.update();
     });
 });

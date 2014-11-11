@@ -34,13 +34,28 @@ function bindButtons() {
             });
             $(this).prop('disabled', true);
             $(this).html('Request sent');
-            SB.SERVER.notifyServer({
-                action: 'notifyUserFriendRequest',
-                data : {
-                    clientID : user
-                }
+
+            /********************
+             *** NOTIFICATION ***
+             *******************/
+            var URI = '/api/notification/create/accessToken:'+localStorage.getItem('sb_access_token') + '/';
+            $.post(URI, {
+                notification        : 'Would you be my friend?',
+	        	csrfmiddlewaretoken : SB.CONFIG.CSRF_TOKEN,
+                category            : 'Friend request',
+                recipient_id        : user
+            }, function(response) {
+                console.log(response);
+                if(response.status == 200) {
+                    SB.SERVER.notifyServer({
+                        action : 'notifyUserFriendRequest',
+                        data   : {
+                            clientID : user
+                        }
+                    });
+                };
             });
-        }
+        };
     });
 
     $('.accept-friend').on('click', function() {

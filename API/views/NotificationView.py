@@ -5,6 +5,7 @@ from django.views.generic import View
 #SB
 from APP.models.UserFriendModel import UserFriend
 from APP.models.UserAccessTokenModel import UserAccessToken
+from APP.models.UserModel import User
 from APP.models.NotificationModel import Notification
 
 """
@@ -19,10 +20,12 @@ class NotificationView (View):
     ###### Get notification info ######
     ###################################
 
+    #Get notification info
     def getInfo (self, request, accessToken) :
-        #saddsadsa
+        #TMP
         return self.response({ 'bla' : 202 });
 
+    #Get count notifications
     def getCount (self, request, accessToken) :
         try :
             #Get user by access token
@@ -38,45 +41,26 @@ class NotificationView (View):
         except :
             return self.response({ 'status' : 500, 'message' : 'Bad request' });
 
-    #Cast <UserModel> instance to dictionary
-    def userToDictionary (self, user) :
-        return {
-            'pk'         : user.user_id,
-            'first_name' : user.first_name,
-            'last_name'  : user.last_name,
-            'full_name'  : user.getFullName()
-        };
-
-    #Get user info
-    def getInfo (self, request, accessToken) :
-        try :
-            #Get user by access token
-            user = UserAccessToken.objects.get(access_token = accessToken).user;
-            return self.response({
-                'status' : 200,
-                'data'   : {
-                    'user' : self.userToDictionary(user)
-                }
-            });
-        except :
-            return self.response({ 'status' : 500, 'message' : 'Bad request' });
-
-    #Get user friends
-    def getFriends (self, request, accessToken) :
-        try :
-            #Get user by access token
-            user = UserAccessToken.objects.get(access_token = accessToken).user;
-            userFriend = UserFriend.getUserFriendByUser(user);
-            friendList = [];
-            #Manipulate userFriend data
-            for friend in userFriend :
-                friendList.append(self.userToDictionary(friend.recipient));
-            #Response
-            return self.response({
-                'status' : 200, 'data' : { 'friendList' : friendList }
-            });
-        except :
-            return self.response({ 'status' : 500, 'message' : 'Bad request' });
+    #Create notification
+    def create (self, request, accessToken) :
+        #try :
+        #Get user by access token
+        requester = UserAccessToken.objects.get(access_token = accessToken).user;
+        recipient = User.objects.get(user_id = request.POST['recipient_id']);
+        #Create notification
+        Notification(
+            requester    = requester,
+            recipient    = recipient,
+            notification = request.POST['notification'],
+            category     = request.POST['category']
+        ).save();
+        #Response
+        return self.response({
+            'status'  : 200,
+            'message' : 'Notification created'
+        });
+        #except :
+        #    return self.response({ 'status' : 500, 'message' : 'Bad request' });
 
     #Response 
     def response (self, data) :
