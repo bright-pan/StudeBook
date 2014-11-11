@@ -1,0 +1,30 @@
+{% extends "main/main.html" %}
+{% block head %}
+<link rel="stylesheet" href="/static/css/notification.css" />
+<script type="text/javascript" src="/static/js/notification/main.js"></script>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="table-responsive">
+        <table class="table" id="notification">
+            <tr>
+                <th>Requester</th>
+                <th>Category</th>
+                <th>Datetime</th>
+                <th>Read</th>
+            </tr>
+            {% for notification in notification_list %}
+            <tr class="head">
+                <td><a href="#" class="notification" rel="{{ notification.pk }}"><span>{{ notification.requester }}</span><span class="caret"></span></a></td>
+                <td>{{ notification.category }}</td>
+                <td>{{ notification.datetime }}</td>
+                <td>{{ notification.read }}</td>
+            </tr>
+            <tr class="body disabled notification-{{ notification.pk }}">
+                <td colspan="4">{{ notification }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

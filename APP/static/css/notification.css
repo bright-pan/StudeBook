@@ -1,0 +1,16 @@
+#notification {
+    border : 1px solid blue;
+}
+
+#notification tr.head {
+    border : 1px solid green;
+}
+
+#notification tr.body.disabled {
+    border : 1px solid red;
+    display : none;
+}
+
+#notification tr.body.enabled {
+    border : 1px solid red;
+}

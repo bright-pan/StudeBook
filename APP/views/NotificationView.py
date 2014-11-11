@@ -1,29 +1,18 @@
-#Django
-from django.http import HttpResponse
-from django.core import serializers
-from django.core.validators import validate_email
-from django.core.exceptions import ValidationError
-
 #SB
 from APP.views.MainView import MainView
-
-import json
-import array
+from APP.models.NotificationModel import Notification
 
 """
- @class ProfileView
+ @class NotificationView
  @version 0.1
  @author StudeBook inc.
 """
 
 class NotificationView(MainView):
-    def show (self, request) :
-        userLogin = super(NotificationView, self).getUserLogin(request)
-       
+
+    def read (self, request) :
+        userLogin = super(NotificationView, self).getUserLogin(request);
+        notificationList = Notification.objects.filter(recipient = userLogin.user);
         return super(NotificationView, self).render(request, 'notification/notification.html', {
+            'notification_list' : notificationList
         });
-        
-    def getNotification (self, request) :
-        
-        data = json.dumps({ 'status' : 200 });
-        return HttpResponse(data,content_type='application/json');
