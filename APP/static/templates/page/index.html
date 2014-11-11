@@ -6,22 +6,26 @@
 {% endblock %} 
 {% block content %}
 <div class="container page" style="margin-bottom: 100px;">
-	<div class="col-md-10">
-		<h1>{{ title }}</h1>
-			<form name="input" action="" id="search" method="POST">
-				<input type="text" name="search" class="search square" placeholder="Search for page title">
-				<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
-			</form>
-	</div>
-	<a href="add"><div class="col-md-2 add" style="padding-top: 20px; font-size: 30pt;"></div></a>
-	{% for page in page_list %}
-		<div class="pagelist col-md-12">
-			<a href="/page/getPage/{{ page.page_id }}"><h3>{{ page.title }}</h3></a>
-			<h5>Created by : {{ page.user }} </h5>
-			<h5>Date Created : {{ page.created }} </h5>
-		</div>
+	<h1 style="float: left; width: 200px;">{{ title }}</h1>
+    <a href="add" class="btn btn-primary pull-right m-l-10" style="margin-top: 20px;"><span class="glyphicon glyphicon-plus"></span> Add Page</a>
 
-	{% endfor %}
+	<table style="width: 100%;" class="table table-striped table-hover">
+		<thead><tr><th>Page</th><th>Created by</th></tr></thead>
+		<tbody>
+			{% if page_list %}
+				{% for page in page_list %}
+					<tr>
+						<td><a href="/page/getPage/{{ page.page_id }}">{{ page.title }}</a></td>
+						<td>{{ page.user }}</td>
+					</tr>
+				{% endfor %}
+				{% else %}
+					<tr><td colspan="5">No pages found.</td></tr>
+				{% endif %}
+		</tbody>
+	</table>
+
+
 	<nav style="margin-bottom: 20px;">
 	  <ul class="pagination">
 

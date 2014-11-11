@@ -24,11 +24,30 @@
                         
                     </ul>
                 </li>
-                <li><a href="/book"><span class="glyphicon glyphicon-book"></span> Books</a></li>
-                <li><a href="/page"><span class="glyphicon glyphicon-list-alt"></span> Pages</a></li>
-                <li><a href="/event"><span class="glyphicon glyphicon-pushpin"></span> Events</a></li>
-                <li><a href="/software"><span class="glyphicon glyphicon-download-alt"></span> Software</a></li>
-                <li><a href="/internship"><span class="glyphicon glyphicon-briefcase"></span> Internships</a></li>
+                <li class="dropdown">
+                    <a href="/page" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-list-alt"></span> Pages <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="/page/add"><span class="glyphicon glyphicon-plus"></span> Add Page</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/page/"><span class="glyphicon glyphicon-list-alt"></span> All Pages</a></li> 
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="/event" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-pushpin"></span> Events <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="/event/add"><span class="glyphicon glyphicon-plus"></span> Add Event</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/event/"><span class="glyphicon glyphicon-pushpin"></span> All Events</a></li> 
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="/software" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-download-alt"></span> Software <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="/software/add"><span class="glyphicon glyphicon-plus"></span> Add Software</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/software/"><span class="glyphicon glyphicon-pushpin"></span> All Software</a></li> 
+                    </ul>
+                </li>
                 <li><a href="/friends/search"><span class="glyphicon glyphicon-user"></span> People </a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
