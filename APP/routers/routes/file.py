@@ -11,5 +11,6 @@ urlpatterns = patterns('',
     url(r'^read/(?P<id>\d+)/$', FileView().read),
     url(r'^download/(?P<id>\d+)/$', FileView().download),
     url(r'^create/$', FileView().create),
+    url(r'^update/(?P<id>\d+)/$', FileView().update),
     url(r'^addRating/$', FileView().addRating),
 )

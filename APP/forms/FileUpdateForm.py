@@ -1,22 +1,16 @@
-# Django
+from APP.models.FileModel import File
 from django import forms
 
-# App
-from APP.models.SoftwareModel import Software
 
-"""
- @class SoftwareForm
- @version 1.0
- @author StudeBook inc.
-"""
-
-
-class SoftwareForm(forms.ModelForm):
+class FileUpdateForm(forms.ModelForm):
 
     class Meta:
-        model = Software
-        fields = ['name', 'description', 'url']
+        model = File
+        fields = ['file_category', 'name', 'description']
         widgets = {
+            'file_category': forms.Select(attrs={
+                'class': 'form-control'
+            }),
             'name': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Enter name'
@@ -25,9 +19,5 @@ class SoftwareForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Enter description',
                 'rows': '3'
-            }),
-            'url': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Enter URL'
             })
         }

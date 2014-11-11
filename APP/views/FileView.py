@@ -18,6 +18,7 @@ from APP.models.FileRatingModel import FileRating
 from APP.models.FileCategoryModel import FileCategory
 from APP.models.FileDownloadModel import FileDownload
 from APP.forms.FileForm import FileForm
+from APP.forms.FileUpdateForm import FileUpdateForm
 
 """
  ### StudeBook Files page ### 
@@ -149,15 +150,30 @@ class FileView (MainView):
             else:
                 return super(FileView, self).render(request, 'file/create.html', {
             'title'   : 'File upload failed',
-            'formset' : form
+            'form' : form
         });  
         else:
             form = FileForm()
 
         return super(FileView, self).render(request, 'file/create.html', {
             'title'   : 'Upload new file',
-            'formset' : form
-        });  
+            'form' : form
+        });
+
+    def update(self, request, id):
+        instance = File.objects.get(file_id=id)
+        form = FileUpdateForm(request.POST or None, instance=instance)
+
+        if form.is_valid():
+            file = form.save(commit=False)
+            file.save()
+
+            return HttpResponseRedirect('/file/read/' + id)
+        else:
+            return super(FileView, self).render(request, 'file/update.html', {
+                'title': 'Edit File',
+                'form': form
+            })
 
     def addRating (self, request) :
         file_id = request.POST.get('fileId', False)

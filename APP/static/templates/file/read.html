@@ -67,8 +67,8 @@
 
 {% if file.user == user_login.user %}
     <div class="col-md-14 col-margin-top">
-        <a href="/file/delete/{{ software.software_id }}" class="btn btn-danger pull-right m-l-10"><span class="glyphicon glyphicon-remove"></span> Delete</a>
-        <a href="/file/update/{{ software.software_id }}" class="btn btn-primary pull-right m-l-10"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+        <a href="/file/delete/{{ file.file_id }}" class="btn btn-danger pull-right m-l-10"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+        <a href="/file/update/{{ file.file_id }}" class="btn btn-primary pull-right m-l-10"><span class="glyphicon glyphicon-edit"></span> Edit</a>
     </div>
 {% endif %}
 

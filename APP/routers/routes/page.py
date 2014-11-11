@@ -11,5 +11,5 @@ urlpatterns = patterns('',
     url(r'^show/(?P<pageID>\d+)/subscribe/', PageView().subscribe),
     url(r'^show/(?P<pageID>\d+)/delete/', PageView().deletePage),
     url(r'^update/$', PageView().update, name="page_update"),
-    url(r'^add/$', PageView().create),
+    url(r'^create/$', PageView().create),
 )

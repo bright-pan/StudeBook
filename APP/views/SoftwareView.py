@@ -1,40 +1,38 @@
+# Django
 from django.http import HttpResponseRedirect
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+# App
 from APP.views.MainView import MainView
 from APP.models.SoftwareModel import Software
 from APP.forms.SoftwareForm import SoftwareForm
 
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
 """
  @class SoftwareView
- @version 0.1
+ @version 1.0
  @author StudeBook inc.
 """
 
 
 class SoftwareView(MainView):
-    url = '/software/'
 
-    def index(self, request, page = 1):
+    def index(self, request, page=1):
+        software = Software.objects.all()
+        paginator = Paginator(software, 10)
 
-        software = Software.objects.all();
-
-        paginator = Paginator(software, 10);
         try:
             software = paginator.page(page)
         except PageNotAnInteger:
-            # If page is not an integer, deliver first page.
             software = paginator.page(1)
         except EmptyPage:
-            # If page is out of range (e.g. 9999), deliver last page of results.
             software = paginator.page(paginator.num_pages)
 
-        paginationRange = [i+1 for i in range(software.paginator.num_pages)]; 
+        pagination_range = [i+1 for i in range(software.paginator.num_pages)]
 
         return super(SoftwareView, self).render(request, 'software/index.html', {
             'title': 'Software',
             'software_list': software,
-            'paginationRange' : paginationRange
+            'pagination_range': pagination_range
         })
 
     def create(self, request):
@@ -45,7 +43,7 @@ class SoftwareView(MainView):
             software.user = super(SoftwareView, self).getUserLogin(request).user
             software.save()
 
-            return HttpResponseRedirect(self.url)
+            return HttpResponseRedirect('/software/')
         else:
             return super(SoftwareView, self).render(request, 'software/create.html', {
                 'title': 'Add Software',
@@ -65,7 +63,7 @@ class SoftwareView(MainView):
             software = form.save(commit=False)
             software.save()
 
-            return HttpResponseRedirect(self.url)
+            return HttpResponseRedirect('/software/')
         else:
             return super(SoftwareView, self).render(request, 'software/update.html', {
                 'title': 'Edit Software',
@@ -74,10 +72,10 @@ class SoftwareView(MainView):
 
     def delete(self, request, software_id):
         software = Software.objects.get(software_id=software_id)
-        userLogin = super(SoftwareView, self).getUserLogin(request)
+        user_login = super(SoftwareView, self).getUserLogin(request)
 
-        if(software.user_id == userLogin.user.user_id):
+        if(software.user_id == user_login.user.user_id):
             software.delete()
-            return HttpResponseRedirect(self.url)
+            return HttpResponseRedirect(software)
 
-        return HttpResponseRedirect(self.url)
+        return HttpResponseRedirect('/software/')

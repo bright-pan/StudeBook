@@ -17,38 +17,35 @@
                     </tr>
                 {% endfor %}
                 {% else %}
-                    <tr><td colspan="3">No software found.</td></tr>
+                    <tr>
+                        <td colspan="3">No software found.</td>
+                    </tr>
                 {% endif %}
         </tbody>
     </table>
 
     <nav style="margin-bottom: 20px;">
-      <ul class="pagination">
-
-        {% if software_list.has_previous %}
-            <li><a href="/software/{{ software_list.previous_page_number }}/">&laquo;</a></li>
-        {% else %}
-            <li class="disabled"><a href="#">&laquo;</a></li>
-        {% endif %}
-
-        {% for index in paginationRange %}
-            <li class="{% if index = software_list.number %} active {% endif %}">
-                <a href="/software/{{ index }}/">
-                    {{ index }}
-                    {% if index = software_list.number %}
-                        <span class="sr-only">(current)</span>
-                    {% endif %}
-                </a>
-            </li>
-        {% endfor %}
-
-        {% if software_list.has_next %}
-            <li><a href="/software/{{ software_list.next_page_number }}/">&raquo;</a></li>
-        {% else %}
-            <li class="disabled"><a href="#">&raquo;</a></li>
-        {% endif %}
-
-      </ul>
-    </nav>    
-
+        <ul class="pagination">
+            {% if software_list.has_previous %}
+                <li><a href="/software/{{ software_list.previous_page_number }}/">&laquo;</a></li>
+            {% else %}
+                <li class="disabled"><a href="#">&laquo;</a></li>
+            {% endif %}
+            {% for index in pagination_range %}
+                <li class="{% if index = software_list.number %} active {% endif %}">
+                    <a href="/software/{{ index }}/">
+                        {{ index }}
+                        {% if index = software_list.number %}
+                            <span class="sr-only">(current)</span>
+                        {% endif %}
+                    </a>
+                </li>
+            {% endfor %}
+            {% if software_list.has_next %}
+                <li><a href="/software/{{ software_list.next_page_number }}/">&raquo;</a></li>
+            {% else %}
+                <li class="disabled"><a href="#">&raquo;</a></li>
+            {% endif %}
+        </ul>
+    </nav>
 {% endblock %}
