@@ -153,7 +153,9 @@ var StudeBookChat = function() {
             wrapper = self.renderChatWrapper(self.setChatWrapper(data.fullName, data.pk));
         };
         //Add message to chatContainer
-        wrapper.find('.chatContainer').prepend($('<p />').text(data.fullName + ' : ' + data.message));
+        var chatContainer = wrapper.find('.chatContainer');
+        chatContainer.append($('<p />').text(data.fullName + ' : ' + data.message));
+        chatContainer.scrollTop(chatContainer[0].scrollHeight);
         var nTop = (wrapper.height()*-1);
         wrapper.css({ top : nTop });
     };

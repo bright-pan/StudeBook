@@ -17,7 +17,7 @@
         <!-- Container -->
         <div class="container-fluid" id="container">
             <!-- Navigation -->
-            {% include "main/nav.html" %}
+            {% include "main/nav.html" with user_login=user_login file_category=file_category %}
 
             <div class="row">
                 <!-- Left Sidebar -->

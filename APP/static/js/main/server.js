@@ -41,9 +41,6 @@ var StudeBookServer = function() {
         self.setAction('ping', function(data) {
             self.server.send(JSON.stringify({ action : 'pong', message : ('Pong from client ' + localStorage.getItem('sb_user_id')) }));
         });
-        self.setAction('notifyFriendRequest', function(data){
-            // Code uitvoeren voor notifactie.
-        })
     };
 
     /**
@@ -144,4 +141,8 @@ var StudeBookServer = function() {
 $().ready(function(){
     SB.SERVER = new StudeBookServer();
     SB.SERVER.init('ws://185.10.51.243', 8001);
+    //Action for handling incoming friend request
+    SB.SERVER.setAction('notifyUserFriendRequest', function(data) {
+        console.log(data);
+    });
 });
