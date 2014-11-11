@@ -5,8 +5,26 @@ class FileForm(forms.ModelForm):
 	class Meta:
 		model = File
 		fields = ['file_category', 'name', 'description', 'path']
-		path = forms.FileField(
-	        label='Select a file',
-	        help_text='max. 42 megabytes'
-    	)
+		# path = forms.FileField(
+	 #        label='Select a file',
+	 #        help_text='max. 42 megabytes'
+  #   	)
+    	# widgets = {
+    	# 	# 'file_category': forms.ChoiceField(attrs={
+     #  #           'class': 'form-control'
+     #  #       }),
+     #        'name': forms.TextInput(attrs={
+     #            'class': 'form-control',
+     #            'placeholder': 'Enter name'
+     #        }),
+     #        'description': forms.Textarea(attrs={
+     #            'class': 'form-control',
+     #            'placeholder': 'Enter description',
+     #            'rows': '3'
+     #        }),
+     #        'path': forms.FileField(attrs={
+     #            'class': 'form-control',
+     #            'placeholder': 'Upload a file'
+     #        })
+     #    }
 
