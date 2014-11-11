@@ -149,14 +149,14 @@ class FileView (MainView):
             else:
                 return super(FileView, self).render(request, 'file/create.html', {
             'title'   : 'File upload failed',
-            'formset' : form
+            'form' : form
         });  
         else:
             form = FileForm()
 
         return super(FileView, self).render(request, 'file/create.html', {
             'title'   : 'Upload new file',
-            'formset' : form
+            'form' : form
         });  
 
     def addRating (self, request) :
