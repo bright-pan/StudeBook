@@ -43,24 +43,24 @@ class NotificationView (View):
 
     #Create notification
     def create (self, request, accessToken) :
-        #try :
-        #Get user by access token
-        requester = UserAccessToken.objects.get(access_token = accessToken).user;
-        recipient = User.objects.get(user_id = request.POST['recipient_id']);
-        #Create notification
-        Notification(
-            requester    = requester,
-            recipient    = recipient,
-            notification = request.POST['notification'],
-            category     = request.POST['category']
-        ).save();
-        #Response
-        return self.response({
-            'status'  : 200,
-            'message' : 'Notification created'
-        });
-        #except :
-        #    return self.response({ 'status' : 500, 'message' : 'Bad request' });
+        try :
+            #Get user by access token
+            requester = UserAccessToken.objects.get(access_token = accessToken).user;
+            recipient = User.objects.get(user_id = request.POST['recipient_id']);
+            #Create notification
+            Notification(
+                requester    = requester,
+                recipient    = recipient,
+                notification = request.POST['notification'],
+                category     = request.POST['category']
+            ).save();
+            #Response
+            return self.response({
+                'status'  : 200,
+                'message' : 'Notification created'
+            });
+        except :
+            return self.response({ 'status' : 500, 'message' : 'Bad request' });
 
     #Response 
     def response (self, data) :
