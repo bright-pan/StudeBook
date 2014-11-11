@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 #SB
 from APP.models.UserLoginModel import UserLogin
 from APP.models.UserFriendModel import UserFriend
-
+from APP.models.FileCategoryModel import FileCategory
 
 """
  @class MainView
@@ -28,6 +28,9 @@ class MainView(View) :
         if (self.isLoggedIn(request)) :
             return UserFriend.getUserFriendByUser(self.getUserLogin(request).user);
 
+    def getFileCategory (self) :
+        return FileCategory.objects.all();
+
     #Get user login instance
     def getUserLogin (self, request) :
         if (self.isLoggedIn(request)) :
@@ -41,9 +44,10 @@ class MainView(View) :
           return HttpResponseRedirect('/authentication/login/');
         #Manipulate params
         params.update({
-            'logged_in'   : self.isLoggedIn(request),
-            'user_login'  : self.getUserLogin(request),
-            'request_uri' : request.get_full_path()
+            'logged_in'     : self.isLoggedIn(request),
+            'user_login'    : self.getUserLogin(request),
+            'request_uri'   : request.get_full_path(),
+            'file_category' : self.getFileCategory()
         });
         #Render view
         return render(request, template, params);

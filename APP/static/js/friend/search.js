@@ -35,9 +35,9 @@ function bindButtons() {
             $(this).prop('disabled', true);
             $(this).html('Request sent');
             SB.SERVER.notifyServer({
-                action: 'notifyFriendRequest',
-                data: {
-                    targetUser : user
+                action: 'notifyUserFriendRequest',
+                data : {
+                    clientID : user
                 }
             });
         }
