@@ -28,8 +28,7 @@ class PageView (MainView):
             search = '';
         pages = Page.objects.filter((Q(publiced='1') | Q(user_id = userLogin.user)) & (Q(title__icontains = search))).order_by('title');
         
-        
-        paginator = Paginator(pages, 5);
+        paginator = Paginator(pages, 10);
         try:
             pages = paginator.page(page)
         except PageNotAnInteger:
@@ -78,7 +77,7 @@ class PageView (MainView):
                 'page' : page,
             });
             
-        return HttpResponseRedirect('/page/getPage/' + pageID)
+        return HttpResponseRedirect('/page/show/' + pageID)
 
     #Edit detail page 
     def deletePage(self, request, pageID) :
@@ -89,14 +88,14 @@ class PageView (MainView):
             page.delete()
             return HttpResponseRedirect('/page/')
 
-        return HttpResponseRedirect('/page/getPage/' + pageID)
+        return HttpResponseRedirect('/page/show/' + pageID)
 
     def create(self, request) :
         userLogin = super(PageView, self).getUserLogin(request)
         new_entry = Page(title='title', user=userLogin.user, body='body', publiced='1')
         new_entry.save()
 
-        return HttpResponseRedirect('/page/getPage/'+ str(new_entry.page_id) +'/edit/')
+        return HttpResponseRedirect('/page/show/'+ str(new_entry.page_id) +'/edit/')
 
     def update (self, request) :
         name = request.POST.get('name', '')
@@ -116,11 +115,11 @@ class PageView (MainView):
         subscription = PageSubscription.objects.filter(Q(page_id = pageID) & Q(user_id = userLogin));
 
         subscription.delete()
-        return HttpResponseRedirect('/page/getPage/' + pageID)
+        return HttpResponseRedirect('/page/show/' + pageID)
     
     def subscribe (self, request, pageID) :
         userLogin = super(PageView, self).getUserLogin(request);
         pagesubscription = PageSubscription(page_id = pageID, user_id = userLogin.user.user_id)
         pagesubscription.save()
 
-        return HttpResponseRedirect('/page/getPage/' + pageID)
+        return HttpResponseRedirect('/page/show/' + pageID)
