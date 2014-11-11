@@ -6,22 +6,26 @@
 {% endblock %} 
 {% block content %}
 <div class="container page" style="margin-bottom: 100px;">
-	<div class="col-md-10">
-		<h1>{{ title }}</h1>
-			<form name="input" action="" id="search" method="POST">
-				<input type="text" name="search" class="search square" placeholder="Search for event title">
-				<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
-			</form>
-	</div>
-	<a href="add"><div class="col-md-2 add" style="padding-top: 20px; font-size: 30pt;"></div></a>
-	{% for event in event_list %}
-		<div class="pagelist col-md-12">
-			<a href="/event/getEvent/{{ event.event_id }}"><h3>{{ event.title }}</h3></a>
-			<h5>Created by : {{ event.user }} </h5>
-			<h5>Date : {{ event.datestart }} - {{ event.dateend }}</h5>
-		</div>
+	<h1 style="float: left; width: 200px;">{{ title }}</h1>
+    <a href="add" class="btn btn-primary pull-right m-l-10" style="margin-top: 20px;"><span class="glyphicon glyphicon-plus"></span> Add Event</a>
 
-	{% endfor %}
+	<table style="width: 100%;" class="table table-striped table-hover">
+		<thead><tr><th>Event</th><th>Created by</th><th>Start Date</th><th>End Date</th></tr></thead>
+		<tbody>
+			{% if event_list %}
+				{% for event in event_list %}
+					<tr>
+						<td><a href="/event/getEvent/{{ event.event_id }}">{{ event.title }}</a></td>
+						<td>{{ event.user }}</td>
+						<td>{{ event.datestart }}</td>
+						<td>{{ event.dateend }}</td>
+					</tr>
+				{% endfor %}
+				{% else %}
+					<tr><td colspan="5">No events found.</td></tr>
+				{% endif %}
+		</tbody>
+	</table>
 	<nav style="margin-bottom: 20px;">
 	  <ul class="pagination">
 
