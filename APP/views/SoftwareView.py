@@ -3,6 +3,8 @@ from APP.views.MainView import MainView
 from APP.models.SoftwareModel import Software
 from APP.forms.SoftwareForm import SoftwareForm
 
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 """
  @class SoftwareView
  @version 0.1
@@ -13,10 +15,26 @@ from APP.forms.SoftwareForm import SoftwareForm
 class SoftwareView(MainView):
     url = '/software/'
 
-    def index(self, request):
+    def index(self, request, page = 1):
+
+        software = Software.objects.all();
+
+        paginator = Paginator(software, 10);
+        try:
+            software = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            software = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            software = paginator.page(paginator.num_pages)
+
+        paginationRange = [i+1 for i in range(software.paginator.num_pages)]; 
+
         return super(SoftwareView, self).render(request, 'software/index.html', {
             'title': 'Software',
-            'software_list': Software.objects.all()
+            'software_list': software,
+            'paginationRange' : paginationRange
         })
 
     def create(self, request):

@@ -11,13 +11,13 @@
         <h5><strong>Description:</strong></h5>
         <p>{{ software.description }}</p>
     </div>
-    <div class="col-md-14 col-margin-bottom">
+    <div class="col-md-14 col-margin-bottom" style="float: left;">
         <h4><a href="{{ software.url }}" target="_blank" class="btn btn-warning"><span class="glyphicon glyphicon-download"></span> Get software</a></h4>
     </div>
     {% if software.user == user_login.user %}
         <div class="col-md-14 col-margin-top">
-            <a href="delete" class="btn btn-danger pull-right m-l-10"><span class="glyphicon glyphicon-remove"></span> Delete</a>
-            <a href="edit" class="btn btn-primary pull-right m-l-10"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+            <a href="/software/delete/{{ software.software_id }}" class="btn btn-danger pull-right m-l-10" style="margin-top: 11px;"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+            <a href="/software/update/{{ software.software_id }}" class="btn btn-primary pull-right m-l-10" style="margin-top: 11px;"><span class="glyphicon glyphicon-edit"></span> Edit</a>
         </div>
     {% endif %}
 {% endblock %}
