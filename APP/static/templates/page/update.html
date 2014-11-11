@@ -13,7 +13,7 @@
     <table class="table">
         <tr>
             <th>
-                Page Details UPDATE
+                Page Details
             </th>
         </tr>
         <tr>
@@ -29,7 +29,7 @@
                 Publiced
             </td>
             <td>
-                <a href="#" class="editable" data-type="select" data-name="publiced" data-pk="{{ page.page_id }}" data-url="{% url 'page_update' %}" data-source='{"0": "Not publiced", "1": "Publiced"}' data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}" data-value="{{ page.body }}">
+                <a href="#" class="editable" data-type="select" data-name="publiced" data-pk="{{ page.page_id }}" data-url="{% url 'page_update' %}" data-source='{"0": "Not publiced", "1": "Publiced"}' data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}" data-value="{{ page.getPubliced }}">
                 {{ page.getPubliced }}</a>
             </td>
         </tr>
@@ -45,10 +45,10 @@
 
         <tr>
             <td class="col-xs-3">
-                Page Image
+                Page Image Url
             </td>
             <td>
-                <a href="#" class="editable" data-type="textarea" data-name="img" data-pk="{{ page.page_id }}" data-url="{% url 'page_update' %}" data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}" data-value="{{ page.img }}">{{ page.img }}</a>
+                <a href="#" class="editable" data-type="text" data-name="img" data-pk="{{ page.page_id }}" data-url="{% url 'page_update' %}" data-params= "{csrfmiddlewaretoken:'{{csrf_token}}'}" data-value="{{ page.img }}">{{ page.img }}</a>
             </td>
         </tr>
 

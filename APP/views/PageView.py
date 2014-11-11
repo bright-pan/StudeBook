@@ -8,6 +8,8 @@ from APP.models.UserLoginModel import UserLogin
 from APP.models.UserModel import User
 from django.db.models import Q
 
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 """
  ### StudeBook main page ### 
  @class APPView
@@ -18,16 +20,31 @@ from django.db.models import Q
 class PageView (MainView):
 
     #Get pages list
-    def index(self, request) :
+    def index(self, request, page = 1) :
         userLogin = super(PageView, self).getUserLogin(request);
         if request.method == "POST":
             search = request.POST['search'];
         else:
             search = '';
+        pages = Page.objects.filter((Q(publiced='1') | Q(user_id = userLogin.user)) & (Q(title__icontains = search))).order_by('title');
         
+        
+        paginator = Paginator(pages, 5);
+        try:
+            pages = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            pages = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            pages = paginator.page(paginator.num_pages)
+
+        paginationRange = [i+1 for i in range(pages.paginator.num_pages)];  
+
         return super(PageView, self).render(request, 'page/index.html', {
             'title'   : 'All pages', 
-            'page_list' : Page.objects.filter((Q(publiced='1') | Q(user_id = userLogin.user)) & (Q(title__contains = search))).order_by('title'),
+            'paginationRange' : paginationRange,
+            'page_list' : pages,
         
         });
 
@@ -76,7 +93,7 @@ class PageView (MainView):
 
     def create(self, request) :
         userLogin = super(PageView, self).getUserLogin(request)
-        new_entry = Page(title='title', user=userLogin.user, body='body', publiced='0')
+        new_entry = Page(title='title', user=userLogin.user, body='body', publiced='1')
         new_entry.save()
 
         return HttpResponseRedirect('/page/getPage/'+ str(new_entry.page_id) +'/edit/')

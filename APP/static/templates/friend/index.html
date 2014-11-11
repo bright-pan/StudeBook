@@ -1,4 +1,6 @@
-{% extends "main/main.html" %} {% block content %}
+{% extends "main/main.html" %}{% load staticfiles %} {% block head %}
+<script src="{% static 'js/friend/friends.js' %}" type="text/javascript"></script>
+{% endblock %} {% block content %}
 <div class="contrainer">
     <h1>Friends</h1>
     <form role="form" class="form-inline m-b-20" action="search/" method="post">
@@ -17,13 +19,16 @@
 
         {% for friend in friends %}
         <tr>
-            <td>
+            <td data-user-id='{{ friend.user_id }}' data-current-user='{{ userLogin.user.user_id }}'>
                 {{ friend }}
-                <button class="btn btn-primary">Check le profille</button>{%empty%}
-                <tr>
-                    <td>You don't have any friends yet!</td>
-                </tr>
+                <a href="/profile/{{ match.user_id }}" class="btn btn-primary pull-right m-l-10">Check le profille</a>
+                <button class="btn btn-danger pull-right m-l-10 de-friend">Remove friend</button>
+                <button class="btn btn-danger pull-right block">Block</button>
             </td>
+        </tr>
+        {%empty%}
+        <tr>
+            <td>You don't have any friends yet!</td>
         </tr>
         {% endfor %}
 

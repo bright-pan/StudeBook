@@ -27,13 +27,15 @@
 ****** CHAT BOX ********
 ***********************/
 
+body #footer div.container-fluid {
+    position : relative;
+}
+
 body div.chatWrapper {
-    width     : 400px !important;
-    display   : block;
-    z-index   : 10000;
-    position  : absolute !important;
-    top       : 0;
-    right     : 0;
+    width   : 400px;
+    display : block;
+    z-index : 10000;
+    height  : auto;
 }
 
 body div.chatWrapper h3.header a.title {

@@ -15,5 +15,6 @@ urlpatterns = patterns('',
 	url(r'^event/', include('APP.routers.routes.event')),
 	url(r'^software/', include('APP.routers.routes.software')),
 	url(r'^file/', include('APP.routers.routes.file')),
-	url(r'^friends/', include('APP.routers.routes.friend'))
+	url(r'^friends/', include('APP.routers.routes.friend')),
+	url(r'^notifications/', include('APP.routers.routes.notification'))
 )

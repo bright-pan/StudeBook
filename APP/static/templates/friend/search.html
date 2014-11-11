@@ -11,20 +11,22 @@
         </div>
     </form>
     <table class="table">
-        {% for match in matches %} {% if match.status != 4 %}
+        {% for match in matches %} {% if match.status != 'blocked' %}
         <tr>
             <td data-user-id='{{ match.user_id }}' data-current-user='{{ userLogin.user.user_id }}'>
                 {{ match.first_name }} {{ match.last_name }}
                 <a href="/profile/{{ match.user_id }}" class="btn btn-primary pull-right m-l-10">Check le profille</a>
-                {% if match.status == 'pending'%}
+                {% if match.status == 'request'%}
                 <button class="btn btn-primary pull-right m-l-10 cancel-request">Pending...</button>
                 {% elif match.status == 'accepted' %}
                 <button class="btn btn-danger pull-right m-l-10 de-friend">Remove friend</button>
+                {% elif match.status == 'pending' %}
+                <button class="btn btn-success pull-right m-l-10 accept-friend">Accept</button>
                 {% else %}
                 <button class="btn btn-primary pull-right m-l-10 add-friend">Add friend</button>
                 {% endif%}
 
-                {% if match.status == 'blocked'%}
+                {% if match.status == 'blocker'%}
                 <button class="btn btn-danger pull-right un-block">Unblock</button>
                 {% else %}
                 <button class="btn btn-danger pull-right block">Block</button>

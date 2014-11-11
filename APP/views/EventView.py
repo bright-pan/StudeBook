@@ -8,6 +8,7 @@ from APP.models.UserLoginModel import UserLogin
 from APP.models.UserModel import User
 from django.db.models import Q
 
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 """
  ### StudeBook main event ### 
  @class APPView
@@ -18,16 +19,31 @@ from django.db.models import Q
 class EventView (MainView):
 
     #Get event list
-    def index(self, request) :
+    def index(self, request, page = 1) :
         userLogin = super(EventView, self).getUserLogin(request);
         if request.method == "POST":
             search = request.POST['search'];
         else:
             search = '';
         
+        events = Event.objects.filter((Q(publiced='1') | Q(user_id = userLogin.user)) & (Q(title__icontains = search))).order_by('title');
+
+        paginator = Paginator(events, 5);
+        try:
+            events = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            events = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            events = paginator.page(paginator.num_pages)
+
+        paginationRange = [i+1 for i in range(events.paginator.num_pages)];  
+
         return super(EventView, self).render(request, 'event/index.html', {
             'title'   : 'All events', 
-            'event_list' : Event.objects.filter((Q(publiced='1') | Q(user_id = userLogin.user)) & (Q(title__icontains = search))).order_by('title'),
+            'paginationRange' : paginationRange,
+            'event_list' : events,
         
         });
 
