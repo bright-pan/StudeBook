@@ -15,13 +15,16 @@
 {% endblock %}
 
 {% block content %}
-	<h1>{{ title }}</h1>
-	<h3>{{ category.category }}</h3>
+	<div style="display: block; height: 80px;">
+		<h1 style="float: left; width: 200px;">{{ category.category }}</h1>
 
-	<input type="hidden" id="categoryId" value="{{ category.file_category_id }}" />
-	<input type="hidden" id="page" value="{{ file_list.number }}" />
+	    <a href="/file/create/" class="btn btn-primary pull-right m-l-10" style="margin-top: 25px;"><span class="glyphicon glyphicon-plus"></span> Add File</a>
+
+		<input type="hidden" id="categoryId" value="{{ category.file_category_id }}" />
+		<input type="hidden" id="page" value="{{ file_list.number }}" />
+	</div>
 	
-	<div style="float: right;">
+	<div class="pull-right">
 		<strong>Order by: </strong> 
 		<select id="orderBy">
 			<option value="rating/desc"{% if orderBy = "rating/desc" %} selected="selected"{% endif %}>Rating (highest first)</option>
@@ -41,9 +44,9 @@
 			{% if file_list %}
 				{% for file in file_list %}
 					<tr>
-						<td><a href="/file/show/{{ file.file_id }}">{{ file.name }}</a></td>
+						<td><a href="/file/read/{{ file.file_id }}">{{ file.name }}</a></td>
 						<td>{{ file.upload_date }}</td>
-						<td>{{ file.user }}</td>
+						<td><a href="/profile/{{ file.user.user_id }}/">{{ file.user }}</a></td>
 						<td>{{ file.downloads }} x</td>
 						<td>
 							<div class="starRate" style="float: left;">

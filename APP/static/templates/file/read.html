@@ -33,8 +33,7 @@
 		<table>
 			<tr><td style="width: 200px; font-weight: bold;">Uploaded by</td><td><a href="/profile/{{file.user.user_id }}/">{{ file.user }}</a></td></td></tr>
 			<tr><td style="font-weight: bold;">Category</td><td><a href="/file/{{file.file_category.file_category_id }}/">{{ file.file_category }}</a></td></tr>
-			<tr><td style="font-weight: bold;">Description</td><td>{{ file.description }}</td></tr>
-			<tr><td style="font-weight: bold;">Date</td><td>{{ file.upload_date }}</td></tr>
+			<tr><td style="font-weight: bold;">Date added</td><td>{{ file.upload_date }}</td></tr>
 			<tr><td style="font-weight: bold;">Filesize</td><td>{{ file.size }} MB</td></tr>
 			<tr><td style="font-weight: bold;">Price</td><td>{{ file.price }}</td></tr>
 			<tr><td style="font-weight: bold;">Downloads</td><td>{{ numberOfDownloads }}x</td></tr>
@@ -56,7 +55,21 @@
 </td>
 </tr>
 </table>
+<br />
+<strong>Description:</strong>
+<br />
+{{ file.description }}
 <br /><br />
-<a href="/file/download/{{ file.file_id }}" target="_blank"><button class="btn btn-primary">Download</button></a>
+<div class="col-md-14 col-margin-bottom" style="float: left;">
+    <h4><a href="/file/download/{{ file.file_id }}" target="_blank" class="btn btn-warning"><span class="glyphicon glyphicon-download"></span> Download file</a></h4>
+</div>
+
+{% if file.user == user_login.user %}
+    <div class="col-md-14 col-margin-top">
+        <a href="/file/delete/{{ software.software_id }}" class="btn btn-danger pull-right m-l-10"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+        <a href="/file/update/{{ software.software_id }}" class="btn btn-primary pull-right m-l-10"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+    </div>
+{% endif %}
+
 
 {% endblock %}

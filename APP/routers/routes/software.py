@@ -4,8 +4,9 @@ from APP.views.SoftwareView import SoftwareView
 
 urlpatterns = patterns('',
     url(r'^$', SoftwareView().index),
-    url(r'^add/$', SoftwareView().create),
-    url(r'^(?P<software_id>\d+)/$', SoftwareView().read),
-    url(r'^(?P<software_id>\d+)/edit/$', SoftwareView().update),
-    url(r'^(?P<software_id>\d+)/delete/$', SoftwareView().delete)
+    url(r'^(?P<page>\d+)/$', SoftwareView().index),
+    url(r'^create/$', SoftwareView().create),
+    url(r'^read/(?P<software_id>\d+)/$', SoftwareView().read),
+    url(r'^update/(?P<software_id>\d+)/$', SoftwareView().update),
+    url(r'^delete/(?P<software_id>\d+)/$', SoftwareView().delete)
 )

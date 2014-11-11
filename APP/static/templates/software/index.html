@@ -1,17 +1,54 @@
 {% extends "main/main.html" %}
 
 {% block content %}
-    <h1>{{ title }}</h1>
+    <h1 style="float: left; width: 200px;">{{ title }}</h1>
 
-	{% for software in software_list %}
-        <div class="col-md-20">
-            <h3><a href="{{ software.software_id }}">{{ software.name }}</a></h3>
-            <h5>Added by: {{ software.user }}</h5>
-            <h5>Date added: {{ software.date }}</h5>
-        </div>
-	{% endfor %}
+    <a href="/software/create" class="btn btn-primary pull-right m-l-10" style="margin-top: 25px;"><span class="glyphicon glyphicon-plus"></span> Add Software</a>
 
-    <div class="col-md-14 col-margin-top">
-        <a href="add" class="btn btn-primary pull-right m-l-10"><span class="glyphicon glyphicon-plus"></span> Add Software</a>
-    </div>
+    <table style="width: 100%;" class="table table-striped table-hover">
+        <thead><tr><th>Name</th><th>User</th><th>Date</th></tr></thead>
+        <tbody>
+            {% if software_list %}
+                {% for software in software_list %}
+                    <tr>
+                        <td><a href="/software/read/{{ software.software_id }}">{{ software.name }}</a></td>
+                        <td><a href="/profile/{{ software.user.user_id }}">{{ software.user }}</a></td>
+                        <td>{{ software.date }}</td>
+                    </tr>
+                {% endfor %}
+                {% else %}
+                    <tr><td colspan="3">No software found.</td></tr>
+                {% endif %}
+        </tbody>
+    </table>
+
+    <nav style="margin-bottom: 20px;">
+      <ul class="pagination">
+
+        {% if software_list.has_previous %}
+            <li><a href="/software/{{ software_list.previous_page_number }}/">&laquo;</a></li>
+        {% else %}
+            <li class="disabled"><a href="#">&laquo;</a></li>
+        {% endif %}
+
+        {% for index in paginationRange %}
+            <li class="{% if index = software_list.number %} active {% endif %}">
+                <a href="/software/{{ index }}/">
+                    {{ index }}
+                    {% if index = software_list.number %}
+                        <span class="sr-only">(current)</span>
+                    {% endif %}
+                </a>
+            </li>
+        {% endfor %}
+
+        {% if software_list.has_next %}
+            <li><a href="/software/{{ software_list.next_page_number }}/">&raquo;</a></li>
+        {% else %}
+            <li class="disabled"><a href="#">&raquo;</a></li>
+        {% endif %}
+
+      </ul>
+    </nav>    
+
 {% endblock %}

@@ -72,7 +72,7 @@ class FileView (MainView):
 
         });
 
-    def show (self, request, id) :
+    def read (self, request, id) :
         
     	file = File.objects.get(file_id = id)
 
@@ -90,7 +90,7 @@ class FileView (MainView):
             file.price = str(file.price) + " credit"
 
 
-        return super(FileView, self).render(request, 'file/show.html', {
+        return super(FileView, self).render(request, 'file/read.html', {
             'title'   : 'File',
             'file' : file,
             'numberOfDownloads' : numberOfDownloads,
