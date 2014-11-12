@@ -10,4 +10,5 @@ urlpatterns = patterns('',
     url(r'remove/(?P<userId>\d+)$', FriendView().removeFriend),
     url(r'cancel/(?P<userId>\d+)$', FriendView().cancelRequest),
     url(r'undoBlock/(?P<userId>\d+)$', FriendView().unblock),
+    url(r'request/$', FriendView().friendRequest),
 )

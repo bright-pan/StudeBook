@@ -21,7 +21,7 @@
                 <td class="status">{{ notification.getRead }}</td>
             </tr>
             <tr class="body disabled notification-{{ notification.pk }}">
-                <td colspan="4">{{ notification }}</td>
+                <td colspan="4">{{ notification }} <br> <a href="{{ notification.goto_url }}">Click here!</a></td>
             </tr>
             {% endfor %}
         </table>

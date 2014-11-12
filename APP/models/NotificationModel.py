@@ -12,6 +12,7 @@ class Notification(models.Model) :
     datetime = models.DateTimeField(null=True,blank=True);
     read = models.SmallIntegerField(max_length=1,null=True,blank=True,default=0);
     category = models.CharField(max_length=50);
+    goto_url = models.CharField(max_length=100);
 
     def getRead (self) :
         return 'unread' if self.read == 0 else 'read';
