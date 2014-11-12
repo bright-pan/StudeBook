@@ -6,6 +6,4 @@ SB.CONFIG.API_URI = SB.CONFIG.BASE_URI + 'api/';
 
 $().ready(function() {
 //	alert(111);
-    $('title').text('Black market');
-    $('.navbar-brand').text('Black market');
 });
