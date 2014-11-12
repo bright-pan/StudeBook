@@ -13,6 +13,9 @@ class Notification(models.Model) :
     read = models.SmallIntegerField(max_length=1,null=True,blank=True,default=0);
     category = models.CharField(max_length=50);
 
+    def getRead (self) :
+        return 'unread' if self.read == 0 else 'read';
+
     def __str__ (self) :
         return self.notification;
 
