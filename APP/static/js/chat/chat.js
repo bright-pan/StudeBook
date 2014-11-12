@@ -109,7 +109,7 @@ var StudeBookChat = function() {
         chatBox.keyup(function(e){
             var message = $(this).val();
             if(e.keyCode == 13 && message) {
-                chatContainer.append($('<p />').attr('class','me').text(message + ' : ' + 'me'));
+                chatContainer.append($('<p />').attr('class','me').text(message));
                 chatContainer.scrollTop(chatContainer[0].scrollHeight);
                 self.notifyUserFriend(userID, message);
                 $(this).val('');

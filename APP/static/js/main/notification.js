@@ -77,7 +77,5 @@ var Notification = function() {
 $().ready(function(){
     SB.NOTIFICATION = new Notification();
     SB.NOTIFICATION.init();
-
-    setInterval(SB.NOTIFICATION.update,1000);
-
+    setInterval(SB.NOTIFICATION.update,10000);
 });
