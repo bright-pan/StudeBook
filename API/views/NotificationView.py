@@ -52,7 +52,8 @@ class NotificationView (View):
                 requester    = requester,
                 recipient    = recipient,
                 notification = request.POST['notification'],
-                category     = request.POST['category']
+                category     = request.POST['category'],
+                goto_url     = request.POST['goto_url']
             ).save();
             #Response
             return self.response({

@@ -145,4 +145,7 @@ $().ready(function(){
     SB.SERVER.setAction('notifyUserFriendRequest', function(data) {
         SB.NOTIFICATION.update();
     });
+    SB.SERVER.setAction('notifyUserFriendAcceptedRequest', function(data) {
+        SB.NOTIFICATION.update();
+    });
 });
