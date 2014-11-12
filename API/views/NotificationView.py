@@ -62,6 +62,26 @@ class NotificationView (View):
         except :
             return self.response({ 'status' : 500, 'message' : 'Bad request' });
 
+    #Update notification
+    def update (self, request, accessToken) :
+        try :
+            #Get user by access token
+            user = UserAccessToken.objects.get(access_token = accessToken).user;
+            notification = Notification.objects.get(recipient = user, notification_id = request.POST['notification_id']);
+            notification.read = request.POST['read'];
+            notification.save();
+            #Response
+            return self.response({
+                'status' : 200,
+                'data'   : {
+                    'total'  : len(Notification.objects.filter(recipient = user)),
+                    'unread' : len(Notification.objects.filter(recipient = user, read = 0))
+                }
+            });
+        except :
+            return self.response({ 'status' : 500, 'message' : 'Bad request' });
+
+
     #Response 
     def response (self, data) :
         return HttpResponse(json.dumps(data), content_type = 'application/json');

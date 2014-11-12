@@ -67,3 +67,12 @@ body {
 .col-margin-bottom {
     margin-bottom: 20px;
 }
+
+
+.badge.notification {
+    background : red;
+    border : 2px solid #fff;
+    -webkit-box-shadow: 0 8px 6px -6px black;
+    -moz-box-shadow: 0 8px 6px -6px black;
+    box-shadow: 0 8px 6px -6px black;
+}

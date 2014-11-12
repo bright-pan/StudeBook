@@ -15,10 +15,10 @@
             </tr>
             {% for notification in notification_list %}
             <tr class="head">
-                <td><a href="#" class="notification" rel="{{ notification.pk }}"><span>{{ notification.requester }}</span><span class="caret"></span></a></td>
+                <td><a href="#" class="notification {{ notification.getRead }}" rel="{{ notification.pk }}"><span>{{ notification.requester }}</span><span class="caret"></span></a></td>
                 <td>{{ notification.category }}</td>
                 <td>{{ notification.datetime }}</td>
-                <td>{{ notification.read }}</td>
+                <td class="status">{{ notification.getRead }}</td>
             </tr>
             <tr class="body disabled notification-{{ notification.pk }}">
                 <td colspan="4">{{ notification }}</td>

@@ -4,9 +4,17 @@
 $().ready(function(){
     //Set chat wrapper
     $('#notification').delegate('a.notification', 'click', function() {
+        //Toggle notification body
         var pk = $(this).attr('rel');
         var notification = $('tr.notification-'+pk);
         var disabled = notification.attr('class').indexOf('disabled') != -1 ? true : false;
         notification.addClass(disabled ? 'enabled' : 'disabled').removeClass(disabled ? 'disabled' : 'enabled');
+        //Unread message
+        if($(this).attr('class').indexOf('unread') != -1) {
+            //Update status
+            $(this).addClass('read').removeClass('unread');
+            $(this).closest('tr').find('.status').text('read');
+            SB.NOTIFICATION.updateStatus(pk);
+        };
     });
 });
