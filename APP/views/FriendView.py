@@ -144,4 +144,16 @@ class FriendView(MainView):
 		response_data['message'] = 'Succes'
 		return HttpResponse(json.dumps(response_data), content_type="application/json")
 
+	def friendRequest (self, request) :
+		userLogin = super(FriendView, self).getUserLogin(request)
+		friendRequests = UserFriend.objects.filter(requester_id = userLogin.user.user_id, status = 'pending')
+		for friendRequest in friendRequests:
+			user = User.objects.get(user_id=friendRequest.recipient_id)
+			friendRequest.first_name = user.first_name
+			friendRequest.last_name = user.last_name
+	
+		return super(FriendView, self).render(request, 'friend/requests.html', {
+			'matches' : friendRequests
+		});
+
 	

@@ -19,6 +19,7 @@ from APP.models.FileCategoryModel import FileCategory
 from APP.models.FileDownloadModel import FileDownload
 from APP.forms.FileForm import FileForm
 from APP.forms.FileUpdateForm import FileUpdateForm
+from APP.models.NotificationModel import Notification
 
 """
  ### StudeBook Files page ### 
@@ -112,12 +113,23 @@ class FileView (MainView):
             if file.user != user and FileDownload.objects.filter(file = file, user = user).count() == 0:
                 fd = FileDownload(file = file, user = user);
                 user.credits -= file.file_category.file_price;
-                file.user.credits += (file.file_category.file_price - 1);
+                credits = (file.file_category.file_price - 1);
+                file.user.credits += credits;
 
                 fd.save();
                 user.save();
                 file.user.save();
-              
+
+                #ADD NOTIFICATION
+                Notification(
+                    requester = user,
+                    recipient = file.user,
+                    category = 'File downloaded',
+                    notification = user.getFullName() + ' has downloaded "' + file.name + '" you\'ve earned ' + str(credits) + ' credits',
+                    goto_url = '/file/read/'+str(file.pk)
+                ).save();
+                #ADD NOTIFICATION
+
             # Prepare file download...  
             path = file.path.url;
             wrapper = FileWrapper( open( path, "r" ) )

@@ -26,6 +26,7 @@ var Notification = function() {
      * Check weather there are notifications or not
      */
     this.update = function() {
+        console.log('Notification -> update');
         var URI = '/api/notification/getCount/accessToken:'+localStorage.getItem('sb_access_token') + '/';
         $.get(URI, function(response){
             if(response.status == 200) {
@@ -76,4 +77,7 @@ var Notification = function() {
 $().ready(function(){
     SB.NOTIFICATION = new Notification();
     SB.NOTIFICATION.init();
+
+    setInterval(SB.NOTIFICATION.update,1000);
+
 });

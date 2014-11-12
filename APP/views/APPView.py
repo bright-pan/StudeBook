@@ -1,5 +1,6 @@
 #StudeBook
 from APP.views.MainView import MainView
+from django.http import HttpResponse, HttpResponseRedirect
 
 """
  ### StudeBook main page ### 
@@ -11,8 +12,7 @@ from APP.views.MainView import MainView
 class APPView (MainView):
 
     def get (self, request) :
-        
-        return super(APPView, self).render(request, 'home/app.html', {
-            'title'   : 'StudeBook',
-            'message' : 'Welkom.'
-        });
+        #TMP AUTHENTICATION FIX
+        if (not super(APPView,self).isLoggedIn(request)) :
+          return HttpResponseRedirect('/authentication/login/');
+        return HttpResponseRedirect('/profile');

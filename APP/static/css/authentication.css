@@ -29,7 +29,6 @@ html, body, #authentication {
 }
 
 div.button {
-    border : 1px solid red;
     height : 135px;
     width  : 135px;
     display : inline-block;
