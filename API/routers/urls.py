@@ -8,4 +8,5 @@ urlpatterns = patterns('',
 	url(r'^/externalAccountLogin/', include('API.routers.routes.authentication')),
 	url(r'^/user/', include('API.routers.routes.user')),
 	url(r'^/notification/', include('API.routers.routes.notification')),
+	url(r'^/update/', include('API.routers.routes.update')),
 )
