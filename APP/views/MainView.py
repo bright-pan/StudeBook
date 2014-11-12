@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect
 from APP.models.UserLoginModel import UserLogin
 from APP.models.UserFriendModel import UserFriend
 from APP.models.FileCategoryModel import FileCategory
+from APP.models.UpdateModel import Update
 
 """
  @class MainView
@@ -37,6 +38,9 @@ class MainView(View) :
             return UserLogin.objects.get(user_login_id = self.getSessionValue(request, 'user_login_id'));
         return False;
 
+    def getUpdates(self) :
+        return Update.objects.all();
+
     #Render template
     def render (self, request, template, params) :
         #TMP AUTHENTICATION FIX
@@ -47,7 +51,8 @@ class MainView(View) :
             'logged_in'     : self.isLoggedIn(request),
             'user_login'    : self.getUserLogin(request),
             'request_uri'   : request.get_full_path(),
-            'file_category' : self.getFileCategory()
+            'file_category' : self.getFileCategory(),
+            'updates'       : self.getUpdates()
         });
         #Render view
         return render(request, template, params);
