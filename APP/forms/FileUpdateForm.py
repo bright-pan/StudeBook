@@ -6,11 +6,8 @@ class FileUpdateForm(forms.ModelForm):
 
     class Meta:
         model = File
-        fields = ['file_category', 'name', 'description']
+        fields = ['name', 'description']
         widgets = {
-            'file_category': forms.Select(attrs={
-                'class': 'form-control'
-            }),
             'name': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Enter name'
