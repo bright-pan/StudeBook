@@ -4,7 +4,7 @@ from django.db import models
 
 class UserType(models.Model):
     
-    user_type_id = models.AutoField(primary_key=True)
+    user_type_id = models.AutoField(primary_key=True, default=5)
     type = models.CharField(max_length=45, blank=True)
 
     class Meta:

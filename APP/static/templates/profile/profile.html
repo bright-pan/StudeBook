@@ -2,14 +2,14 @@
 <script src="{% static 'js/profile/profile.js' %}" type="text/javascript"></script>
 <link rel="stylesheet" href="{% static 'css/message.css' %}">{% endblock %} {% block content %}
 
-<div class="container">
+<div class="wrapper">
     <h1>{{ user.first_name}} {{ user.last_name }}</h1>
     <a href="details/">Personal details</a>
     {% if showAll %}
     <div class="messages">
-        <div class="message-box" data-current-user="{{ currentUserId }}" data-target-user="{{ user.user_id }}">
+        <div class="message-box col-md-10" data-current-user="{{ currentUserId }}" data-target-user="{{ user.user_id }}">
             <textarea class="form-control" placeholder="What are you doing right now?"></textarea>
-            <button type="submit" class="btn btn-primary send-message">Send</button>
+            <button type="submit" class="btn btn-primary send-message form-control">Send</button>
         </div>
         {% for message in messages%}
         <div class="message">

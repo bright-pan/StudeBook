@@ -21,7 +21,7 @@
         <tr>
             <td data-user-id='{{ friend.user_id }}' data-current-user='{{ userLogin.user.user_id }}'>
                 {{ friend }}
-                <a href="/profile/{{ match.user_id }}" class="btn btn-primary pull-right m-l-10">Profile</a>
+                <a href="/profile/{{ friend.user_id }}" class="btn btn-primary pull-right m-l-10">Profile</a>
                 <button class="btn btn-danger pull-right m-l-10 de-friend">Remove friend</button>
                 <button class="btn btn-danger pull-right block">Block</button>
             </td>

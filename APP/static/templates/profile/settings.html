@@ -45,6 +45,14 @@
         </tr>
         <tr>
             <td class="col-xs-3">
+                Role
+            </td>
+            <td>
+                <a href="#" id="user_type_id" class="editable" data-type="select" data-source="{{ roles }}" data-name="user_type_id" data-pk="{{ user_login.user.user_id}}" data-url="{% url 'profile_update' %}" data-params="{csrfmiddlewaretoken:'{{csrf_token}}'}" data-value="{{ user_login.user.user_type_id }}">{{ currentRole.type }}</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="col-xs-3">
                 Date of birth
             </td>
             <td>

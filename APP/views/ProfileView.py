@@ -10,6 +10,7 @@ from APP.views.MainView import MainView
 from APP.models.UserLoginModel import UserLogin
 from APP.models.UserModel import User
 from APP.models.UserFriendModel import UserFriend
+from APP.models.UserTypeModel import UserType
 from APP.models.CountryModel import Country
 from APP.models.MessageModel import Message
 
@@ -81,6 +82,7 @@ class ProfileView(MainView):
     def settings (self, request) :
         userLogin = super(ProfileView, self).getUserLogin(request)
         currentCountry = Country.objects.get(country_id=userLogin.user.country)
+        currentRole = UserType.objects.get(pk=userLogin.user.user_type_id)
 
         countries = Country.objects.all()
         countryList = '['
@@ -89,13 +91,23 @@ class ProfileView(MainView):
         countryList[:-1]
         countryList += ']'
 
+        roles = UserType.objects.all()
+        rolesList = '['
+        for role in roles:
+            rolesList += '{value: ' + str(role.pk) + ', text : "' + role.type + '"},'
+        rolesList[:-1]
+        rolesList += ']'
+
         return super(ProfileView, self).render(request, 'profile/settings.html', {
             'countries' : countryList,
-            'currentCountry' : currentCountry
+            'roles' : rolesList,
+            'currentCountry' : currentCountry,
+            'currentRole' : currentRole
         });
 
     def details (self, request, userId=None) :
         userLogin = super(ProfileView, self).getUserLogin(request)
+        currentRole = UserType.objects.get(pk=userLogin.user.user_type_id)
         if not userId:
             user = userLogin.user
             showAll = True
@@ -111,15 +123,8 @@ class ProfileView(MainView):
 
         currentCountry = Country.objects.get(country_id=user.country)
 
-        countries = Country.objects.all()
-        countryList = '['
-        for country in countries:
-            countryList += '{value: ' + str(country.country_id) + ', text : "' + country.name + '"},'
-        countryList[:-1]
-        countryList += ']'
-
         return super(ProfileView, self).render(request, 'profile/details.html', {
-            'countries' : countryList,
+            'currentRole': currentRole,
             'currentCountry' : currentCountry,
             'user' : user,
             'showAll' : showAll

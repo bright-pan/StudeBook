@@ -31,6 +31,14 @@
                 {{ user.date_of_birth|date:'Y-m-d' }}
             </td>
         </tr>
+        <tr>
+            <td class="col-xs-3">
+                Role
+            </td>
+            <td>
+                {{ currentRole.type }}
+            </td>
+        </tr>
         {% if showAll %}
         <tr>
             <td class="col-xs-3">
