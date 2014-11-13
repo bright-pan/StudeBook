@@ -12,7 +12,7 @@ class NotificationView(MainView):
 
     def read (self, request) :
         userLogin = super(NotificationView, self).getUserLogin(request);
-        notificationList = Notification.objects.filter(recipient = userLogin.user);
+        notificationList = Notification.objects.filter(recipient = userLogin.user).order_by('-datetime');
         return super(NotificationView, self).render(request, 'notification/notification.html', {
             'notification_list' : notificationList
         });
