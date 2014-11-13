@@ -77,5 +77,6 @@ var Notification = function() {
 $().ready(function(){
     SB.NOTIFICATION = new Notification();
     SB.NOTIFICATION.init();
-    setInterval(SB.NOTIFICATION.update,10000);
+    //Validate every 5 seconds
+    setInterval(SB.NOTIFICATION.update, 5000);
 });

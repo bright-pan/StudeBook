@@ -1,16 +1,28 @@
 #notification {
-    border : 1px solid blue;
 }
 
 #notification tr.head {
-    border : 1px solid green;
+}
+
+#notification tr.body {
 }
 
 #notification tr.body.disabled {
-    border : 1px solid red;
     display : none;
 }
 
 #notification tr.body.enabled {
-    border : 1px solid red;
+}
+
+#notification tr.body td {
+    padding : 10px;
+}
+
+#notification tr.body td:hover {
+    background : #fff;
+}
+
+#notification tr.body td span {
+    display : block;
+    margin  : 0 0 10px 0;
 }
