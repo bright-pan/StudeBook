@@ -12,8 +12,9 @@ $().ready(function(){
         //Unread message
         if($(this).attr('class').indexOf('unread') != -1) {
             //Update status
+            var parent = $(this).closest('tr');
+            parent.find('.status').text('read');
             $(this).addClass('read').removeClass('unread');
-            $(this).closest('tr').find('.status').text('read');
             SB.NOTIFICATION.updateStatus(pk);
         };
     });

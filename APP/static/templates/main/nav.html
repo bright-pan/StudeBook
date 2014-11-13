@@ -17,11 +17,11 @@
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="/file/create"><span class="glyphicon glyphicon-upload"></span> Upload file</a></li>
                         <li class="divider"></li>
-                        
+
                         {% for fileCategory in file_category %}
                             <li><a href="/file/{{ fileCategory.file_category_id }}/"><span class="glyphicon glyphicon-{{ fileCategory.glyphicon }}"></span> {{ fileCategory.category }}</a></li>
                         {% endfor %}
-                        
+
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -29,7 +29,7 @@
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="/page/create"><span class="glyphicon glyphicon-plus"></span> Add Page</a></li>
                         <li class="divider"></li>
-                        <li><a href="/page/"><span class="glyphicon glyphicon-list-alt"></span> All Pages</a></li> 
+                        <li><a href="/page/"><span class="glyphicon glyphicon-list-alt"></span> All Pages</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -37,7 +37,7 @@
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="/event/create"><span class="glyphicon glyphicon-plus"></span> Add Event</a></li>
                         <li class="divider"></li>
-                        <li><a href="/event/"><span class="glyphicon glyphicon-pushpin"></span> All Events</a></li> 
+                        <li><a href="/event/"><span class="glyphicon glyphicon-pushpin"></span> All Events</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -45,7 +45,7 @@
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="/software/create"><span class="glyphicon glyphicon-plus"></span> Add Software</a></li>
                         <li class="divider"></li>
-                        <li><a href="/software/"><span class="glyphicon glyphicon-pushpin"></span> All Software</a></li> 
+                        <li><a href="/software/"><span class="glyphicon glyphicon-pushpin"></span> All Software</a></li>
                     </ul>
                 </li>
                 <li><a href="/friends/search"><span class="glyphicon glyphicon-user"></span> People </a></li>
