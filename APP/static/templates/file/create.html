@@ -5,6 +5,8 @@
 
 	<form method="post" enctype="multipart/form-data">
         {% include "file/form.html" %}
+        <p><i>Allowed file types: .doc(x) / .pdf / .xls(x) / .ppt(x) / .zip / .rar / .mpeg / .bmp / .gif / .jp(e)g / .tiff / .txt / .avi / .mp3 / .mp4 <br />
+        	Max. filesize: 20MB</i></p>        
         <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Add File</button>
     </form>
 {% endblock %}

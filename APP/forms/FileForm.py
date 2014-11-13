@@ -21,6 +21,6 @@ class FileForm(forms.ModelForm):
                 'rows': '3'
             }),
             'path': forms.FileInput(attrs={
-                'class': 'form-control',
+                'class': 'form-control'
             }),
         }
