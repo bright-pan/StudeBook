@@ -1,45 +1,70 @@
 {% extends "main/main.html" %}
 {% load staticfiles %} {% block head %}
 <link href="{% static 'css/page.css' %}" rel="stylesheet" />
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+<script type="text/javascript">
+var map;
+var lng = "{{ event.location.longitude }}";
+var lat = "{{ event.location.latitude }}";
+function initialize() {
+  var latlng = new google.maps.LatLng(lat, lng);
+  var mapOptions = {
+    zoom: 15,
+    center: latlng
+  };
+  map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+
+  var marker = new google.maps.Marker({
+    position: latlng,
+    map: map
+  });
+
+  var infowindow = new google.maps.InfoWindow({
+    content: '<p>Marker Location:' + marker.getPosition() + '</p>'
+  });
+
+  google.maps.event.addListener(marker, 'click', function() {
+    infowindow.open(map, marker);
+  });
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+</script>
 {% endblock %} 
 {% block content %}
 <div class="container page">
 	<div style="min-height: 200px;">
-		<img src="{{ event.img }}" 
-		style="float: left; margin-right: 30px; " width="200px" height="150px"/> 
+    	<div id="map-canvas"></div>
 		<h1>{{ event.title }}</h1>
 		<h4>Date: <i>{{ event.datestart }} - {{ event.dateend }}</i></h4>
 		{% if member %}
-			<h4><a href="unsubscribe">Not Going</a></h4>
+			<h4><a href="unsubscribe" class="btn btn-primary pull-left m-l-10"><span class="glyphicon glyphicon-remove"></span> Not Going</a></h4>
 		{% else %}
-			<h4><a href="subscribe">Going</a></h4>
+			<h4><a href="subscribe" class="btn btn-success pull-left m-l-10"><span class="glyphicon glyphicon-ok"></span> Going</a></h4>
 		{% endif %}
 		{% if event.user == user_login.user %}
-			<h4><a href="edit">Edit</a></h4>
-			<h4><a href="delete">Delete</a></h4>
+			<h4><a href="edit" class="btn btn-primary pull-left m-l-10"><span class="glyphicon glyphicon-pencil"></span> Edit</a></h4>
+			<h4><a href="delete" class="btn btn-danger pull-left m-l-10"><span class="glyphicon glyphicon-trash"></span> Delete</a></h4>
 		{% endif %}
 	</div>
 	<div class="col-md-8">
 		<div class="content">
-			<h2>Info</h2>
+			<h2>Information</h2>
 			<p>{{ event.body }}</p>
-		</div>
-		<div class="content">
-			<h2>Messages</h2>
-			{% for event in event_messages %}
-				<hr />
-				<p>{{ event.message }}</p>
-
-			{% endfor %}
 		</div>
 	</div>
 
 	<div class="col-md-4 pagesidebar">
-		<h2>Sidebar</h2>
-		<p>Comming: 
-		{% for members in members %}
-			<p>{{ members.user }}</p>
-		{% endfor %}</p>
+		<h2>Coming</h2>
+		<p>{% if members %}
+				{% for members in members %}
+					<p>{{ members.user }}</p>
+				{% endfor %}
+			{% else %}
+				Nobody goes
+			{% endif %}
+		</p>
 	</div>
 
 	

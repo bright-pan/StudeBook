@@ -5,43 +5,35 @@
 {% block content %}
 <div class="container page">
 	<div style="min-height: 200px;">
-		<img src="{{ page.img }}" 
-		style="float: left; margin-right: 30px; " width="200px" height="150px"/> 
+		<img src="{{ page.img }}" class="img"/> 
 		<h1>{{ page.title }}</h1>
 		<h4>{{ page.user }}</h4>
 		{% if member %}
-			<h4><a href="unsubscribe">Unsubscribe</a></h4>
+			<h4><a href="unsubscribe" class="btn btn-danger pull-left m-l-10"><span class="glyphicon glyphicon-remove"></span> Unsubscribe</a></h4>
 		{% else %}
-			<h4><a href="subscribe">Subscribe</a></h4>
+			<h4><a href="subscribe" class="btn btn-success pull-left m-l-10"><span class="glyphicon glyphicon-ok"></span> Subscribe</a></h4>
 		{% endif %}
 		{% if page.user == user_login.user %}
-			<h4><a href="edit">Edit</a></h4>
-			<h4><a href="delete">Delete</a></h4>
+			<h4><a href="edit" class="btn btn-primary pull-left m-l-10"><span class="glyphicon glyphicon-pencil"></span> Edit</a></h4>
+			<h4><a href="delete" class="btn btn-danger pull-left m-l-10"><span class="glyphicon glyphicon-trash"></span> Delete</a></h4>
 		{% endif %}
 	</div>
 	<div class="col-md-8">
 		<div class="content">
-			<h2>Info</h2>
+			<h2>Information</h2>
 			<p>{{ page.body }}</p>
 		</div>
-		<div class="content">
-			<h2>Messages</h2>
-			{% for page in page_messages %}
-				<hr />
-				<p>{{ page.message }}</p>
-
-			{% endfor %}
-		</div>
 	</div>
-
 	<div class="col-md-4 pagesidebar">
-		<h2>Sidebar</h2>
-		<p>Members: 
-		{% for members in members %}
-			<p>{{ members.user }}</p>
-		{% endfor %}</p>
-	</div>
-
-	
+		<h2>Members</h2>
+		<p> {% if members %}
+				{% for members in members %}
+					<p>{{ members.user }}</p>
+				{% endfor %}
+			{% else %}
+				No members for this page
+			{% endif %}
+		</p>
+	</div>	
 </div>
 {% endblock %}

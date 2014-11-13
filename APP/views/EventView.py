@@ -7,7 +7,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from APP.models.UserLoginModel import UserLogin
 from APP.models.UserModel import User
 from django.db.models import Q
-
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 """
  ### StudeBook main event ### 
@@ -77,7 +76,7 @@ class EventView (MainView):
                 'event' : event,
             });
             
-        return HttpResponseRedirect('/event/show/' + eventID)
+        return HttpResponseRedirect('/event/read/' + eventID)
 
     #Delete event 
     def deleteEvent(self, request, eventID) :
@@ -95,7 +94,7 @@ class EventView (MainView):
         new_entry = Event(title='title', user=userLogin.user, body='body', publiced='0')
         new_entry.save()
 
-        return HttpResponseRedirect('/event/show/'+ str(new_entry.event_id) +'/edit/')
+        return HttpResponseRedirect('/event/read/'+ str(new_entry.event_id) +'/edit/')
 
     def update (self, request) :
         name = request.POST.get('name', '')
@@ -115,11 +114,11 @@ class EventView (MainView):
         subscription = EventSubscription.objects.filter(Q(event_id = eventID) & Q(user_id = userLogin));
 
         subscription.delete()
-        return HttpResponseRedirect('/event/show/' + eventID)
+        return HttpResponseRedirect('/event/read/' + eventID)
     
     def subscribe (self, request, eventID) :
         userLogin = super(EventView, self).getUserLogin(request);
         eventsubscription = EventSubscription(event_id = eventID, user_id = userLogin.user.user_id)
         eventsubscription.save()
 
-        return HttpResponseRedirect('/event/show/' + eventID)
+        return HttpResponseRedirect('/event/read/' + eventID)

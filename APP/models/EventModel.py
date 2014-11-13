@@ -2,6 +2,7 @@
 from django.db import models
 #SB
 from APP.models.UserModel import User
+from geoposition.fields import GeopositionField
 
 class Event(models.Model):
 
@@ -12,7 +13,8 @@ class Event(models.Model):
     publiced = models.IntegerField()
     datestart = models.DateField(blank=True, null=True)
     dateend = models.DateField(blank=True, null=True)
-    img = models.CharField(max_length=500)
+    location = GeopositionField()
+    address = models.CharField(max_length=100)
 
     def __str__ (self) :
         return self.title
