@@ -3,12 +3,15 @@ from django.http import HttpResponse
 from django.core import serializers
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
+from django.shortcuts import get_object_or_404
 
 #SB
 from APP.views.MainView import MainView
 from APP.models.UserLoginModel import UserLogin
 from APP.models.UserModel import User
+from APP.models.UserFriendModel import UserFriend
 from APP.models.CountryModel import Country
+from APP.models.MessageModel import Message
 
 import json
 import array
@@ -20,9 +23,22 @@ import array
 """
 
 class ProfileView(MainView):
-    def show (self, request) :
+    def show (self, request, userId=None) :
         userLogin = super(ProfileView, self).getUserLogin(request)
-        currentCountry = Country.objects.get(country_id=userLogin.user.country)
+        if not userId:
+            user = userLogin.user
+            showAll = True
+        elif int(userLogin.user.pk) == int(userId):
+            user = userLogin.user
+            showAll = True
+        else: 
+            user = get_object_or_404(User, pk=userId)
+            if UserFriend.objects.filter(requester_id=userLogin.user.user_id, recipient_id=userId, status='accepted'):
+                showAll = True
+            else :
+                showAll = False
+
+        currentCountry = Country.objects.get(country_id=user.country)
 
         countries = Country.objects.all()
         countryList = '['
@@ -31,9 +47,17 @@ class ProfileView(MainView):
         countryList[:-1]
         countryList += ']'
 
+        messages = Message.objects.filter(recipient_id=user.user_id).order_by('-created_at')
+        for message in messages:
+            message.user = User.objects.get(user_id=message.creator_id)
+
         return super(ProfileView, self).render(request, 'profile/profile.html', {
             'countries' : countryList,
-            'currentCountry' : currentCountry
+            'currentCountry' : currentCountry,
+            'user' : user,
+            'showAll' : showAll,
+            'currentUserId' : userLogin.user.pk,
+            'messages' : messages
         });
         
     def update (self, request) :
@@ -54,13 +78,56 @@ class ProfileView(MainView):
         data = json.dumps({ 'status' : 200 });
         return HttpResponse(data,content_type='application/json');
 
-    def getCountries(self, request):
+    def settings (self, request) :
+        userLogin = super(ProfileView, self).getUserLogin(request)
+        currentCountry = Country.objects.get(country_id=userLogin.user.country)
+
         countries = Country.objects.all()
         countryList = '['
         for country in countries:
             countryList += '{value: ' + str(country.country_id) + ', text : "' + country.name + '"},'
         countryList[:-1]
-        countryList += ']' 
+        countryList += ']'
 
-        return HttpResponse("Hoi")
+        return super(ProfileView, self).render(request, 'profile/settings.html', {
+            'countries' : countryList,
+            'currentCountry' : currentCountry
+        });
 
+    def details (self, request, userId=None) :
+        userLogin = super(ProfileView, self).getUserLogin(request)
+        if not userId:
+            user = userLogin.user
+            showAll = True
+        elif int(userLogin.user.pk) == int(userId):
+            user = userLogin.user
+            showAll = True
+        else: 
+            user = get_object_or_404(User, pk=userId)
+            if UserFriend.objects.filter(requester_id=userLogin.user.user_id, recipient_id=userId, status='accepted'):
+                showAll = True
+            else :
+                showAll = False
+
+        currentCountry = Country.objects.get(country_id=user.country)
+
+        countries = Country.objects.all()
+        countryList = '['
+        for country in countries:
+            countryList += '{value: ' + str(country.country_id) + ', text : "' + country.name + '"},'
+        countryList[:-1]
+        countryList += ']'
+
+        return super(ProfileView, self).render(request, 'profile/details.html', {
+            'countries' : countryList,
+            'currentCountry' : currentCountry,
+            'user' : user,
+            'showAll' : showAll
+        });
+
+    def sendMessage (self, request) :
+        message = Message(creator_id=request.POST['current_user'], recipient_id=request.POST['target_user'], message=request.POST['message'])
+        message.save()
+
+        data = json.dumps({ 'status' : 200, 'message' : 'Succes!!' });
+        return HttpResponse(data,content_type='application/json');
