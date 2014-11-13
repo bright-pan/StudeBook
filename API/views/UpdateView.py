@@ -26,7 +26,7 @@ class UpdateView (View):
             for update in updates :
                 type = update.table_name[3:];
                 link = "/" + type + "/read/" + str(update.row_id);
-                content = update.user.getFullName() + " added a " + type + ": " + update.title;
+                content = "<strong>" + update.user.getFullName() + "</strong> added a " + type + ": <strong>" + update.title + "</strong>";
 
                 updateList.append({'link' : link, 'content' : content});
             #Response
